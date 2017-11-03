@@ -199,6 +199,25 @@ function initVue() {
 		},
 		mounted: function() {
 			this.$nextTick(function () {
+				//===========================================================Side Menu
+				$('.side-menu a').click(function(){
+					var level = $(this).attr('menu-level');
+					var id = $(this).attr('menu-id');
+					
+					if($(this).parent().is('.active')) {
+						$(this).parent().removeClass('active');
+						$(this).parent().find('ul').slideUp();
+					}
+					else {
+						$('[menu-level='+level+']').parent().removeClass('active');
+						$('.side-menu li').not('.active').find('.active').removeClass('active');
+						$('[menu-level='+level+']').parent().find('ul').slideUp();
+						$(this).parent().addClass('active');
+						$(this).parent().children('ul').slideDown();
+					}
+				});
+				//====================================================================
+				
 				$('#leftPanel').resizable({
 					handles: "e",
 					resize: function(event, ui) {

@@ -53,27 +53,38 @@
 
 						<!-- sidebar menu -->
 						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-							<div class="menu_section">
+							<div class="menu_section">	
 								<ul class="nav side-menu">
-									<li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span></a>
+									<li>
+										<a menu-level="1" menu-id="1"><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
-											<li><a href="index.html">Dashboard</a></li>
-											<li><a href="index2.html">Dashboard2</a></li>
-											<li><a href="index3.html">Dashboard3</a></li>
+											<li>
+												<a menu-level="2" menu-id="2">Dashboard</a>
+												<ul class="nav child_menu">
+													<li>
+														<a menu-level="3" menu-id="3">Sub menu-level 3</a>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<a menu-level="2" menu-id="4">Dashboard2</a>
+												<ul class="nav child_menu">
+													<li>
+														<a menu-level="3" menu-id="5">Sub menu-level 3</a>
+													</li>
+												</ul>
+											</li>
+											<li><a menu-level="2" menu-id="6">Dashboard3</a></li>
 										</ul>
 									</li>
-									<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+									<li>
+										<a menu-level="1" menu-id="7"><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
 										<ul class="nav child_menu">
-										  <li><a href="form.html">General Form</a></li>
-										  <li><a href="form_advanced.html">Advanced Components</a></li>
-										  <li><a href="form_validation.html">Form Validation</a></li>
-										  <li><a href="form_wizards.html">Form Wizard</a></li>
-										  <li><a href="form_upload.html">Form Upload</a></li>
-										  <li><a href="form_buttons.html">Form Buttons</a></li>
+										  <li><a menu-level="2" menu-id="8">General Form</a></li>
+										  <li><a menu-level="2" menu-id="9">Advanced Components</a></li>
 										</ul>
 									  </li>
 								</ul>
-							</div>
 								<!--
 								<div class="metro_container">
 									<i class="fa fa-tachometer" aria-hidden="true"></i>
@@ -99,7 +110,8 @@
 									<i class="fa fa-question" aria-hidden="true"></i>
 									<div class="metro_title">Modul 5</div>
 								</div>
-								-->
+							-->
+							</div>
 						</div>
 						<!-- /sidebar menu -->
 
@@ -361,7 +373,6 @@
 		<script src="lib/switchery/switchery.min.js"></script>
 		<script src="lib/select2/js/select2.full.min.js"></script>
 		<script src="lib/devbridge-autocomplete/jquery.autocomplete.js"></script>
-		<script src="lib/bootstrap/js/custom.js"></script>
 		<script src="lib/jquery-ui/jquery-ui.min.js"></script>
 		<script src="lib/jquery.debounce-1.0.5.js"></script>
 		<script src="lib/dropzone/dropzone.js"></script>
