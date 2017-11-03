@@ -1,0 +1,84 @@
+[
+	{
+		"type": "standardlist",
+		"source": "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, 'rozaGetParam(globalUserName)' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate",
+		"source_param": ["Selangor", "rozaGetParam(globalUserId)"],
+		"onclick": "rozaCallLandingFile({module:'Sumber Manusia', file:'UI_ProtoCuti.js?id=rozaGetField(ROZA_ID)'})",
+		"labelbm": "Senarai Tugasan",
+		"labelbi": "Task List"
+	}
+]
+
+//"sort": [{"labelbm":"Masa", "labelbi":"Time", "param":"time"}, {"labelbm":"Tajuk", "labelbi":"Title", "param":"title"}],
+
+[
+	{
+		"type": "data",
+		"source": "SELECT data_data FROM proto_data WHERE data_id = ?",
+		"source_param": ["rozaGetParam(id)"]
+	},
+	{
+		"type": "data",
+		"source": {"gender":"P", "comment":"Testing 123", "attachment2":"<a href=''>My Paperwork.docx</a>"}
+	},
+	{
+		"type": "data",
+		"source": {"attachment":"<iframe src='dev/html/UI_Complex.html?id=rozaGetParam(id)'></iframe>"}
+	},
+	{
+		"type": "title",
+		"labelbm": "Permohonan Cuti",
+		"labelbi": "Leave Application"
+	},
+	{
+		"id": "name",
+		"type": "text",
+		"labelbm": "Nama",
+		"labelbi": "Name",
+		"placeholder": "insert name",
+		"maxlength": 30,
+		"required": true
+	},
+	{
+		"id": "state",
+		"type": "dropdown",
+		"source": "SELECT lov_data FROM proto_lov WHERE lov_category = 'state'",
+		"labelbm": "Negeri",
+		"labelbi": "State",
+		"onchange": "stateChanged()",
+		"required": true
+	},
+	{
+		"id": "gender",
+		"type": "dropdown",
+		"source": [{"value":"M", "labelbi":"Male", "labelbm":"Lelaki"}, {"value":"P", "labelbi":"Female", "labelbm":"Perempuan"}],
+		"labelbm": "Jantina",
+		"labelbi": "Gender"
+	},
+	{
+		"id": "file",
+		"type": "file",
+		"labelbm": "Muat Naik Fail",
+		"labelbi": "Upload File",
+		"required": false,
+		"filetype": ["doc", "docx"]
+	},
+	{
+		"id": "attachment",
+		"type": "inlinehtml",
+		"labelbm": "Lampiran",
+		"labelbi": "Attachment",
+		"fullwidth": false
+	},
+	{
+		"id": "comment",
+		"type": "textarea",
+		"labelbm": "Komen",
+		"labelbi": "Comment",
+		"placeholder": "insert comment",
+		"maxlength": 255,
+		"required": true
+	}
+]
+
+

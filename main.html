@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>AGC ILMS</title>
+
+		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link href="lib/nprogress/nprogress.css" rel="stylesheet">
+		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
+		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
+		<link href="lib/switchery/switchery.min.css" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css" rel="stylesheet">
+		<link href="lib/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+		<link href="lib/dropzone/dropzone.css" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/custom.css" rel="stylesheet">
+	</head>
+
+	<body class="nav-md">
+		<div id="roza" class="container body">
+			<div class="main_container">
+				<div class="col-md-3 left_col">
+					<div class="left_col scroll-view">
+						<div class="navbar nav_title" style="border: 0;">
+							<a href="index.html" class="site_title">
+								<img class="logo_normal" src="images/logo.svg">
+								<img class="logo_small" src="images/logo_small.svg">
+							</a>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<!-- menu profile quick info -->
+						<!--
+						<div class="profile clearfix">
+							<div class="profile_pic">
+								<img src="images/coisox.jpg" alt="..." class="img-circle profile_img">
+							</div>
+							<div class="profile_info">
+								<span>Selamat Datang,</span>
+								<h2>Aizal Manan</h2>
+							</div>
+						</div>
+						-->
+						<!-- /menu profile quick info -->
+
+						<br />
+
+						<!-- sidebar menu -->
+						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+							<div class="menu_section">
+								<ul class="nav side-menu">
+									<li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+											<li><a href="index.html">Dashboard</a></li>
+											<li><a href="index2.html">Dashboard2</a></li>
+											<li><a href="index3.html">Dashboard3</a></li>
+										</ul>
+									</li>
+									<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+										  <li><a href="form.html">General Form</a></li>
+										  <li><a href="form_advanced.html">Advanced Components</a></li>
+										  <li><a href="form_validation.html">Form Validation</a></li>
+										  <li><a href="form_wizards.html">Form Wizard</a></li>
+										  <li><a href="form_upload.html">Form Upload</a></li>
+										  <li><a href="form_buttons.html">Form Buttons</a></li>
+										</ul>
+									  </li>
+								</ul>
+							</div>
+								<!--
+								<div class="metro_container">
+									<i class="fa fa-tachometer" aria-hidden="true"></i>
+									<div class="metro_title">Dashboard</div>
+								</div>
+								<div class="metro_container" @click="rozaCallLandingFile({module:'Sumber Manusia', file:'UI_ProtoTask.js'})" :class="{active:module=='Sumber Manusia'}">
+									<i class="fa fa-address-book" aria-hidden="true"></i>
+									<div class="metro_title">Sumber Manusia</div>
+								</div>
+								<div class="metro_container">
+									<i class="fa fa-balance-scale" aria-hidden="true"></i>
+									<div class="metro_title">Perundangan</div>
+								</div>
+								<div class="metro_container">
+									<i class="fa fa-question" aria-hidden="true"></i>
+									<div class="metro_title">Modul 3</div>
+								</div>
+								<div class="metro_container">
+									<i class="fa fa-question" aria-hidden="true"></i>
+									<div class="metro_title">Modul 4</div>
+								</div>
+								<div class="metro_container">
+									<i class="fa fa-question" aria-hidden="true"></i>
+									<div class="metro_title">Modul 5</div>
+								</div>
+								-->
+						</div>
+						<!-- /sidebar menu -->
+
+						<!-- /menu footer buttons -->
+						<div class="sidebar-footer">Hakcipta Terpelihara 2017</div>
+						<!-- /menu footer buttons -->
+					</div>
+				</div>
+
+				<!-- top navigation -->
+				<div class="top_nav">
+					<div class="nav_menu" style="padding: 0 20px;">
+						<nav>
+							<div class="float-left">
+								<div class="nav toggle">
+									<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+								</div>	
+								<div class="col-sm-4 col-xs-5 form-group top_search">
+									<div class="input-group">
+										<input type="text" id="globalSearch" class="form-control" placeholder="Carian...">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+										</span>
+									</div>
+								</div>
+							</div>
+							
+							<ul class="nav navbar-nav navbar-right">
+								<li class="">
+									<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding-right:0;">
+										<img src="images/coisox.jpg" alt=""><span id="username" class="hidden-xs">Aizal Manan</span>
+										<span class=" fa fa-angle-down"></span>
+									</a>
+									<ul class="dropdown-menu dropdown-usermenu pull-right">
+										<li><a href="javascript:;"> Profil</a></li>
+										<li>
+											<a href="javascript:;">
+												<span>Konfigurasi</span>
+											</a>
+										</li>
+										<li><a href="javascript:;">Bantuan</a></li>
+										<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Keluar</a></li>
+									</ul>
+								</li>
+
+								<li role="presentation" class="dropdown">
+									<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+										<i class="fa fa-envelope-o"></i>
+										<span class="badge bg-green">4</span>
+									</a>
+									<ul id="notification_panel" class="dropdown-menu list-unstyled msg_list" role="menu">
+										<li>
+											<a>
+												<span class="image"><img src="images/thumb_legal.jpg"/></span>
+												<span>
+													<span>Modul Perundangan</span>
+													<span class="time">3 minit lepas</span>
+												</span>
+												<span class="message">
+													Terdapat draft permohnan baru untuk dikaji...
+												</span>
+											</a>
+										</li>
+										<li>
+											<a>
+												<span class="image"><img src="images/thumb_hr.jpg"/></span>
+												<span>
+													<span>Modul Sumber Manusia</span>
+													<span class="time">4 minit lepas</span>
+												</span>
+												<span class="message">
+													Terdapat permohonan cuti baru...
+												</span>
+											</a>
+										</li>
+										<li>
+											<a>
+												<span class="image"><img src="images/thumb_hr.jpg"/></span>
+												<span>
+													<span>Modul Sumber Manusia</span>
+													<span class="time">15 minit lepas</span>
+												</span>
+												<span class="message">
+													Terdapat permohonan tuntutan baru...
+												</span>
+											</a>
+										</li>
+										<li>
+											<a>
+												<span class="image"><img src="images/thumb_announce.jpg"/></span>
+												<span>
+													<span>Modul Pengumuman</span>
+													<span class="time">7 jam lepas</span>
+												</span>
+												<span class="message">
+													Bengkel TOT sistem ILMSv2...
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<!-- /top navigation -->
+
+				<!-- page content -->
+				<div class="right_col" role="main">
+					<div class="">
+					
+						<div class="secondnav pull-left"><ol class="breadcrumb" v-html="breadcrumb"></ol></div>
+						
+						<div class="secondnav pull-right">
+							<span>
+								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-plus"></i> Baru</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><label>Tatatertib</label></li>
+									<li><label>Cuti</label></li>
+									<li><label>Tuntutan</label></li>
+								</ul>
+							</span>
+							<span>
+								<button class="btn btn-outline-secondary" type="button">
+									<i class="fa fa-hourglass-end"></i> Status
+								</button>
+							</span>
+							<span>
+								<button class="btn btn-outline-secondary" type="button">
+									<i class="fa fa-tasks"></i> Tugasan
+								</button>
+							</span>
+							<span id="kegemaran">
+								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-heart"></i> Kegemaran</button>
+								<ul class="dropdown-menu" role="menu">
+									<li><label>Kegemaran 1</label></li>
+									<li><label>Kegemaran 2</label></li>
+									<li><label>Kegemaran 3</label></li>
+								</ul>
+							</span>
+						</div>
+						
+						<div class="clearfix"></div>
+
+						<div class="row panelWrapper">
+							<div id="leftPanel" v-if="!panel.fullPanel.show">
+								<div class="x_panel" v-if="panel.leftPanel.type=='standardlist'">
+									<div class="x_title">
+										<h2>{{panel.leftPanel.prop[0][language]}}</h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<li><label @click="sortList('leftPanel', 'ROZA_EPOCH')">{{language=='labelbm'?'Masa':'Time'}}</label></li>
+													<li><label @click="sortList('leftPanel', 'ROZA_TITLE')">{{language=='labelbm'?'Tajuk':'Title'}}</label></li>
+												</ul>
+											</li>
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-filter"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<!--<li class="rozafilter" v-for="item in leftPanel.filter"><div class="checkbox"><label @click="rozaFilter('leftPanel')"><input type="checkbox" class="flat" checked="checked">{{item[language]}}</label></div></li>-->
+													<li><input class="filterString" v-model="panel.leftPanel.filterString" :placeholder="language=='labelbm'?'Masukkan terma tapisan':'Enter filter term'"></li>
+												</ul>
+											</li>
+										</ul>
+										<div class="clearfix"></div>
+									</div>
+									<div class="x_content p-0">
+										<ul class="list-group">
+											<li v-for="item in leftFilteredList" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+												<div class="pull-right">{{item.ROZA_TIME}}</div>
+												<div class="clearfix"></div>
+												<div class="pull-left">{{item.ROZA_DESC}}</div>
+												<div class="clearfix"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="x_panel" v-if="panel.leftPanel.type=='ui'">
+									<div class="x_content p-0">
+										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
+											<template v-for="item in panel.leftPanel.prop" v-if="item.type!='data'">
+											
+												<!-- Title -->
+												<div v-if="item.type=='title'" class="x_title">
+													<h2>{{item[language]}}</h2>
+													<div class="clearfix"></div>
+												</div>
+												
+												<!-- Element -->
+												<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file'].indexOf(item.type)>-1" class="form-group">
+													<div v-if="item.type.indexOf('html')>-1 && item.fullwidth" :class="item.type" v-html="item.value"></div>
+													<template v-else>
+														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item[language]}}</label>
+														<div class="col-xs-9">
+															<input v-if="['text','password'].indexOf(item.type)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.type" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
+															<select v-if="item.type=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required">
+																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt[language]}}</option>
+															</select>
+															<textarea v-if="item.type=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
+															<div v-if="item.type.indexOf('html')>-1" :class="item.type" v-html="item.value"></div>
+															<div v-if="item.type=='file'" class="dropzone" :load="bindDropzone()"></div>
+														</div>													
+													</template>
+												</div>
+												
+												<!-- Not Supported -->
+												<div v-else class="form-group">
+													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item[language]}}</label>
+													<div class="col-xs-9">
+														<input class="form-control not-supported" value="Element type not supported" readonly>
+													</div>
+												</div>
+												
+											</template>
+										</form>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Right Panel -->
+							
+						</div>
+					</div>
+				</div>
+				<!-- /page content -->
+			</div>
+			
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ Modal General -->
+			<div id="modalGeneral" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"></h4>
+						</div>
+						<div class="modal-body"></div>
+						<div class="modal-footer">
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{language=='labelbm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<script src="lib/jquery.min.js"></script>
+		<script src="lib/vue.js"></script>
+		<script src="lib/popper.min.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="lib/bootstrap-notify.min.js"></script>
+		<script src="lib/fastclick.js"></script>
+		<script src="lib/nprogress/nprogress.js"></script>
+		<script src="lib/iCheck/icheck.min.js"></script>
+		<script src="lib/moment.min.js"></script>
+		<script src="lib/daterangepicker.js"></script>
+		<script src="lib/switchery/switchery.min.js"></script>
+		<script src="lib/select2/js/select2.full.min.js"></script>
+		<script src="lib/devbridge-autocomplete/jquery.autocomplete.js"></script>
+		<script src="lib/bootstrap/js/custom.js"></script>
+		<script src="lib/jquery-ui/jquery-ui.min.js"></script>
+		<script src="lib/jquery.debounce-1.0.5.js"></script>
+		<script src="lib/dropzone/dropzone.js"></script>
+		<script src="roza/ROZA_Vue.js"></script>
+	</body>
+</html>

@@ -1,0 +1,12 @@
+<style>
+	body, html {
+		margin: 0;
+	}
+</style>
+<div id="x" style="background:red; padding:10px;">xxx</div>
+
+<script src="../../lib/jquery.min.js"></script>
+<script>
+	var url = new URL(window.location+'');
+	$('#x').html('Parameter received: '+url.searchParams.get("id"));
+</script>

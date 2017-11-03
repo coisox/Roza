@@ -1,0 +1,17 @@
+[8:58 PM, 10/27/2017] Nurulhuda: Extend template
+[9:40 PM, 10/27/2017] Nurulhuda: Load template superlist
+
+Log system konsep graphical mcm Panda Antivirus
+	Click Node nampak description
+	Node ala2 timeline
+	
+Log timelapse every query
+
+Still need UiOrBl or just Ui
+
+
+convert array_push --> []
+
+audit trail after success query non select
+
+custom attribute for element (data-xxx)
