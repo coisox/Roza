@@ -92,13 +92,14 @@ function initVue() {
 				else $('#modalGeneral').modal('hide');
 			},
 			rozaResetData: function(e) {
-				console.log('rozaResetData');
+				console.log('rozaSubmitData');
+				console.log(file);
 				console.log(e);
 			},
-			rozaSubmitData: function(e, f) {
+			rozaSubmitData: function(file, e) {
 				console.log('rozaSubmitData');
+				console.log(file);
 				console.log(e);
-				console.log(f);
 			},
 			rozaGetParam: function(param) {
 				return localStorage.getItem('ROZA_param_'+param);
