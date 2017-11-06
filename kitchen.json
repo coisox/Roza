@@ -2,8 +2,8 @@
 	{
 		"type": "standardlist",
 		"source": "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, 'rozaGetParam(globalUserName)' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate",
-		"source_param": ["Selangor", "rozaGetParam(globalUserId)"],
-		"onclick": "rozaCallLandingFile({module:'Sumber Manusia', file:'UI_ProtoCuti.js?id=rozaGetField(ROZA_ID)'})",
+		"sourceparam": ["Selangor", "rozaGetParam(globalUserId)"],
+		"onclick": "rozaCallLandingFile('UI_ProtoCuti.js?id=rozaGetField(ROZA_ID)')",
 		"labelbm": "Senarai Tugasan",
 		"labelbi": "Task List"
 	}
@@ -15,15 +15,15 @@
 	{
 		"type": "data",
 		"source": "SELECT data_data FROM proto_data WHERE data_id = ?",
-		"source_param": ["rozaGetParam(id)"]
+		"sourceparam": ["rozaGetParam(id)"]
 	},
 	{
 		"type": "data",
-		"source": {"gender":"P", "comment":"Testing 123", "attachment2":"<a href=''>My Paperwork.docx</a>"}
+		"source": {"gender":"P", "comment":"Testing 123", "attachment":"<a href=''>My Paperwork.docx</a>"}
 	},
 	{
 		"type": "data",
-		"source": {"attachment":"<iframe src='dev/html/UI_Complex.html?id=rozaGetParam(id)'></iframe>"}
+		"source": {"attachment2":"<iframe src='dev/html/UI_Complex.html?id=rozaGetParam(id)'></iframe>"}
 	},
 	{
 		"type": "title",
@@ -51,7 +51,7 @@
 	{
 		"id": "gender",
 		"type": "dropdown",
-		"source": [{"value":"M", "labelbi":"Male", "labelbm":"Lelaki"}, {"value":"P", "labelbi":"Female", "labelbm":"Perempuan"}],
+		"source": [{"value":"", "labelbi":"", "labelbm":""}, {"value":"M", "labelbi":"Male", "labelbm":"Lelaki"}, {"value":"P", "labelbi":"Female", "labelbm":"Perempuan"}],
 		"labelbm": "Jantina",
 		"labelbi": "Gender"
 	},
@@ -78,5 +78,41 @@
 		"placeholder": "insert comment",
 		"maxlength": 255,
 		"required": true
+	}
+]
+
+[
+	{
+		"type": "taskbar",
+		"labelbm": "Baru",
+		"labelbi": "New",
+		"icon": "fa fa-plus",
+		"list": [
+			{
+				"labelbm": "Tatatertib",
+				"labelbi": "Discipline"
+			},
+			{
+				"labelbm": "Cuti",
+				"labelbi": "Leave",
+				"onclick": "rozaCallLandingFile('UI_ProtoCutiNew.js')"
+			},
+			{
+				"labelbm": "Tuntutan",
+				"labelbi": "Claim"
+			}
+		]
+	},
+	{
+		"type": "taskbar",
+		"labelbm": "Status",
+		"labelbi": "Status",
+		"icon": "fa fa-hourglass-end"
+	},
+	{
+		"type": "taskbar",
+		"labelbm": "Tugasan",
+		"labelbi": "Task",
+		"icon": "fa fa-tasks"
 	}
 ]

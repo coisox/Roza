@@ -1,14 +1,14 @@
 rozaSetPanel({
-	panel: 'leftPanel',
+	panel: 'rightPanel',
 	ui: 2
 });
 
 function stateChanged() {
 	rozaModal({
-		title: 'Modal Title',
-		content: 'Lorem Ipsum',
+		labelbm: 'Negeri bertukar!',
+		labelbi: 'State changed!',
 		cancel: true,
-		action: 'okBeingClicked()'
+		onclick: 'okBeingClicked()'
 	});
 }
 

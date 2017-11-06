@@ -14,6 +14,35 @@ if(mysqli_connect_errno()) {
 
 session_start();
 
+/*
+function generateMenu() {
+	$rs = rozaExecuteQuery("
+		SELECT
+			t0.menu_id 'id_0', t0.menu_labelbm 'labelbm_0', t0.menu_labelbi 'labelbi_0',
+			t1.menu_id 'id_1', t1.menu_labelbm 'labelbm_1', t1.menu_labelbi 'labelbi_1',
+			t2.menu_id 'id_2', t2.menu_labelbm 'labelbm_2', t2.menu_labelbi 'labelbi_2',
+			t3.menu_id 'id_3', t3.menu_labelbm 'labelbm_3', t3.menu_labelbi 'labelbi_3',
+			t4.menu_id 'id_4', t4.menu_labelbm 'labelbm_4', t4.menu_labelbi 'labelbi_4'
+		FROM roza_menu AS t0
+			LEFT JOIN roza_menu AS t1 ON t1.menu_parent_id = t0.menu_id
+			LEFT JOIN roza_menu AS t2 ON t2.menu_parent_id = t1.menu_id
+			LEFT JOIN roza_menu AS t3 ON t3.menu_parent_id = t2.menu_id
+			LEFT JOIN roza_menu AS t4 ON t4.menu_parent_id = t3.menu_id
+		WHERE t0.menu_parent_id = 0
+	", null);
+	
+	$menus = array();
+	while($row = $rs->fetch_assoc()) {
+		$menus[] = {
+			'menu_id' => $row['id_0'],
+			'menu_labelbm' => $row['labelbm_0'],
+			'menu_labelbi' => $row['labelbi_0'],
+			'child' => array() //stop here
+		};
+	}
+}
+*/
+
 function str_replace_first($search, $replace, $subject) {
     $pos = strpos($subject, $search);
     if ($pos !== false) {

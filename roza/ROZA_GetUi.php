@@ -6,22 +6,24 @@
 
 	for($i=0; $i<count($prop); $i++) {
 		
-		if(gettype($prop[$i]['source'])=='string') { //SQL
-			$prop[$i]['source'] = rozaReplaceParam($prop[$i]['source']);
-		}
-		else if($prop[$i]['source']) { //Object
-			foreach($prop[$i]['source'] as $key => $value) {
-				$prop[$i]['source'][$key] = rozaReplaceParam($prop[$i]['source'][$key]);
+		if(isset($_GET['nodala']) && $_GET['nodala']=='true') {
+			if(gettype($prop[$i]['source'])=='string') { //SQL
+				$prop[$i]['source'] = rozaReplaceParam($prop[$i]['source']);
 			}
-		}
-		
-		for($j=0; $j<count($prop[$i]['source_param']); $j++) {
-			$prop[$i]['source_param'][$j] = rozaReplaceParam($prop[$i]['source_param'][$j]);
+			else if($prop[$i]['source']) { //Object
+				foreach($prop[$i]['source'] as $key => $value) {
+					$prop[$i]['source'][$key] = rozaReplaceParam($prop[$i]['source'][$key]);
+				}
+			}
+			
+			for($j=0; $j<count($prop[$i]['sourceparam']); $j++) {
+				$prop[$i]['sourceparam'][$j] = rozaReplaceParam($prop[$i]['sourceparam'][$j]);
+			}
 		}
 		
 		//=================================================================================== standardlist
 		if($prop[$i]['type']=='standardlist') {
-			$prop[$i]['list'] = rozaGetStandardList($prop[$i]['source'], $prop[$i]['source_param']);
+			$prop[$i]['list'] = rozaGetStandardList($prop[$i]['source'], $prop[$i]['sourceparam']);
 			
 			//roza event
 			for($j=0; $j<count($prop[$i]['list']); $j++) {
@@ -34,7 +36,7 @@
 		//=================================================================================== data
 		else if($prop[$i]['type']=='data') {
 			if(gettype($prop[$i]['source'])=='string') {
-				$data = array_merge($data, json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['source_param']), true));
+				$data = array_merge($data, json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['sourceparam']), true));
 			}
 			else {
 				$data = array_merge($data, $prop[$i]['source']);
@@ -47,7 +49,7 @@
 			
 			if($prop[$i]['type']=='dropdown') {
 				if(gettype($prop[$i]['source'])=='string') { //SQL
-					$prop[$i]['list'] = json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['source_param']), true);
+					$prop[$i]['list'] = json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['sourceparam']), true);
 				}
 				else { //Array of object
 					$prop[$i]['list'] = $prop[$i]['source'];

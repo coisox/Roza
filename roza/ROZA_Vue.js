@@ -1,5 +1,5 @@
 var xxx;
-var rozaCallLandingFile, rozaSetBreadcrumb, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal;
+var rozaCallLandingFile, rozaSetBreadcrumb, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetData, rozaSubmitData;
 var globalUserId = '999';
 
 if(!localStorage.getItem('ILMS_Language')) localStorage.setItem('ILMS_Language', 'labelbm');
@@ -22,6 +22,7 @@ function initVue() {
 			breadcrumb: '',
 			module: '',
 			activeItem: '',
+			taskbar: {},
 			panel: {
 				leftPanel: {
 					filterString: '',
@@ -48,10 +49,21 @@ function initVue() {
 				return this.panel.leftPanel.prop[0].list.filter(item => {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.leftPanel.filterString.toLowerCase()) > -1
 				})
+			},
+			rightFilteredList: function() {
+				return this.panel.rightPanel.prop[0].list.filter(item => {
+					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.rightPanel.filterString.toLowerCase()) > -1
+				})
+			},
+			fullFilteredList: function() {
+				return this.panel.fullPanel.prop[0].list.filter(item => {
+					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.fullPanel.filterString.toLowerCase()) > -1
+				})
 			}
 		},
 		methods: {
 			onclick: function(item) {
+				console.log(item);
 				eval(item.onclick);
 			},
 			onchange: function(item) {
@@ -70,37 +82,42 @@ function initVue() {
 			},
 			rozaModal: function(opt) {
 				if(opt)  {
-					if(opt.title) $('#modalGeneral .modal-title').html(opt.title);
-					else $('#modalGeneral .modal-header').hide();
-					if(opt.cancel) $('#modalGeneral #btnCancel').show();
-					else $('#modalGeneral #btnCancel').hide();
-					$('#modalGeneral .modal-body').html('').html(opt.content);
-					$('#modalGeneral #btnOk').attr('onclick', opt.action);
-
+					console.log("modal");
+					console.log(opt);
+					$('#modalGeneral #btnCancel').toggle(opt.cancel);
+					$('#modalGeneral .modal-body').html('').html(opt[this.language]);
+					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
 				}
 				else $('#modalGeneral').modal('hide');
 			},
+			rozaResetData: function(e) {
+				console.log('rozaResetData');
+				console.log(e);
+			},
+			rozaSubmitData: function(e, f) {
+				console.log('rozaSubmitData');
+				console.log(e);
+				console.log(f);
+			},
 			rozaGetParam: function(param) {
 				return localStorage.getItem('ROZA_param_'+param);
 			},
-			rozaCallLandingFile: function(opt) {
-				this.module = opt.module; //kat sini leh bagi sub module terus. then aku manually search parent utk active
-
+			rozaCallLandingFile: function(file) {
 				//save param for next page
 				//================================================================================================
-				var param = opt.file.split(/[\?&]+/);
+				var param = file.split(/[\?&]+/);
 				for(var i=0; i<param.length; i++) localStorage.setItem('ROZA_param_'+param[i].split('=')[0], param[i].split('=')[1]);
 				//================================================================================================
 				
-				$.getScript('dev/js/'+opt.file, function(data, textStatus, jqxhr) {}).fail(function(){
-					if(arguments[1]=='error') roza.toast(opt.file+': Not found');
+				$.getScript('dev/js/'+file, function(data, textStatus, jqxhr) {}).fail(function(){
+					if(arguments[1]=='error') roza.toast(file+': Not found');
 					else {
-						roza.toast(opt.file+': '+arguments[2].toString().replace('ReferenceError: ', ''));
+						roza.toast(file+': '+arguments[2].toString().replace('ReferenceError: ', ''));
 						$.ajax({
 							crossDomain: true,
 							dataType: "script",
-							url: 'dev/js/'+opt.file
+							url: 'dev/js/'+file
 						});
 					}
 				});
@@ -124,10 +141,19 @@ function initVue() {
 			rozaSetPanel: function(opt) {
 				this.panel.fullPanel.show = (opt.panel=='fullPanel');
 				
-				$.getJSON('roza/ROZA_GetUi.php?id='+opt.ui, function(data){
+				$.getJSON('roza/ROZA_GetUi.php?id='+opt.ui+'&nodata='+opt.nodata, function(data){
 					if(data.status=='ok') {
 						roza.panel[opt.panel].prop = data.prop;
 						roza.panel[opt.panel].type = data.prop[0].type=='standardlist'?'standardlist':'ui';
+						if(opt.callback) opt.callback(data);
+					}
+					else roza.toast(data.status);
+				});
+			},
+			rozaSetTaskbar: function(opt) {			
+				$.getJSON('roza/ROZA_GetUi.php?id='+opt.ui, function(data){
+					if(data.status=='ok') {
+						roza.taskbar = data.prop;
 						if(opt.callback) opt.callback(data);
 					}
 					else roza.toast(data.status);
@@ -172,30 +198,35 @@ function initVue() {
 			rozaSetBreadcrumb: function(html) {
 				this.breadcrumb = html;
 			},
-			bindDropzone: function() {	
-				setTimeout(function(){
-					$(".dropzone").dropzone({
-						url: "main.html",
-						createImageThumbnails: false,
-						ignoreHiddenFiles: true,
-						addRemoveLinks: true,
-						dictRemoveFile: 'x',
-						removedfile: function(file) {
-							var _ref;
-							return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-						}
-					});
-				}, 100);
+			bindDropzone: function(panel) {
+				if($('#'+panel+' .dropzone').find('.dz-default').size()==0) {
+					setTimeout(function(){
+						$('#'+panel+' .dropzone').dropzone({
+							url: 'main.html',
+							createImageThumbnails: false,
+							ignoreHiddenFiles: true,
+							addRemoveLinks: true,
+							dictRemoveFile: 'x',
+							removedfile: function(file) {
+								var _ref;
+								return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+							}
+						});
+					}, 100);
+				}
 			}
 		},
 		created: function() {
 			rozaCallLandingFile = this.rozaCallLandingFile;
 			rozaSetBreadcrumb = this.rozaSetBreadcrumb;
+			rozaSetTaskbar = this.rozaSetTaskbar;
 			rozaSetPanel = this.rozaSetPanel;
 			rozaBindData = this.rozaBindData;
 			rozaBindLov = this.rozaBindLov;
 			rozaGetParam = this.rozaGetParam;
 			rozaModal = this.rozaModal;
+			rozaResetData = this.rozaResetData;
+			rozaSubmitData = this.rozaSubmitData;
 		},
 		mounted: function() {
 			this.$nextTick(function () {
@@ -233,8 +264,6 @@ function initVue() {
 				$('#menu_toggle').click(function(){
 					$('body').toggleClass('nav-md nav-sm');
 				});
-
-				this.rozaCallLandingFile({module:'Dashboard', file:'UI_Dashboard.js'});
 			});
 		}
 	});
