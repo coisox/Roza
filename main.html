@@ -114,7 +114,7 @@
 							<div class="float-left">
 								<div class="nav toggle">
 									<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-								</div>	
+								</div>
 								<div class="col-sm-4 col-xs-5 form-group top_search">
 									<div class="input-group">
 										<input type="text" id="globalSearch" class="form-control" placeholder="Carian...">
@@ -123,6 +123,11 @@
 										</span>
 									</div>
 								</div>
+								<!--
+								<div class="nav navbar-nav navbar-left">
+									<li><a><i class="fa fa-filter"></i></a></li>
+								</div>
+								-->
 							</div>
 							
 							<ul class="nav navbar-nav navbar-right">
@@ -473,6 +478,173 @@
 										</form>
 									</div>
 								</div>
+								<div class="x_panel" v-if="panel.fullPanel.type=='searchresult'">
+									<div class="x_content p-0">
+										<div class="" role="tabpanel" data-example-id="togglable-tabs">
+											<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+												<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">All</a></li>
+												<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Module</a></li>
+												<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Document</a></li>
+												<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Images</a></li>
+												<li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Video</a></li>
+											</ul>
+											<div id="myTabContent" class="tab-content">
+												<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+													<ul class="list-group">
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
+																	Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
+																	Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
+																	Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-play"></i>
+																</div>
+																<div class="left searchresult_thumbnail">
+																	<img src='data:image/jpg;base64,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'/>
+																</div>
+																<div class="right">
+																	<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
+																	Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-file"></i>
+																</div>
+																<div class="right">
+																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
+																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+												<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+													<ul class="list-group">
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
+																	Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
+																	Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
+																</div>
+															</div>
+														</li>
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-microchip"></i>
+																</div>
+																<div class="right">
+																	<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
+																	Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+												<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+													<ul class="list-group">
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-file"></i>
+																</div>
+																<div class="right">
+																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
+																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+												<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+													No result
+												</div>
+												<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+													<ul class="list-group">
+														<li class="list-group-item">
+															<div class="mail_list">
+																<div class="left">
+																	<i class="fa fa-file"></i>
+																</div>
+																<div class="left searchresult_thumbnail">
+																	<img src='data:image/jpg;base64,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'/>
+																</div>
+																<div class="right">
+																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
+																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																</div>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="btn-toolbar" style="margin-left: 5px;">
+												<div class="btn-group">
+													<button class="btn btn-success" type="button">Prev</button>
+												</div>
+												<div class="btn-group">
+													<button class="btn btn-default" type="button">1</button>
+													<button class="btn btn-default active" type="button">2</button>
+													<button class="btn btn-default" type="button">3</button>
+													<button class="btn btn-default" type="button">4</button>
+												</div>
+												<div class="btn-group">
+													<button class="btn btn-success" type="button">Next</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 							</div>
 							<!-- Full Panel End -->
 							

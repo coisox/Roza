@@ -329,3 +329,29 @@ iframe {
     transform: translateX(-50%) rotate(45deg);
 	z-index: 1;
 }
+.mail_list {
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+.mail_list .left {
+    margin-right: 0;
+	width: 30px;
+}
+.mail_list .searchresult_thumbnail {
+	width: initial;
+	margin-right: 10px;
+}
+.mail_list .searchresult_thumbnail img {
+	width: 100px;
+	height: 75px;
+}
+.mail_list .right {
+	width: calc(100% - 30px);
+}
+.mail_list .searchresult_thumbnail + .right {
+	width: calc(100% - 140px);
+}
+#globalSearch + .input-group-btn .btn-default {
+	border-color: #EDEDED;
+	background-color: white;
+}

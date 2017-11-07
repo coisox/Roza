@@ -3,7 +3,7 @@
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
 $globalUserId = '999';
 $globalUserName = 'Lorem Ipsum';
-$conn = new mysqli('ilims-db.ansi.com.my', 'admin', 'Xs2mysql_admin', 'roza');
+$conn = new mysqli('ilims.ansi.com.my', 'admin', 'Xs2mysql_admin', 'roza');
 
 if(mysqli_connect_errno()) {
 	$timestamp = date("YmdHis");

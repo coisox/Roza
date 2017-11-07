@@ -65,7 +65,6 @@ function initVue() {
 		},
 		methods: {
 			onclick: function(item) {
-				console.log(item);
 				eval(item.onclick);
 			},
 			onchange: function(item) {
@@ -153,14 +152,19 @@ function initVue() {
 					else roza.toast(data.status);
 				});
 			},
-			rozaSetTaskbar: function(opt) {			
-				$.getJSON('roza/ROZA_GetUi.php?id='+opt.ui, function(data){
-					if(data.status=='ok') {
-						roza.taskbar = data.prop;
-						if(opt.callback) opt.callback(data);
-					}
-					else roza.toast(data.status);
-				});
+			rozaSetTaskbar: function(opt) {
+				if(opt) {
+					$.getJSON('roza/ROZA_GetUi.php?id='+opt.ui, function(data){
+						if(data.status=='ok') {
+							roza.taskbar = data.prop;
+							if(opt.callback) opt.callback(data);
+						}
+						else roza.toast(data.status);
+					});
+				}
+				else {
+					roza.taskbar = {};
+				}
 			},
 			rozaBindData_BAK: function(panel, bl, callback) {
 				$.getJSON('dev/php/'+bl, function(data){
@@ -269,50 +273,28 @@ function initVue() {
 				$('#menu_toggle').click(function(){
 					$('body').toggleClass('nav-md nav-sm');
 				});
+				
+				$('#globalSearch').devbridgeAutocomplete({
+					lookup: [{value:'Khairul Bahar'}, {value:'Akta Merbahaya'}, {value:'Bahasa Melayu Teras Kejayaan'}],
+					onSelect: function (suggestion) {
+						$('#globalSearch').focus();
+					}
+				});
+
+				$('#globalSearch').keyup(function(event){
+					if(event.key=='Enter') {
+						rozaSetBreadcrumb('<li class="breadcrumb-item"><a href="#">Search Result</a></li>');
+						roza.panel.fullPanel.type = 'searchresult';
+						roza.panel.leftPanel.show = false;
+						roza.panel.rightPanel.show = false;
+						roza.panel.fullPanel.show = true;
+						rozaSetTaskbar();
+					}
+				});
 			});
 		}
 	});
 };
-
-$('#globalSearch').devbridgeAutocomplete({
-	lookup: [{value:'Khairul Bahar'}, {value:'Akta Merbahaya'}, {value:'Bahasa Melayu Teras Kejayaan'}],
-	onSelect: function (suggestion) {
-		$('#globalSearch').focus();
-	}
-});
-
-$('#globalSearch').keyup(function(event){
-	if(event.key=='Enter') {
-		$('.secondnav span').not('#kegemaran').hide();
-		$('.breadcrumb').html('');
-		$('#ajax_contentMain').load('carian.html', function(){
-			$('input.flat').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-		});
-	}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function addFavourite_BAK() {
