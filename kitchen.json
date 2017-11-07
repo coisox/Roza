@@ -1,11 +1,14 @@
 [
 	{
-		"type": "standardlist",
-		"source": "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, 'rozaGetParam(globalUserName)' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate",
-		"sourceparam": ["Selangor", "rozaGetParam(globalUserId)"],
-		"onclick": "rozaCallLandingFile('UI_ProtoCuti.js?id=rozaGetField(ROZA_ID)')",
-		"labelbm": "Senarai Tugasan",
-		"labelbi": "Task List"
+		"type" : "standardlist",
+		"labelbi" : "Task List",
+		"labelbm" : "Senarai Tugasan",
+		"onclick" : "rozaCallLandingFile('UI_ProtoCuti.js?id={{ROZA_ID}}')",
+		"source" : "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, '{{globalUserName}}' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate",
+		"sourceparam" : [
+			"Selangor",
+			"{{globalUserId}}"
+		]
 	}
 ]
 
@@ -13,106 +16,122 @@
 
 [
 	{
-		"type": "data",
-		"source": "SELECT data_data FROM proto_data WHERE data_id = ?",
-		"sourceparam": ["rozaGetParam(id)"]
+		"type" : "data",
+		"source" : "SELECT data_data FROM proto_data WHERE data_id = ?",
+		"sourceparam" : [
+			"{{id}}"
+		]
 	},
 	{
-		"type": "data",
-		"source": {"gender":"P", "comment":"Testing 123", "attachment":"<a href=''>My Paperwork.docx</a>"}
+		"type" : "data",
+		"source" : {
+			"attachment" : "<a href=''>My Paperwork.docx</a>",
+			"comment" : "Testing 123",
+			"gender" : "P"
+		}
 	},
 	{
-		"type": "data",
-		"source": {"attachment2":"<iframe src='dev/html/UI_Complex.html?id=rozaGetParam(id)'></iframe>"}
+		"type" : "data",
+		"source" : {
+			"attachment2" : "<iframe src='dev/html/UI_Complex.html?id={{id}}'></iframe>"
+		}
 	},
 	{
-		"type": "title",
-		"labelbm": "Permohonan Cuti",
-		"labelbi": "Leave Application"
+		"type" : "title",
+		"labelbi" : "Leave Application",
+		"labelbm" : "Permohonan Cuti"
 	},
 	{
-		"id": "name",
-		"type": "text",
-		"labelbm": "Nama",
-		"labelbi": "Name",
-		"placeholder": "insert name",
-		"maxlength": 30,
-		"required": true
+		"type" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+		"maxlength" : 30,
+		"placeholder" : "insert name",
+		"required" : true
 	},
 	{
-		"id": "state",
-		"type": "dropdown",
-		"source": "SELECT lov_data FROM proto_lov WHERE lov_category = 'state'",
-		"labelbm": "Negeri",
-		"labelbi": "State",
-		"onchange": "stateChanged()",
-		"required": true
+		"type" : "dropdown",
+		"id" : "state",
+		"labelbi" : "State",
+		"labelbm" : "Negeri",
+		"onchange" : "stateChanged()",
+		"required" : true,
+		"source" : "SELECT lov_data FROM proto_lov WHERE lov_category = 'state'"
 	},
 	{
-		"id": "gender",
-		"type": "dropdown",
-		"source": [{"value":"", "labelbi":"", "labelbm":""}, {"value":"M", "labelbi":"Male", "labelbm":"Lelaki"}, {"value":"P", "labelbi":"Female", "labelbm":"Perempuan"}],
-		"labelbm": "Jantina",
-		"labelbi": "Gender"
+		"type" : "dropdown",
+		"id" : "gender",
+		"labelbi" : "Gender",
+		"labelbm" : "Jantina",
+		"source" : [
+			{
+				"labelbi" : "",
+				"labelbm" : "",
+				"value" : ""
+			},
+			{
+				"labelbi" : "Male",
+				"labelbm" : "Lelaki",
+				"value" : "M"
+			},
+			{
+				"labelbi" : "Female",
+				"labelbm" : "Perempuan",
+				"value" : "P"
+			}
+		]
 	},
 	{
-		"id": "file",
-		"type": "file",
-		"labelbm": "Muat Naik Fail",
-		"labelbi": "Upload File",
-		"required": false,
-		"filetype": ["doc", "docx"]
+		"type" : "inlinehtml",
+		"fullwidth" : false,
+		"id" : "attachment",
+		"labelbi" : "Attachment",
+		"labelbm" : "Lampiran"
 	},
 	{
-		"id": "attachment",
-		"type": "inlinehtml",
-		"labelbm": "Lampiran",
-		"labelbi": "Attachment",
-		"fullwidth": false
-	},
-	{
-		"id": "comment",
-		"type": "textarea",
-		"labelbm": "Komen",
-		"labelbi": "Comment",
-		"placeholder": "insert comment",
-		"maxlength": 255,
-		"required": true
+		"type" : "textarea",
+		"id" : "comment",
+		"labelbi" : "Comment",
+		"labelbm" : "Komen",
+		"maxlength" : 255,
+		"placeholder" : "insert comment",
+		"required" : true
 	}
 ]
 
 [
 	{
-		"type": "taskbar",
-		"labelbm": "Baru",
-		"labelbi": "New",
-		"icon": "fa fa-plus",
-		"list": [
+		"type" : "taskbar",
+		"icon" : "fa fa-plus",
+		"labelbi" : "New",
+		"labelbm" : "Baru",
+		"list" : [
 			{
-				"labelbm": "Tatatertib",
-				"labelbi": "Discipline"
+				"labelbi" : "Discipline",
+				"labelbm" : "Tatatertib"
 			},
 			{
-				"labelbm": "Cuti",
-				"labelbi": "Leave",
-				"onclick": "rozaCallLandingFile('UI_ProtoCutiNew.js')"
+				"labelbi" : "Leave",
+				"labelbm" : "Cuti",
+				"onclick" : "rozaCallLandingFile('UI_ProtoCutiNew.js')"
 			},
 			{
-				"labelbm": "Tuntutan",
-				"labelbi": "Claim"
+				"labelbi" : "Claim",
+				"labelbm" : "Tuntutan"
 			}
 		]
 	},
 	{
-		"type": "taskbar",
-		"labelbm": "Status",
-		"labelbi": "Status",
-		"icon": "fa fa-hourglass-end"
+		"type" : "taskbar",
+		"icon" : "fa fa-hourglass-end",
+		"labelbi" : "Status",
+		"labelbm" : "Status"
 	},
 	{
-		"type": "taskbar",
-		"labelbm": "Tugasan",
-		"labelbi": "Task",
-		"icon": "fa fa-tasks"
+		"type" : "taskbar",
+		"icon" : "fa fa-tasks",
+		"labelbi" : "Task",
+		"labelbm" : "Tugasan"
 	}
 ]

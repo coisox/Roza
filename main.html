@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<title>AGC ILMS</title>
+		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -126,8 +126,8 @@
 							</div>
 							
 							<ul class="nav navbar-nav navbar-right">
-								<li class="">
-									<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="padding-right:0;">
+								<li>
+									<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 										<img src="images/coisox.jpg" alt=""><span id="username" class="hidden-xs">Aizal Manan</span>
 										<span class=" fa fa-angle-down"></span>
 									</a>
@@ -142,13 +142,22 @@
 										<li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Keluar</a></li>
 									</ul>
 								</li>
+								
+								<li class="roza-tooltip" :data-title="language=='labelbm'?'Kegemaran':'Favourite'">
+									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<i class="fa fa-heart-o"></i>
+									</a>
+									<ul class="dropdown-menu list-unstyled msg_list right_navbar">
+										<li v-for="item in favourites"><a @click="globalSearch(item.keyword)"> {{item.label}}</a></li>
+									</ul>
+								</li>
 
-								<li role="presentation" class="dropdown">
+								<li class="roza-tooltip" :data-title="language=='labelbm'?'Notifikasi':'Notification'">
 									<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
 										<i class="fa fa-envelope-o"></i>
 										<span class="badge bg-green">4</span>
 									</a>
-									<ul id="notification_panel" class="dropdown-menu list-unstyled msg_list" role="menu">
+									<ul class="dropdown-menu list-unstyled msg_list right_navbar" role="menu">
 										<li>
 											<a>
 												<span class="image"><img src="images/thumb_legal.jpg"/></span>
@@ -193,7 +202,7 @@
 													<span class="time">23/10/16 04:23AM</span>
 												</span>
 												<span class="message">
-													Bengkel TOT sistem ILMSv2...
+													Bengkel TOT sistem ILIMSv2...
 												</span>
 											</a>
 										</li>

@@ -52,15 +52,15 @@ function str_replace_first($search, $replace, $subject) {
 }
 
 function rozaReplaceParam($string) {
-	preg_match_all("/(rozaGetParam\()(.*)(\))/U", $string, $pat_array);
-	for($i=0; $i<count($pat_array[0]); $i++) $string = str_replace('rozaGetParam('.$pat_array[2][$i].')', rozaGetParam($pat_array[2][$i]), $string);
+	preg_match_all("/(\{\{)(.*)(\}\})/U", $string, $pat_array);
+	for($i=0; $i<count($pat_array[0]); $i++) $string = str_replace('{{'.$pat_array[2][$i].'}}', rozaGetParam($pat_array[2][$i]), $string);
 
 	return $string;
 }
 
 function rozaReplaceField($string, $fields) {
-	preg_match_all("/(rozaGetField\()(.*)(\))/U", $string, $pat_array);
-	for($i=0; $i<count($pat_array[0]); $i++) $string = str_replace('rozaGetField('.$pat_array[2][$i].')', $fields[$pat_array[2][$i]], $string);
+	preg_match_all("/\{\{\{)(.*)(\}\}\})/U", $string, $pat_array);
+	for($i=0; $i<count($pat_array[0]); $i++) $string = str_replace('{{{'.$pat_array[2][$i].'}}}', $fields[$pat_array[2][$i]], $string);
 	
 	return $string;
 }

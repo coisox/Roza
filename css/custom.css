@@ -1,8 +1,8 @@
-#notification_panel {
-	position: fixed;
+.right_navbar {
+	position: fixed !important;
 	top: 57px;
-	right: 0;
-	background: #D9DEE4;
+	right: 0 !important;
+	background: #D9DEE4 !important;
 	height: calc(100vh - 57px);
 }
 .top_search {
@@ -300,4 +300,32 @@ iframe {
 }
 .form-group .btn {
     margin-bottom: initial;
+}
+.roza-tooltip:hover:after {
+	position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    content: attr(data-title);
+    background: #424242;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    line-height: initial;
+    font-size: 12px;
+    font-weight: normal;
+	z-index: 1;
+}
+.roza-tooltip:hover:before {
+    background: #424242;
+    display: block;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    content: '';
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%) rotate(45deg);
+	z-index: 1;
 }

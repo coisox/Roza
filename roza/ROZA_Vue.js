@@ -2,7 +2,8 @@ var xxx;
 var rozaCallLandingFile, rozaSetBreadcrumb, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetData, rozaSubmitData;
 var globalUserId = '999';
 
-if(!localStorage.getItem('ILMS_Language')) localStorage.setItem('ILMS_Language', 'labelbm');
+if(!localStorage.getItem('ILIMS_Language')) localStorage.setItem('ILIMS_Language', 'labelbm');
+if(!localStorage.getItem('ILIMS_Favourites')) localStorage.setItem('ILIMS_Favourites', '[{"label":"Test Global Search 123","keyword":"Test Global Search 123"},{"label":"Test Global Search 456","keyword":"Test Global Search 456"}]');
 
 $(document).ready(function(){
 	$('input.flat').iCheck({
@@ -10,7 +11,7 @@ $(document).ready(function(){
 		radioClass: 'iradio_flat-green'
 	});
 	
-	$('#leftPanel').width(localStorage.getItem('ILMS_PanelSize')?localStorage.getItem('ILMS_PanelSize'):400);
+	$('#leftPanel').width(localStorage.getItem('ILIMS_PanelSize')?localStorage.getItem('ILIMS_PanelSize'):400);
 	
 	initVue();
 });
@@ -42,7 +43,8 @@ function initVue() {
 				},
 			},
 			dropzoneAction: 'main.html',
-			language: localStorage.getItem('ILMS_Language')
+			language: localStorage.getItem('ILIMS_Language'),
+			favourites: JSON.parse(localStorage.getItem('ILIMS_Favourites'))
 		},
 		computed: {
 			leftFilteredList: function() {
@@ -232,6 +234,7 @@ function initVue() {
 		mounted: function() {
 			this.$nextTick(function () {
 				//===========================================================Side Menu
+				/*
 				$('.side-menu a').click(function(){
 					var level = $(this).attr('menu-level');
 					var id = $(this).attr('menu-id');
@@ -248,17 +251,18 @@ function initVue() {
 						$(this).parent().children('ul').slideDown();
 					}
 				});
+				*/
 				//====================================================================
 				
 				$('#leftPanel').resizable({
 					handles: "e",
 					resize: function(event, ui) {
-						localStorage.setItem('ILMS_PanelSize', ui.size.width);
+						localStorage.setItem('ILIMS_PanelSize', ui.size.width);
 					}
 				});
 				
 				$('.ui-resizable-handle').dblclick(function(){
-					localStorage.removeItem('ILMS_PanelSize');
+					localStorage.removeItem('ILIMS_PanelSize');
 					$(this).parent('.ui-resizable').removeAttr('style');
 				});
 		
