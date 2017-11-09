@@ -27,7 +27,8 @@
 				<div class="col-md-3 left_col">
 					<div class="left_col scroll-view">
 						<div class="navbar nav_title" style="border: 0;">
-							<a href="index.html" class="site_title">
+							<a class="site_title">
+								<i v-if="moduleLevel==2" class="fa fa-long-arrow-left" @click="moduleLevel=1" style="margin-right:10px; vertical-align:middle;"></i>
 								<img class="logo_normal" src="images/logo.svg">
 								<img class="logo_small" src="images/logo_small.svg">
 							</a>
@@ -88,14 +89,47 @@
 								</ul>
 								-->
 								
-								<div class="metro_container" @click="module=='Sumber Manusia'; rozaCallLandingFile('UI_ProtoTask.js')" :class="{active:module=='Sumber Manusia'}">
-									<i class="fa fa-address-book" aria-hidden="true"></i>
-									<div class="metro_title">Sumber Manusia</div>
-								</div>
-								<div class="metro_container">
-									<i class="fa fa-balance-scale" aria-hidden="true"></i>
-									<div class="metro_title">Perundangan</div>
-								</div>
+								<template v-if="moduleLevel==1">
+									<div class="metro_container" @click="moduleLevel=2">
+										<i class="fa fa-address-book" aria-hidden="true"></i>
+										<div class="metro_title">Sumber Manusia</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-balance-scale" aria-hidden="true"></i>
+										<div class="metro_title">Perundangan</div>
+									</div>
+								</template>
+								
+								<template v-if="moduleLevel==2">
+									<div class="metro_container" @click="module='Sumber Manusia'; rozaCallLandingFile('UI_ProtoTask.js');" :class="{active:module=='Sumber Manusia'}">
+										<i class="fa fa-user-circle" aria-hidden="true"></i>
+										<div class="metro_title">Peribadi</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-sitemap" aria-hidden="true"></i>
+										<div class="metro_title">Carta B8</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-align-right" aria-hidden="true"></i>
+										<div class="metro_title">Senarai Kekananan</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-gift" aria-hidden="true"></i>
+										<div class="metro_title">Penjawatan</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-handshake-o" aria-hidden="true"></i>
+										<div class="metro_title">Perkhidmatan</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-link" aria-hidden="true"></i>
+										<div class="metro_title">Integrasi</div>
+									</div>
+									<div class="metro_container">
+										<i class="fa fa-line-chart" aria-hidden="true"></i>
+										<div class="metro_title">Laporan Analisa</div>
+									</div>
+								</template>
 
 							</div>
 						</div>
@@ -117,9 +151,9 @@
 								</div>
 								<div class="col-sm-4 col-xs-5 form-group top_search">
 									<div class="input-group">
-										<input type="text" id="globalSearch" class="form-control" placeholder="Carian...">
+										<input type="text" v-model="globalSearchKeyword" @keyup="globalSearch" class="form-control" placeholder="Carian...">
 										<span class="input-group-btn">
-											<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+											<button class="btn btn-default" type="button"><i class="fa fa-filter"></i></button>
 										</span>
 									</div>
 								</div>
@@ -153,7 +187,8 @@
 										<i class="fa fa-heart-o"></i>
 									</a>
 									<ul class="dropdown-menu list-unstyled msg_list right_navbar">
-										<li v-for="item in favourites"><a @click="globalSearch(item.keyword)"> {{item.label}}</a></li>
+										<li style="text-align:center"><a><i class="fa fa-plus"></i></a></li>
+										<li v-for="item in favourites"><a @click="globalSearchKeyword=item.keyword; globalSearch($event);" > {{item.label}}</a></li>
 									</ul>
 								</li>
 
@@ -604,21 +639,21 @@
 													</ul>
 												</div>
 												<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-													No result
+													<p>No result</p>
 												</div>
 												<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
 													<ul class="list-group">
 														<li class="list-group-item">
 															<div class="mail_list">
 																<div class="left">
-																	<i class="fa fa-file"></i>
+																	<i class="fa fa-play"></i>
 																</div>
 																<div class="left searchresult_thumbnail">
 																	<img src='data:image/jpg;base64,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'/>
 																</div>
 																<div class="right">
-																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
-																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																	<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
+																	Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
 																</div>
 															</div>
 														</li>
@@ -652,6 +687,24 @@
 					</div>
 				</div>
 				<!-- /page content -->
+			</div>
+			
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ Modal Global Search -->
+			<div id="modalGlobalSearch" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Sumber Manusia</h4>
+						</div>
+						<div class="modal-body">
+						
+						</div>
+						<div class="modal-footer">
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{language=='labelbm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
+						</div>
+					</div>
+				</div>
 			</div>
 			
 			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ Modal General -->

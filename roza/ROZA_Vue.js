@@ -20,8 +20,10 @@ function initVue() {
 	roza = new Vue({
 		el: '#roza',
 		data: {
+			globalSearchKeyword: '',
 			breadcrumb: '',
 			module: '',
+			moduleLevel: 1,
 			activeItem: '',
 			taskbar: {},
 			panel: {
@@ -221,6 +223,18 @@ function initVue() {
 						});
 					}, 100);
 				}
+			},
+			globalSearch: function(event) {
+				xxx = event;
+				if(event.key=='Enter' || event.type=='click') {
+					rozaSetBreadcrumb('<li class="breadcrumb-item"><a>Search result for "'+this.globalSearchKeyword+'"</a></li>');
+					roza.panel.fullPanel.type = 'searchresult';
+					roza.panel.fullPanel.show = true;
+					roza.panel.leftPanel.show = false;
+					roza.panel.leftPanel.show = false;
+					roza.panel.rightPanel.show = false;
+					rozaSetTaskbar();
+				}
 			}
 		},
 		created: function() {
@@ -278,17 +292,6 @@ function initVue() {
 					lookup: [{value:'Khairul Bahar'}, {value:'Akta Merbahaya'}, {value:'Bahasa Melayu Teras Kejayaan'}],
 					onSelect: function (suggestion) {
 						$('#globalSearch').focus();
-					}
-				});
-
-				$('#globalSearch').keyup(function(event){
-					if(event.key=='Enter') {
-						rozaSetBreadcrumb('<li class="breadcrumb-item"><a href="#">Search Result</a></li>');
-						roza.panel.fullPanel.type = 'searchresult';
-						roza.panel.leftPanel.show = false;
-						roza.panel.rightPanel.show = false;
-						roza.panel.fullPanel.show = true;
-						rozaSetTaskbar();
 					}
 				});
 			});
