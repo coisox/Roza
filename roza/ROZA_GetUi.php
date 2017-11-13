@@ -1,59 +1,73 @@
 <?php
 	require_once('ROZA_Util.php');
 
-	$prop = rozaGetUi(rozaGetParam('id'));
+	$source = ['source', 'lookup'];
 	$data = [];
+	$prop = rozaGetArray("SELECT ui_data FROM roza_ui WHERE ui_id = ".$_GET['ROZA_UIID'], null);
 
 	for($i=0; $i<count($prop); $i++) {
 		
-		if(isset($_GET['nodala']) && $_GET['nodala']=='true') {
+		//========================================================================================= replace param
+		for($j=0; $j<2; $j++) {
+			if(gettype($prop[$i][$source[$j]])=='string') { //SQL
+				$prop[$i][$source[$j]] = rozaReplaceParam($prop[$i][$source[$j]]);
+			}
+			else if($prop[$i][$source[$j]]) { //Object
+				foreach($prop[$i][$source[$j]] as $key => $value) {
+					$prop[$i][$source[$j]][$key] = rozaReplaceParam($prop[$i][$source[$j]][$key]);
+				}
+			}
+		}
+		
+		for($j=0; $j<count($prop[$i]['parameterized']); $j++) $prop[$i]['parameterized'][$j] = rozaReplaceParam($prop[$i]['parameterized'][$j]);
+		if($prop[$i]['onclick']) $prop[$i]['onclick'] = rozaReplaceParam($prop[$i]['onclick']);
+		if($prop[$i]['onchange']) $prop[$i]['onchange'] = rozaReplaceParam($prop[$i]['onchange']);
+		
+		//========================================================================================= standardlist
+		
+		if($prop[$i]['element']=='standardlist') {
 			if(gettype($prop[$i]['source'])=='string') { //SQL
-				$prop[$i]['source'] = rozaReplaceParam($prop[$i]['source']);
+				$prop[$i]['list'] = rozaGetArray2D($prop[$i]['source'], $prop[$i]['parameterized']);
 			}
-			else if($prop[$i]['source']) { //Object
-				foreach($prop[$i]['source'] as $key => $value) {
-					$prop[$i]['source'][$key] = rozaReplaceParam($prop[$i]['source'][$key]);
-				}
+			else { //JSON
+				$prop[$i]['list'] = $prop[$i]['source'];
 			}
-			
-			for($j=0; $j<count($prop[$i]['sourceparam']); $j++) {
-				$prop[$i]['sourceparam'][$j] = rozaReplaceParam($prop[$i]['sourceparam'][$j]);
-			}
-		}
-		
-		//=================================================================================== standardlist
-		if($prop[$i]['type']=='standardlist') {
-			$prop[$i]['list'] = rozaGetStandardList($prop[$i]['source'], $prop[$i]['sourceparam']);
-			
-			//roza event
 			for($j=0; $j<count($prop[$i]['list']); $j++) {
-				if(isset($prop[$i]['onclick'])) {
-					$prop[$i]['list'][$j]['onclick'] = rozaReplaceField(rozaReplaceParam($prop[$i]['onclick']), $prop[$i]['list'][$j]);
-				}
+				if($prop[$i]['onclick']) $prop[$i]['list'][$j]['onclick'] = rozaReplaceField($prop[$i]['onclick'], $prop[$i]['list'][$j]);
+				if($prop[$i]['onchange']) $prop[$i]['list'][$j]['onchange'] = rozaReplaceField($prop[$i]['onchange'], $prop[$i]['list'][$j]);
 			}
+			unset($prop[$i]['source']);
 		}
 		
-		//=================================================================================== data
-		else if($prop[$i]['type']=='data') {
+		//========================================================================================= data
+
+		else if($prop[$i]['element']=='data') {
 			if(gettype($prop[$i]['source'])=='string') {
-				$data = array_merge($data, json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['sourceparam']), true));
+				$data = array_merge($data, rozaGetArray($prop[$i]['source'], $prop[$i]['parameterized']));
 			}
 			else {
 				$data = array_merge($data, $prop[$i]['source']);
 			}
 		}
+	
+		//========================================================================================= element
 		
-		//=================================================================================== element
 		else {
 			if($data[$prop[$i]['id']]) $prop[$i]['value'] = $data[$prop[$i]['id']];
 			
-			if($prop[$i]['type']=='dropdown') {
-				if(gettype($prop[$i]['source'])=='string') { //SQL
-					$prop[$i]['list'] = json_decode(rozaGetData($prop[$i]['source'], $prop[$i]['sourceparam']), true);
+			//------------------------------------------------------------------------------------------------------------------------------------------- element lookup
+			if($prop[$i]['element']=='dropdown') {
+				if(gettype($prop[$i]['lookup'])=='string') { //SQL
+					$prop[$i]['list'] = rozaGetArray2D($prop[$i]['lookup'], $prop[$i]['parameterized']);
 				}
-				else { //Array of object
-					$prop[$i]['list'] = $prop[$i]['source'];
+				else { //JSON
+					$prop[$i]['list'] = $prop[$i]['lookup'];
 				}
+				for($j=0; $j<count($prop[$i]['list']); $j++) {
+					if($prop[$i]['onclick']) $prop[$i]['list'][$j]['onclick'] = rozaReplaceField($prop[$i]['onclick'], $prop[$i]['list'][$j]);
+					if($prop[$i]['onchange']) $prop[$i]['list'][$j]['onchange'] = rozaReplaceField($prop[$i]['onchange'], $prop[$i]['list'][$j]);
+				}
+				unset($prop[$i]['lookup']);
 			}
 		}
 		
@@ -63,5 +77,4 @@
 		'status' => 'ok',
 		'prop' => $prop
 	]);
-	
 ?>

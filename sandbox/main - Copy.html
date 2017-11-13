@@ -28,7 +28,7 @@
 					<div class="left_col scroll-view">
 						<div class="navbar nav_title" style="border: 0;">
 							<a class="site_title">
-								<i v-if="menu.level==2" class="fa fa-long-arrow-left" @click="menu.level=1" style="vertical-align:middle; cursor:pointer;"></i>
+								<i v-if="menu.level==2" class="fa fa-long-arrow-left" @click="menu.level=1" style="margin-right:10px; vertical-align:middle;"></i>
 								<img class="logo_normal" src="images/logo.svg">
 								<img class="logo_small" src="images/logo_small.svg">
 							</a>
@@ -90,16 +90,16 @@
 								-->
 								
 								<template v-if="menu.level==1">
-									<div class="metro_container" v-for="m1,index in menu.list" @click="onclick(m1); if(!m1.onclick) menu.level=2; menu.parentIndex=++index; setBreadcrumbBuffer(1, m1['label'+globalLanguage]);">
+									<div class="metro_container" v-for="m1,index in menu.list" @click="onclick(m1); if(!m1.onclick) menu.level=2; menu.parentIndex=++index; setBreadcrumbBuffer(1, m1['label'+language]);">
 										<i :class="m1.icon" aria-hidden="true"></i>
-										<div class="metro_title">{{m1['label'+globalLanguage]}}</div>
+										<div class="metro_title">{{m1['label'+language]}}</div>
 									</div>
 								</template>
 								
 								<template v-if="menu.level==2">
-									<div class="metro_container" v-for="m2 in menu.list[menu.parentIndex-1].list" @click="onclick(m2); setBreadcrumbBuffer(2, m2['label'+globalLanguage]);">
+									<div class="metro_container" v-for="m2 in menu.list[menu.parentIndex-1].list" @click="onclick(m2); setBreadcrumbBuffer(2, m2['label'+language]);">
 										<i :class="m2.icon" aria-hidden="true"></i>
-										<div class="metro_title">{{m2['label'+globalLanguage]}}</div>
+										<div class="metro_title">{{m2['label'+language]}}</div>
 									</div>
 								</template>
 
@@ -154,7 +154,7 @@
 									</ul>
 								</li>
 								
-								<li class="roza-tooltip" :data-title="globalLanguage=='bm'?'Kegemaran':'Favourite'">
+								<li class="roza-tooltip" :data-title="language=='bm'?'Kegemaran':'Favourite'">
 									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 										<i class="fa fa-heart-o"></i>
 									</a>
@@ -164,7 +164,7 @@
 									</ul>
 								</li>
 
-								<li class="roza-tooltip" :data-title="globalLanguage=='bm'?'Notifikasi':'Notification'">
+								<li class="roza-tooltip" :data-title="language=='bm'?'Notifikasi':'Notification'">
 									<a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
 										<i class="fa fa-envelope-o"></i>
 										<span class="badge bg-green">4</span>
@@ -234,9 +234,9 @@
 						
 						<div class="secondnav pull-right">
 							<span v-for="item in taskbar">
-								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i :class="item.icon"></i> {{item['label'+globalLanguage]}}</button>
+								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i :class="item.icon"></i> {{item['label'+language]}}</button>
 								<ul v-if="item.list" class="dropdown-menu" role="menu">
-									<li v-for="sub in item.list" ><label @click="onclick(sub)">{{sub['label'+globalLanguage]}}</label></li>
+									<li v-for="sub in item.list" ><label @click="onclick(sub)">{{sub['label'+language]}}</label></li>
 								</ul>
 							</span>
 						</div>
@@ -244,23 +244,24 @@
 						<div class="clearfix"></div>
 
 						<div class="row panelWrapper">
-							<div v-for="p in ['leftPanel', 'rightPanel', 'fullPanel']" :id="p" v-if="panel[p].show">
-								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for standardlist -->
-								<div class="x_panel" v-if="panel[p].type=='standardlist'">
+						
+							<!-- Left Panel -->
+							<div id="leftPanel" v-if="!panel.fullPanel.show">
+								<div class="x_panel" v-if="panel.leftPanel.type=='standardlist'">
 									<div class="x_title">
-										<h2>{{panel[p].prop[0]['label'+globalLanguage]}}</h2>
+										<h2>{{panel.leftPanel.prop[0]['label'+language]}}</h2>
 										<ul class="nav navbar-right panel_toolbox">
 											<li class="dropdown">
 												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
 												<ul class="dropdown-menu" role="menu">
-													<li><label @click="sortList(p, 'ROZA_EPOCH')">{{globalLanguage=='bm'?'Masa':'Time'}}</label></li>
-													<li><label @click="sortList(p, 'ROZA_TITLE')">{{globalLanguage=='bm'?'Tajuk':'Title'}}</label></li>
+													<li><label @click="sortList('leftPanel', 'ROZA_EPOCH')">{{language=='bm'?'Masa':'Time'}}</label></li>
+													<li><label @click="sortList('leftPanel', 'ROZA_TITLE')">{{language=='bm'?'Tajuk':'Title'}}</label></li>
 												</ul>
 											</li>
 											<li class="dropdown">
 												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-filter"></i></a>
 												<ul class="dropdown-menu" role="menu">
-													<li><input class="filterString" v-model="panel[p].filterString" :placeholder="globalLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
+													<li><input class="filterString" v-model="panel.leftPanel.filterString" :placeholder="language=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
 												</ul>
 											</li>
 										</ul>
@@ -268,7 +269,7 @@
 									</div>
 									<div class="x_content p-0">
 										<ul class="list-group">
-											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+											<li v-for="item in leftFilteredList" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
 												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
 												<div class="pull-right">{{item.ROZA_TIME}}</div>
 												<div class="clearfix"></div>
@@ -278,15 +279,14 @@
 										</ul>
 									</div>
 								</div>
-								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for ui -->
-								<div class="x_panel" v-else-if="panel[p].type=='ui'">
+								<div class="x_panel" v-if="panel.leftPanel.type=='ui'">
 									<div class="x_content p-0">
 										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
-											<template v-for="item in panel[p].prop" v-if="item.element!='data'">
+											<template v-for="item in panel.leftPanel.prop" v-if="item.element!='data'">
 											
 												<!-- Title -->
 												<div v-if="item.element=='title'" class="x_title">
-													<h2 :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</h2>
+													<h2>{{item['label'+language]}}</h2>
 													<div class="clearfix"></div>
 												</div>
 												
@@ -294,25 +294,25 @@
 												<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group">
 													<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
 													<template v-else>
-														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
+														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
 														<div class="col-xs-9">
-															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
-															<select v-if="item.element=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required">
-																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+globalLanguage]}}</option>
+															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
+															<select v-if="item.element=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required">
+																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+language]}}</option>
 															</select>
-															<textarea v-if="item.element=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
+															<textarea v-if="item.element=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
 															<div v-if="item.element.indexOf('html')>-1" :class="item.element" v-html="item.value"></div>
 															<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
-															<button v-if="item.element=='button'" type="button" class="btn btn-success" @click="onclick(item)" :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</button>
-															<button v-if="item.element=='formbutton'" type="button" class="btn btn-primary" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Semula':'Reset'}}</button>
-															<button v-if="item.element=='formbutton'" type="button" class="btn btn-success" @click="onclick(item)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
+															<button v-if="item.element=='button'" type="button" class="btn btn-success" @click="onclick(item)">{{item['label'+language]}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-primary" @click="rozaResetData(item)">{{language=='bm'?'Semula':'Reset'}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-success" @click="onclick(item)">{{language=='bm'?'Hantar':'Send'}}</button>
 														</div>													
 													</template>
 												</div>
 												
 												<!-- Not Supported -->
 												<div v-else class="form-group">
-													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
+													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
 													<div class="col-xs-9">
 														<input class="form-control not-supported" value="Element type not supported" readonly>
 													</div>
@@ -322,8 +322,167 @@
 										</form>
 									</div>
 								</div>
-								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for search result -->
-								<div class="x_panel" v-else-if="panel.fullPanel.type=='searchresult'">
+							</div>
+							<!-- Left Panel End -->
+							
+							<!-- Right Panel -->
+							<div id="rightPanel" v-if="!panel.fullPanel.show">
+								<div class="x_panel" v-if="panel.rightPanel.type=='standardlist'">
+									<div class="x_title">
+										<h2>{{panel.rightPanel.prop[0]['label'+language]}}</h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<li><label @click="sortList('rightPanel', 'ROZA_EPOCH')">{{language=='bm'?'Masa':'Time'}}</label></li>
+													<li><label @click="sortList('rightPanel', 'ROZA_TITLE')">{{language=='bm'?'Tajuk':'Title'}}</label></li>
+												</ul>
+											</li>
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-filter"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<li><input class="filterString" v-model="panel.rightPanel.filterString" :placeholder="language=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
+												</ul>
+											</li>
+										</ul>
+										<div class="clearfix"></div>
+									</div>
+									<div class="x_content p-0">
+										<ul class="list-group">
+											<li v-for="item in rightFilteredList" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+												<div class="pull-right">{{item.ROZA_TIME}}</div>
+												<div class="clearfix"></div>
+												<div class="pull-left">{{item.ROZA_DESC}}</div>
+												<div class="clearfix"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="x_panel" v-if="panel.rightPanel.type=='ui'">
+									<div class="x_content p-0">
+										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
+											<template v-for="item in panel.rightPanel.prop" v-if="item.element!='data'">
+											
+												<!-- Title -->
+												<div v-if="item.element=='title'" class="x_title">
+													<h2>{{item['label'+language]}}</h2>
+													<div class="clearfix"></div>
+												</div>
+												
+												<!-- Element -->
+												<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group">
+													<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
+													<template v-else>
+														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
+														<div class="col-xs-9">
+															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
+															<select v-if="item.element=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required">
+																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+language]}}</option>
+															</select>
+															<textarea v-if="item.element=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
+															<div v-if="item.element.indexOf('html')>-1" :class="item.element" v-html="item.value"></div>
+															<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('rightPanel')"></div>
+															<button v-if="item.element=='button'" type="button" class="btn btn-success" @click="onclick(item)">{{item['label'+language]}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-primary" @click="rozaResetData(item)">{{language=='bm'?'Semula':'Reset'}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-success" @click="onclick(item)">{{language=='bm'?'Hantar':'Send'}}</button>
+														</div>													
+													</template>
+												</div>
+												
+												<!-- Not Supported -->
+												<div v-else class="form-group">
+													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
+													<div class="col-xs-9">
+														<input class="form-control not-supported" value="Element type not supported" readonly>
+													</div>
+												</div>
+												
+											</template>
+										</form>
+									</div>
+								</div>
+							</div>
+							<!-- Right Panel End -->
+							
+							<!-- Full Panel -->
+							<div id="fullPanel" v-if="panel.fullPanel.show">
+								<div class="x_panel" v-if="panel.fullPanel.type=='standardlist'">
+									<div class="x_title">
+										<h2>{{panel.fullPanel.prop[0]['label'+language]}}</h2>
+										<ul class="nav navbar-right panel_toolbox">
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<li><label @click="sortList('fullPanel', 'ROZA_EPOCH')">{{language=='bm'?'Masa':'Time'}}</label></li>
+													<li><label @click="sortList('fullPanel', 'ROZA_TITLE')">{{language=='bm'?'Tajuk':'Title'}}</label></li>
+												</ul>
+											</li>
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-filter"></i></a>
+												<ul class="dropdown-menu" role="menu">
+													<li><input class="filterString" v-model="panel.fullPanel.filterString" :placeholder="language=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
+												</ul>
+											</li>
+										</ul>
+										<div class="clearfix"></div>
+									</div>
+									<div class="x_content p-0">
+										<ul class="list-group">
+											<li v-for="item in fullFilteredList" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+												<div class="pull-right">{{item.ROZA_TIME}}</div>
+												<div class="clearfix"></div>
+												<div class="pull-left">{{item.ROZA_DESC}}</div>
+												<div class="clearfix"></div>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="x_panel" v-if="panel.fullPanel.type=='ui'">
+									<div class="x_content p-0">
+										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
+											<template v-for="item in panel.fullPanel.prop" v-if="item.element!='data'">
+											
+												<!-- Title -->
+												<div v-if="item.element=='title'" class="x_title">
+													<h2>{{item['label'+language]}}</h2>
+													<div class="clearfix"></div>
+												</div>
+												
+												<!-- Element -->
+												<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group">
+													<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
+													<template v-else>
+														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
+														<div class="col-xs-9">
+															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
+															<select v-if="item.element=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required">
+																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+language]}}</option>
+															</select>
+															<textarea v-if="item.element=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.name" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
+															<div v-if="item.element.indexOf('html')>-1" :class="item.element" v-html="item.value"></div>
+															<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('fullPanel')"></div>
+															<button v-if="item.element=='button'" type="button" class="btn btn-success" @click="onclick(item)">{{item['label'+language]}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-primary" @click="rozaResetData(item)">{{language=='bm'?'Semula':'Reset'}}</button>
+															<button v-if="item.element=='formbutton'" type="button" class="btn btn-success" @click="onclick(item)">{{language=='bm'?'Hantar':'Send'}}</button>
+														</div>													
+													</template>
+												</div>
+												
+												<!-- Not Supported -->
+												<div v-else class="form-group">
+													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+language]}}</label>
+													<div class="col-xs-9">
+														<input class="form-control not-supported" value="Element type not supported" readonly>
+													</div>
+												</div>
+												
+											</template>
+										</form>
+									</div>
+								</div>
+								<div class="x_panel" v-if="panel.fullPanel.type=='searchresult'">
 									<div class="x_content p-0">
 										<div class="" role="tabpanel" data-example-id="togglable-tabs">
 											<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -489,8 +648,10 @@
 										</div>
 									</div>
 								</div>
-								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for search result end -->
+								
 							</div>
+							<!-- Full Panel End -->
+							
 						</div>
 					</div>
 				</div>
@@ -508,7 +669,7 @@
 						
 						</div>
 						<div class="modal-footer">
-							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{globalLanguage=='bm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{language=='bm'?'Batal':'Close'}}</button>
 							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
 						</div>
 					</div>
@@ -527,7 +688,7 @@
 						-->
 						<div class="modal-body"></div>
 						<div class="modal-footer">
-							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{globalLanguage=='bm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{language=='bm'?'Batal':'Close'}}</button>
 							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
 						</div>
 					</div>

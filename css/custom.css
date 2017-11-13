@@ -73,11 +73,14 @@
     padding: 8px 0px;
 	background-color: initial;
 }
-.breadcrumb > li + li:before {
+.breadcrumb > li + br + li:before {
     padding: 0 5px;
     color: #ccc;
     content: "\f105";
     font: normal normal normal 14px/1 FontAwesome;
+}
+.breadcrumb br {
+	display: none;
 }
 .duoswitch {
 	position: relative;
@@ -354,4 +357,10 @@ iframe {
 #globalSearch + .input-group-btn .btn-default {
 	border-color: #EDEDED;
 	background-color: white;
+}
+select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url(../images/down-arrow.svg) no-repeat right 10px center;
 }

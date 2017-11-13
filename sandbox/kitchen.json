@@ -1,152 +1,218 @@
-//=========================================================== UI ID 1
+//=========================================================== Tasklist: ID 1
 [
 	{
-		"type" : "standardlist",
-		"labelbi" : "Task List",
-		"labelbm" : "Senarai Tugasan",
-		"onclick" : "rozaCallLandingFile('UI_ProtoCuti.js?id={{ROZA_ID}}')",
-		"source" : "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, '{{globalUserName}}' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate",
-		"sourceparam" : [
-			"Selangor",
-			"{{globalUserId}}"
-		]
+		"element": "standardlist",
+		"labelbi": "List of Officer",
+		"labelbm": "Senarai Pegawai",
+		"onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js?staff_id=[[ROZA_ID]]')",
+		"source": "SELECT JSON_OBJECT('ROZA_ID', staff_id, 'ROZA_TITLE', staff_data->>'$.name', 'ROZA_DESC', CONCAT(staff_data->>'$.position', ', ', staff_data->>'$.group', ', ', (SELECT lov_data->>'$.labelbm' state FROM sample_lov WHERE lov_category = 'state' AND lov_data->>'$.value' = staff_data->>'$.state')), 'ROZA_TIME', staff_timeupdate) 'DESC' FROM sample_staff ORDER BY staff_timeupdate"
 	}
 ]
 
-//=========================================================== UI ID 5
-
-[
-	{
-		"type" : "standardlist",
-		"labelbi" : "Search Result",
-		"labelbm" : "Keputusan Carian",
-		"source" : "SELECT task_id ROZA_ID, task_title ROZA_TITLE, task_desc ROZA_DESC, task_timecreate ROZA_TIME, task_unread ROZA_UNREAD, '{{globalUserName}}' CUBAAN1, ? CUBAAN2 FROM proto_task WHERE task_userid = ? ORDER BY task_timecreate"
-	}
-]
 
 //"sort": [{"labelbm":"Masa", "labelbi":"Time", "param":"time"}, {"labelbm":"Tajuk", "labelbi":"Title", "param":"title"}],
 
-//=========================================================== UI ID 2
+//=========================================================== Maklumat Staff: ID 2
 [
 	{
-		"type" : "data",
-		"source" : "SELECT data_data FROM proto_data WHERE data_id = ?",
-		"sourceparam" : [
-			"{{id}}"
+		"element": "data",
+		"source": "SELECT JSON_MERGE(staff_data, '{\"comment\":\"Testing 123\"}')  FROM sample_staff WHERE staff_id = ?",
+		"parameterized" : [
+			"{{staff_id}}"
 		]
 	},
 	{
-		"type" : "data",
-		"source" : {
-			"attachment" : "<a href=''>My Paperwork.docx</a>",
-			"comment" : "Testing 123",
-			"gender" : "P"
-		}
+		"element": "title",
+		"labelbi": "Officer Info",
+		"labelbm": "Maklumat Pegawai"
 	},
 	{
-		"type" : "data",
-		"source" : {
-			"attachment2" : "<iframe src='dev/html/UI_Complex.html?id={{id}}'></iframe>"
-		}
-	},
-	{
-		"type" : "title",
-		"labelbi" : "Leave Application",
-		"labelbm" : "Permohonan Cuti"
-	},
-	{
-		"type" : "text",
-		"id" : "name",
-		"labelbi" : "Name",
-		"labelbm" : "Nama",
-		"maxlength" : 30,
-		"placeholder" : "insert name",
-		"required" : true
-	},
-	{
-		"type" : "dropdown",
-		"id" : "state",
-		"labelbi" : "State",
-		"labelbm" : "Negeri",
-		"onchange" : "stateChanged()",
+		"element": "text",
+		"id": "name",
+		"labelbi": "Name",
+		"labelbm": "Nama",
+		"placeholderbi": "insert name",
+		"placeholderbm": "masukkan nama",
 		"required" : true,
-		"source" : "SELECT lov_data FROM proto_lov WHERE lov_category = 'state'"
+		"maxlength": 20
 	},
 	{
-		"type" : "dropdown",
-		"id" : "gender",
-		"labelbi" : "Gender",
-		"labelbm" : "Jantina",
-		"source" : [
+		"element": "text",
+		"id": "group",
+		"labelbi": "Group",
+		"labelbm": "Kumpulan",
+		"placeholderbi": "insert group",
+		"placeholderbm": "masukkan kumpulan",
+		"required" : true,
+		"maxlength": 20
+	},
+	{
+		"element": "text",
+		"id": "position",
+		"labelbi": "Position",
+		"labelbm": "Jawatan",
+		"placeholderbi": "insert position",
+		"placeholderbm": "masukkan jawatan",
+		"required" : true
+	},
+	{
+		"element": "dropdown",
+		"id": "state",
+		"lookup": "SELECT lov_data FROM sample_lov WHERE lov_category = 'state'",
+		"labelbi": "State",
+		"labelbm": "Negeri",
+		"onchange": "stateChanged()"
+	},
+	{
+		"element": "dropdown",
+		"id": "gender",
+		"lookup": "SELECT lov_data FROM sample_lov WHERE lov_category = 'gender'",
+		"labelbi": "Gender",
+		"labelbm": "Jantina"
+	},
+	{
+		"element": "dropdown",
+		"id": "status",
+		"labelbi": "Status",
+		"labelbm": "Status",
+		"lookup": [
 			{
-				"labelbi" : "",
-				"labelbm" : "",
-				"value" : ""
+				"labelbi": "",
+				"labelbm": "",
+				"value": ""
 			},
 			{
-				"labelbi" : "Male",
-				"labelbm" : "Lelaki",
-				"value" : "M"
+				"labelbi": "Permanent",
+				"labelbm": "Tetap",
+				"value": "T"
 			},
 			{
-				"labelbi" : "Female",
-				"labelbm" : "Perempuan",
-				"value" : "P"
+				"labelbi": "Contract",
+				"labelbm": "Kontrak",
+				"value": "K"
 			}
 		]
 	},
 	{
-		"type" : "inlinehtml",
-		"fullwidth" : false,
-		"id" : "attachment",
-		"labelbi" : "Attachment",
-		"labelbm" : "Lampiran"
+		"element": "textarea",
+		"id": "comment",
+		"labelbi": "Comment",
+		"labelbm": "Komen",
+		"placeholderbi": "insert comment",
+		"placeholderbm": "masukkan komen",
+		"required" : true,
+		"maxlength" : 255
 	},
 	{
-		"type" : "textarea",
-		"id" : "comment",
-		"labelbi" : "Comment",
-		"labelbm" : "Komen",
-		"maxlength" : 255,
-		"placeholder" : "insert comment",
-		"required" : true
+		"element": "formbutton",
+		"onclick": "rozaSubmitPanel({\"file\":\"BL_SampleSubmit.php\"})"
 	}
 ]
 
-//=========================================================== UI ID 3
+//=========================================================== Taskbar: ID 3
 
 [
-	{
-		"type" : "taskbar",
-		"icon" : "fa fa-plus",
-		"labelbi" : "New",
-		"labelbm" : "Baru",
-		"list" : [
-			{
-				"labelbi" : "Discipline",
-				"labelbm" : "Tatatertib"
-			},
-			{
-				"labelbi" : "Leave",
-				"labelbm" : "Cuti",
-				"onclick" : "rozaCallLandingFile('UI_ProtoCutiNew.js')"
-			},
-			{
-				"labelbi" : "Claim",
-				"labelbm" : "Tuntutan"
-			}
-		]
-	},
-	{
-		"type" : "taskbar",
-		"icon" : "fa fa-hourglass-end",
-		"labelbi" : "Status",
-		"labelbm" : "Status"
-	},
-	{
-		"type" : "taskbar",
-		"icon" : "fa fa-tasks",
-		"labelbi" : "Task",
-		"labelbm" : "Tugasan"
-	}
+  {
+    "element": "taskbar",
+    "icon": "fa fa-plus",
+    "labelbi": "New",
+    "labelbm": "Baru",
+    "list" : [
+      {
+        "labelbi": "Officer Registration",
+        "labelbm": "Daftar Pegawai",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
+      },
+      {
+        "labelbi": "Vendor Registration",
+        "labelbm": "Daftar Vendor",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      }
+    ]
+  },
+  {
+    "element": "taskbar",
+    "icon": "fa fa-list",
+    "labelbi": "List",
+    "labelbm": "Senarai",
+    "list" : [
+      {
+        "labelbi": "Officer",
+        "labelbm": "Pegawai",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffList.js')"
+      },
+      {
+        "labelbi": "Vendor",
+        "labelbm": "Vendor",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorList.js')"
+      }
+    ]
+  }
 ]
+
+//=========================================================== Menu
+
+{
+	"labelbm":"Sumber Manusia",
+	"labelbi":"Human Resource",
+	"icon":"fa fa-address-book",
+	"role":["admin", "hr"],
+	"list": [
+		{
+			"labelbm":"Peribadi",
+			"labelbi":"Personal",
+			"icon":"fa fa-user-circle",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleStaffList.js')"
+		},
+		{
+			"labelbm":"Carta B8",
+			"labelbi":"B8 Chart",
+			"icon":"fa fa-sitemap",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		},
+		{
+			"labelbm":"Senarai Kekananan",
+			"labelbi":"List of Seniority",
+			"icon":"fa fa-align-right",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		},
+		{
+			"labelbm":"Penjawatan",
+			"labelbi":"Employment",
+			"icon":"fa fa-child",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		},
+		{
+			"labelbm":"Perkhidmatan",
+			"labelbi":"Services",
+			"icon":"fa fa-handshake-o",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		},
+		{
+			"labelbm":"Integrasi",
+			"labelbi":"Integration",
+			"icon":"fa fa-link",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		},
+		{
+			"labelbm":"Laporan Analisa",
+			"labelbi":"Analytical Report",
+			"icon":"fa fa-line-chart",
+			"role":["admin", "hr"],
+			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+		}
+	]
+}
+{
+	"labelbm":"Perundangan",
+	"labelbi":"Legislation",
+	"icon":"fa fa-gavel",
+	"role":["admin", "hr"],
+	"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
+}

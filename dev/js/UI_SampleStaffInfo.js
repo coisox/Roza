@@ -1,5 +1,5 @@
 rozaSetPanel({
-	panel: 'rightPanel',
+	panel: rozaGetParam('staff_id')?'rightPanel':'fullPanel',
 	ui: 2
 });
 
@@ -13,6 +13,5 @@ function stateChanged() {
 }
 
 function okBeingClicked() {
-	//do stuff here
-	alert('okBeingClicked');
+	console.log('okBeingClicked');
 }

@@ -1,9 +1,9 @@
 var prefix = 'ILIMS_';
 var xxx;
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetPanel, rozaSubmitPanel;
-var globalUserId, globalUserName, globalUserRole, globalLanguage = '';
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetData, rozaSubmitData;
+var globalUserId = '999';
 
-if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
+if(!localStorage.getItem(prefix+'Language')) localStorage.setItem(prefix+'Language', 'bm');
 if(!localStorage.getItem(prefix+'Favourites')) localStorage.setItem(prefix+'Favourites', '[{"label":"Test Global Search 123","keyword":"Test Global Search 123"},{"label":"Test Global Search 456","keyword":"Test Global Search 456"}]');
 
 $(document).ready(function(){
@@ -22,10 +22,6 @@ function initVue() {
 		el: '#roza',
 		data: {
 			globalSearchKeyword: '',
-			globalUserId: '-1',
-			globalUserName: 'Roza',
-			globalUserRole: [],
-			globalLanguage: localStorage.getItem(prefix+'globalLanguage'),
 			breadcrumb: '',
 			breadcrumbBuffer: '',
 			sessionParam: {},
@@ -41,14 +37,12 @@ function initVue() {
 				leftPanel: {
 					filterString: '',
 					type: '',
-					prop: {},
-					show: true
+					prop: {}
 				},
 				rightPanel: {
 					filterString: '',
 					type: '',
-					prop: {},
-					show: true
+					prop: {}
 				},
 				fullPanel: {
 					filterString: '',
@@ -58,20 +52,21 @@ function initVue() {
 				},
 			},
 			dropzoneAction: 'main.html',
+			language: localStorage.getItem(prefix+'Language'),
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites'))
 		},
 		computed: {
-			leftPanelFiltered: function() {
+			leftFilteredList: function() {
 				return this.panel.leftPanel.prop[0].list.filter(item => {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.leftPanel.filterString.toLowerCase()) > -1
 				})
 			},
-			rightPanelFiltered: function() {
+			rightFilteredList: function() {
 				return this.panel.rightPanel.prop[0].list.filter(item => {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.rightPanel.filterString.toLowerCase()) > -1
 				})
 			},
-			fullPanelFiltered: function() {
+			fullFilteredList: function() {
 				return this.panel.fullPanel.prop[0].list.filter(item => {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.fullPanel.filterString.toLowerCase()) > -1
 				})
@@ -95,37 +90,24 @@ function initVue() {
 			toast: function(html) {
 				$.notify({message:html},{type:'danger', delay:4000});
 			},
-			filteredList: function(panel) {
-				return this.panel[panel].prop[0].list.filter(item => {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel[panel].filterString.toLowerCase()) > -1
-				})
-			},
 			rozaModal: function(opt) {
 				if(opt)  {
 					$('#modalGeneral #btnCancel').toggle(opt.cancel);
-					$('#modalGeneral .modal-body').html('').html(opt['label'+this.globalLanguage]);
+					$('#modalGeneral .modal-body').html('').html(opt['label'+this.language]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
 				}
 				else $('#modalGeneral').modal('hide');
 			},
-			rozaResetPanel: function() {
-				roza.rozaModal({
-					labelbm: 'Fungsi ini belum siap',
-					labelbi: 'This function is not ready'
-				});
+			rozaResetData: function(e) {
+				console.log('rozaSubmitData');
+				console.log(file);
+				console.log(e);
 			},
-			rozaSubmitPanel: function(opt) {
-				$.getJSON('dev/php/'+opt.file+'?'+$('.x_content form:last').serialize()+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
-					if(data.status=='ok') {
-						roza.rozaModal({
-							labelbm: 'Data telah dihantar',
-							labelbi: 'Data has been sent'
-						});
-						if(opt.callback) opt.callback(data);
-					}
-					else roza.toast(data.status);
-				});
+			rozaSubmitData: function(file, e) {
+				console.log('rozaSubmitData');
+				console.log(file);
+				console.log(e);
 			},
 			rozaGetParam: function(param) {
 				return this.sessionParam[param];
@@ -170,8 +152,6 @@ function initVue() {
 				this.rozaModal();
 				
 				if(opt) {
-					this.panel.leftPanel.show = !(opt.panel=='fullPanel');
-					this.panel.rightPanel.show = !(opt.panel=='fullPanel');
 					this.panel.fullPanel.show = (opt.panel=='fullPanel');
 
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
@@ -179,10 +159,10 @@ function initVue() {
 							roza.panel[opt.panel].prop = data.prop;
 							roza.panel[opt.panel].type = data.prop[0].element=='standardlist'?'standardlist':'ui';
 							
-							if(data.prop[0].element=='standardlist') roza.setBreadcrumbBuffer(3, data.prop[0]['label'+roza.globalLanguage]);
+							if(data.prop[0].element=='standardlist') roza.setBreadcrumbBuffer(3, data.prop[0]['label'+roza.language]);
 							else if(opt.panel!='rightPanel'){
 								for(var x=0; x<data.prop.length; x++) {
-									if(data.prop[x].type=='title') roza.setBreadcrumbBuffer(3, data.prop[x]['label'+roza.globalLanguage]);
+									if(data.prop[x].type=='title') roza.setBreadcrumbBuffer(3, data.prop[x]['label'+roza.language]);
 								}
 							}
 							roza.breadcrumb = roza.breadcrumbBuffer;
@@ -234,7 +214,7 @@ function initVue() {
 							if(target[0].tagName=='SELECT') {
 								var lov = JSON.parse(data.data);
 								for(var i=0; i<lov.length; i++) {
-									html += '<option value="'+lov[i].value+'" '+(target.attr('data-value')==lov[i].value?'selected':'')+'>'+lov[i]['label'+roza.globalLanguage]+'</option>';
+									html += '<option value="'+lov[i].value+'" '+(target.attr('data-value')==lov[i].value?'selected':'')+'>'+lov[i]['label'+roza.language]+'</option>';
 								}
 								$('[name="'+selector+'"]').html(html);
 							}
@@ -272,6 +252,7 @@ function initVue() {
 				}
 			},
 			globalSearch: function(event) {
+				xxx = event;
 				if(event.key=='Enter' || event.type=='click') {
 					roza.breadcrumb = '<li class="breadcrumb-item"><a>Search result for "'+this.globalSearchKeyword+'"</a></li>';
 					roza.panel.fullPanel.type = 'searchresult';
@@ -290,14 +271,6 @@ function initVue() {
 			}
 		},
 		created: function() {
-			
-			//development only
-			this.globalUserRole = localStorage.getItem('ILIMS_globalUserRole').split(',').map(r => r.trim());
-			
-			globalUserId = this.globalUserId;
-			globalUserName = this.globalUserName;
-			globalUserRole = this.globalUserRole;
-			globalLanguage = this.globalLanguage;
 			rozaCallLandingFile = this.rozaCallLandingFile;
 			rozaSetTaskbar = this.rozaSetTaskbar;
 			rozaSetPanel = this.rozaSetPanel;
@@ -305,8 +278,8 @@ function initVue() {
 			rozaBindLov = this.rozaBindLov;
 			rozaGetParam = this.rozaGetParam;
 			rozaModal = this.rozaModal;
-			rozaResetPanel = this.rozaResetPanel;
-			rozaSubmitPanel = this.rozaSubmitPanel;
+			rozaResetData = this.rozaResetData;
+			rozaSubmitData = this.rozaSubmitData;
 		},
 		mounted: function() {
 			this.$nextTick(function () {
@@ -330,7 +303,7 @@ function initVue() {
 				});
 				*/
 				//====================================================================
-
+				
 				$('#leftPanel').resizable({
 					handles: "e",
 					resize: function(event, ui) {
@@ -342,7 +315,7 @@ function initVue() {
 					localStorage.removeItem(prefix+'PanelSize');
 					$(this).parent('.ui-resizable').removeAttr('style');
 				});
-				
+		
 				$('#menu_toggle').click(function(){
 					$('body').toggleClass('nav-md nav-sm');
 				});

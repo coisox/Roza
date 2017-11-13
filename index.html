@@ -180,5 +180,14 @@
 				<input type="submit" value="SIGN IN">
 			</form>
 		</div>
+		
+		<script src="lib/jquery.min.js"></script>
+		<script>
+			$('form').submit(function(e){
+				e.preventDefault();
+				localStorage.setItem('ILIMS_globalUserRole', $('#username').val());
+				window.location = 'main.html';
+			});
+		</script>
 	</body>
 </html>
