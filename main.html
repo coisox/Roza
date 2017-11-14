@@ -233,10 +233,10 @@
 						<div class="secondnav pull-left"><ol class="breadcrumb" v-html="breadcrumb"></ol></div>
 						
 						<div class="secondnav pull-right">
-							<span v-for="item in taskbar">
+							<span v-for="item in taskbar" :class="{ac_hide:ac_hide(item)}">
 								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i :class="item.icon"></i> {{item['label'+globalLanguage]}}</button>
 								<ul v-if="item.list" class="dropdown-menu" role="menu">
-									<li v-for="sub in item.list" ><label @click="onclick(sub)">{{sub['label'+globalLanguage]}}</label></li>
+									<li v-for="sub in item.list" :class="{ac_hide:ac_hide(sub)}"><label @click="onclick(sub)">{{sub['label'+globalLanguage]}}</label></li>
 								</ul>
 							</span>
 						</div>
