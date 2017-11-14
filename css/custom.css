@@ -364,3 +364,11 @@ select.form-control {
 	appearance: none;
 	background: url(../images/down-arrow.svg) no-repeat right 10px center;
 }
+.ac_disable {
+	pointer-events: none;
+	border-color: transparent !important;
+	padding-left: 0;
+}
+.ac_hide {
+	display: none;
+}

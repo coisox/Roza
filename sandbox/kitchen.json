@@ -22,6 +22,10 @@
 		]
 	},
 	{
+		"element": "data",
+		"source": "SELECT JSON_OBJECT('today', DATE_FORMAT(CURDATE(), '%Y%m%d'))"
+	},
+	{
 		"element": "title",
 		"labelbi": "Officer Info",
 		"labelbm": "Maklumat Pegawai"
@@ -156,55 +160,47 @@
 	"labelbm":"Sumber Manusia",
 	"labelbi":"Human Resource",
 	"icon":"fa fa-address-book",
-	"role":["admin", "hr"],
 	"list": [
 		{
 			"labelbm":"Peribadi",
 			"labelbi":"Personal",
 			"icon":"fa fa-user-circle",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleStaffList.js')"
 		},
 		{
 			"labelbm":"Carta B8",
 			"labelbi":"B8 Chart",
 			"icon":"fa fa-sitemap",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		},
 		{
 			"labelbm":"Senarai Kekananan",
 			"labelbi":"List of Seniority",
 			"icon":"fa fa-align-right",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		},
 		{
 			"labelbm":"Penjawatan",
 			"labelbi":"Employment",
 			"icon":"fa fa-child",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		},
 		{
 			"labelbm":"Perkhidmatan",
 			"labelbi":"Services",
 			"icon":"fa fa-handshake-o",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		},
 		{
 			"labelbm":"Integrasi",
 			"labelbi":"Integration",
 			"icon":"fa fa-link",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		},
 		{
 			"labelbm":"Laporan Analisa",
 			"labelbi":"Analytical Report",
 			"icon":"fa fa-line-chart",
-			"role":["admin", "hr"],
 			"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 		}
 	]
@@ -213,6 +209,5 @@
 	"labelbm":"Perundangan",
 	"labelbi":"Legislation",
 	"icon":"fa fa-gavel",
-	"role":["admin", "hr"],
 	"onclick":"rozaCallLandingFile('UI_SampleBlank.js')"
 }

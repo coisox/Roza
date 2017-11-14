@@ -284,39 +284,42 @@
 										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
 											<template v-for="item in panel[p].prop" v-if="item.element!='data'">
 											
-												<!-- Title -->
-												<div v-if="item.element=='title'" class="x_title">
-													<h2 :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</h2>
-													<div class="clearfix"></div>
-												</div>
-												
-												<!-- Element -->
-												<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group">
-													<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
-													<template v-else>
+													<!-- Title -->
+													<div v-if="item.element=='title'" class="x_title" :class="{ac_disable:ac_disable(item), ac_hide:ac_hide(item)}">
+														<h2 :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</h2>
+														<div class="clearfix"></div>
+													</div>
+													
+													<!-- Element -->
+													<div v-else-if="['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:ac_hide(item)}">
+														<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
+														<template v-else>
+															<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
+															<div class="col-xs-9">
+																<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" :class="{ac_disable:ac_disable(item)}" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item.placeholder" :value="item.value" :data-default="item.value" :maxlength="item.maxlength">
+																<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:ac_disable(item)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
+																	<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+globalLanguage]}}</option>
+																</select>
+																<textarea v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:ac_disable(item)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
+																<div v-if="item.element.indexOf('html')>-1" :class="item.element" v-html="item.value"></div>
+																<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
+																<button v-if="item.element=='button'" type="button" class="btn btn-success" :class="{ac_disable:ac_disable(item)}" @click="onclick(item)" :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</button>
+																<template v-if="item.element=='formbutton'">
+																	<button type="button" class="btn btn-primary" :class="{ac_disable:ac_disable(item)}" @click="rozaClearPanel()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
+																	<button type="button" class="btn btn-primary" :class="{ac_disable:ac_disable(item)}" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
+																	<button type="button" class="btn btn-success" :class="{ac_disable:ac_disable(item)}" @click="onclick(item)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
+																</template>
+															</div>													
+														</template>
+													</div>
+													
+													<!-- Not Supported -->
+													<div v-else class="form-group" :class="{ac_hide:ac_hide(item)}">
 														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
 														<div class="col-xs-9">
-															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item.placeholder" :value="item.value" :maxlength="item.maxlength">
-															<select v-if="item.element=='dropdown'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required">
-																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+globalLanguage]}}</option>
-															</select>
-															<textarea v-if="item.element=='textarea'" class="form-control" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :placeholder="item.placeholder" :maxlength="item.maxlength" rows="4">{{item.value}}</textarea>
-															<div v-if="item.element.indexOf('html')>-1" :class="item.element" v-html="item.value"></div>
-															<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
-															<button v-if="item.element=='button'" type="button" class="btn btn-success" @click="onclick(item)" :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</button>
-															<button v-if="item.element=='formbutton'" type="button" class="btn btn-primary" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Semula':'Reset'}}</button>
-															<button v-if="item.element=='formbutton'" type="button" class="btn btn-success" @click="onclick(item)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
-														</div>													
-													</template>
-												</div>
-												
-												<!-- Not Supported -->
-												<div v-else class="form-group">
-													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
-													<div class="col-xs-9">
-														<input class="form-control not-supported" value="Element type not supported" readonly>
+															<input class="form-control not-supported" value="Element type not supported" readonly>
+														</div>
 													</div>
-												</div>
 												
 											</template>
 										</form>

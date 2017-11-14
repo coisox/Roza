@@ -1,6 +1,6 @@
 var prefix = 'ILIMS_';
 var xxx;
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetPanel, rozaSubmitPanel;
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetPanel, rozaSubmitPanel, rozaHasRole;
 var globalUserId, globalUserName, globalUserRole, globalLanguage = '';
 
 if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
@@ -100,6 +100,18 @@ function initVue() {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel[panel].filterString.toLowerCase()) > -1
 				})
 			},
+			rozaHasRole: function(a) {
+				a = new Set(a), b = new Set(this.globalUserRole);
+				return [...a].filter(v => b.has(v)).length;
+			},
+			ac_disable: function(item) {
+				return eval(item.ac_disable);
+			},
+			ac_hide: function(item) {
+				console.log("---------------------------------");
+				console.log(item.id+" ac_hide: "+eval(item.ac_hide));
+				return eval(item.ac_hide);
+			},
 			rozaModal: function(opt) {
 				if(opt)  {
 					$('#modalGeneral #btnCancel').toggle(opt.cancel);
@@ -109,10 +121,13 @@ function initVue() {
 				}
 				else $('#modalGeneral').modal('hide');
 			},
+			rozaClearPanel: function() {
+				$('.x_content form:last')[0].reset();
+				$('.x_content form:last textarea').val('');
+			},
 			rozaResetPanel: function() {
-				roza.rozaModal({
-					labelbm: 'Fungsi ini belum siap',
-					labelbi: 'This function is not ready'
+				$('.x_content [data-default]').each(function(){
+					$(this).val($(this).attr('data-default'));
 				});
 			},
 			rozaSubmitPanel: function(opt) {
@@ -307,6 +322,7 @@ function initVue() {
 			rozaModal = this.rozaModal;
 			rozaResetPanel = this.rozaResetPanel;
 			rozaSubmitPanel = this.rozaSubmitPanel;
+			rozaHasRole = this.rozaHasRole;
 		},
 		mounted: function() {
 			this.$nextTick(function () {
