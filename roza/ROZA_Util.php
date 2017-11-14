@@ -1,8 +1,8 @@
 <?php
 
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
-$globalUserId = '999';
-$globalUserName = 'Lorem Ipsum';
+$globalUserId = '-1';
+$globalUserName = 'Roza';
 $conn = new mysqli('ilims.ansi.com.my', 'admin', 'Xs2mysql_admin', 'roza');
 
 if(mysqli_connect_errno()) {
