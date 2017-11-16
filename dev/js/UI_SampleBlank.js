@@ -1,2 +1,0 @@
-rozaSetPanel();
-rozaSetTaskbar();

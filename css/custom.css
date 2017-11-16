@@ -269,6 +269,10 @@ body.nav-md .logo_small {
 .blockhtml {
 	padding: 0;
 }
+.tabs {
+	border-color: transparent !important;
+	padding: 0;
+}
 .required {
 	color: #E74C3C;
 	font-weight: bold;
@@ -371,4 +375,24 @@ select.form-control {
 }
 .ac_hide {
 	display: none;
+}
+.x_content.p-0 {
+	max-height: calc(100vh - 171px);
+	overflow-x: hidden;
+    overflow-y: scroll;
+}
+.x_content.p-0.standardlist {
+	max-height: calc(100vh - 220px);
+}
+.x_content.p-0::-webkit-scrollbar {
+    width: 0px;
+}
+.x_content.p-0::-webkit-scrollbar-thumb {
+    background: #2A3F54;
+}
+.x_content.p-0::-webkit-scrollbar-track {
+    background-color: #1ABB9C;
+}
+.list-group {
+	margin-bottom: 0;
 }

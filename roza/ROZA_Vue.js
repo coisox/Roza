@@ -3,6 +3,7 @@ var xxx;
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetPanel, rozaSubmitPanel, rozaHasRole;
 var globalUserId, globalUserName, globalUserRole, globalLanguage = '';
 
+if(!localStorage.getItem(prefix+'globalUserRole')) localStorage.setItem(prefix+'globalUserRole', '');
 if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
 if(!localStorage.getItem(prefix+'Favourites')) localStorage.setItem(prefix+'Favourites', '[{"label":"Test Global Search 123","keyword":"Test Global Search 123"},{"label":"Test Global Search 456","keyword":"Test Global Search 456"}]');
 
@@ -34,9 +35,13 @@ function initVue() {
 				parentIndex: 0,
 				list: []
 			},
-			module: '',
-			activeItem: '',
+			activeMetro: '',
+			activeStandardlist: '',
 			taskbar: {},
+			tab: {
+				init: true,
+				prop: {}
+			},
 			panel: {
 				leftPanel: {
 					filterString: '',
@@ -60,24 +65,27 @@ function initVue() {
 			dropzoneAction: 'main.html',
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites'))
 		},
-		computed: {
-			leftPanelFiltered: function() {
-				return this.panel.leftPanel.prop[0].list.filter(item => {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.leftPanel.filterString.toLowerCase()) > -1
-				})
-			},
-			rightPanelFiltered: function() {
-				return this.panel.rightPanel.prop[0].list.filter(item => {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.rightPanel.filterString.toLowerCase()) > -1
-				})
-			},
-			fullPanelFiltered: function() {
-				return this.panel.fullPanel.prop[0].list.filter(item => {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel.fullPanel.filterString.toLowerCase()) > -1
-				})
-			}
-		},
 		methods: {
+			metroClick: function(item, level, index) {
+				if(level=='m1') {
+					if(item.list) this.menu.level = 2;
+					this.menu.parentIndex = index;
+					this.activeMetro = index;
+					this.setBreadcrumbBuffer(1, item['label'+this.globalLanguage]);
+				}
+				else {
+					this.activeMetro = this.menu.parentIndex+'>'+index;
+					this.setBreadcrumbBuffer(2, item['label'+this.globalLanguage]);
+				}
+
+				if(item.onclick) eval(item.onclick);
+				else if(!item.list) {
+					this.rozaSetPanel();
+					this.rozaSetTaskbar();
+					this.setBreadcrumbBuffer(3, '<b style="color:#E74C3C">'+(this.globalLanguage=='bi'?'Module not ready!':'Modul belum disediakan')+'</b>');
+					this.breadcrumb = this.breadcrumbBuffer;
+				}
+			},
 			onclick: function(item) {
 				eval(item.onclick);
 			},
@@ -96,21 +104,22 @@ function initVue() {
 				$.notify({message:html},{type:'danger', delay:4000});
 			},
 			filteredList: function(panel) {
-				return this.panel[panel].prop[0].list.filter(item => {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(this.panel[panel].filterString.toLowerCase()) > -1
+				return this.panel[panel].prop[0].list.filter(function(item) {
+					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(roza.panel[panel].filterString.toLowerCase()) > -1
 				})
 			},
+			loadTabContent: function(item) {
+				
+			},
 			rozaHasRole: function(a) {
-				a = new Set(a), b = new Set(this.globalUserRole);
-				return [...a].filter(v => b.has(v)).length;
+				var match = 0;
+				for(var x=0; x<this.globalUserRole.length; x++) {
+					if(a.indexOf(this.globalUserRole[x])>-1) match++;
+				}
+				return match;
 			},
-			ac_disable: function(item) {
-				return eval(item.ac_disable);
-			},
-			ac_hide: function(item) {
-				console.log("---------------------------------");
-				console.log(item.id+" ac_hide: "+eval(item.ac_hide));
-				return eval(item.ac_hide);
+			accessControl: function(item, ac) {
+				return eval(item[ac]);
 			},
 			rozaModal: function(opt) {
 				if(opt)  {
@@ -122,8 +131,9 @@ function initVue() {
 				else $('#modalGeneral').modal('hide');
 			},
 			rozaClearPanel: function() {
-				$('.x_content form:last')[0].reset();
-				$('.x_content form:last textarea').val('');
+				$('.x_content [data-default]').not('.ac_disable, .ac_hide').each(function(){
+					$(this).val('');
+				});
 			},
 			rozaResetPanel: function() {
 				$('.x_content [data-default]').each(function(){
@@ -131,7 +141,7 @@ function initVue() {
 				});
 			},
 			rozaSubmitPanel: function(opt) {
-				$.getJSON('dev/php/'+opt.file+'?'+$('.x_content form:last').serialize()+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+				$.getJSON('dev/php/'+opt.file+'?'+$('.x_content .formMain').serialize()+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 					if(data.status=='ok') {
 						roza.rozaModal({
 							labelbm: 'Data telah dihantar',
@@ -202,6 +212,8 @@ function initVue() {
 							}
 							roza.breadcrumb = roza.breadcrumbBuffer;
 
+							roza.tab.init = false;
+
 							if(opt.callback) opt.callback(data);
 						}
 						else roza.toast(data.status);
@@ -226,6 +238,14 @@ function initVue() {
 				else {
 					roza.taskbar = {};
 				}
+			},
+			rozaSetTab: function(opt) {
+				$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+					if(data.status=='ok') {
+						roza.tab.prop = data.prop;
+					}
+					else roza.toast(data.status);
+				});
 			},
 			rozaBindData_BAK: function(panel, bl, callback) {
 				$.getJSON('dev/php/'+bl, function(data){
@@ -288,13 +308,14 @@ function initVue() {
 			},
 			globalSearch: function(event) {
 				if(event.key=='Enter' || event.type=='click') {
-					roza.breadcrumb = '<li class="breadcrumb-item"><a>Search result for "'+this.globalSearchKeyword+'"</a></li>';
-					roza.panel.fullPanel.type = 'searchresult';
-					roza.panel.fullPanel.show = true;
-					roza.panel.leftPanel.show = false;
-					roza.panel.leftPanel.show = false;
-					roza.panel.rightPanel.show = false;
-					rozaSetTaskbar();
+					this.breadcrumb = '<li class="breadcrumb-item"><a>Search result for "'+this.globalSearchKeyword+'"</a></li>';
+					this.panel.fullPanel.type = 'searchresult';
+					this.panel.fullPanel.show = true;
+					this.panel.leftPanel.show = false;
+					this.panel.leftPanel.show = false;
+					this.panel.rightPanel.show = false;
+					this.activeMetro = 'globalSearch';
+					this.rozaSetTaskbar();
 				}
 			},
 			getMenu: function() {
@@ -307,7 +328,7 @@ function initVue() {
 		created: function() {
 			
 			//development only
-			this.globalUserRole = localStorage.getItem('ILIMS_globalUserRole').split(',').map(r => r.trim());
+			this.globalUserRole = localStorage.getItem('ILIMS_globalUserRole').split(',').map(function(role){ return role.trim() });
 			
 			globalUserId = this.globalUserId;
 			globalUserName = this.globalUserName;
@@ -323,6 +344,12 @@ function initVue() {
 			rozaResetPanel = this.rozaResetPanel;
 			rozaSubmitPanel = this.rozaSubmitPanel;
 			rozaHasRole = this.rozaHasRole;
+		},
+		updated: function() {
+			if(!this.tab.init) {
+				this.tab.init = true;
+				$('.bar_tabs li:nth-child(1)').click();
+			}
 		},
 		mounted: function() {
 			this.$nextTick(function () {

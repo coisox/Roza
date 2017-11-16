@@ -59,8 +59,8 @@
 			if($data[$prop[$i]['id']]) $prop[$i]['value'] = $data[$prop[$i]['id']];
 
 			//----------------------------------------------------------------------------------------------------------------------------------- replace param & field for access control
-			$prop[$i]['ac_disable'] =  rozaReplaceParam(rozaReplaceField($prop[$i]['ac_disable'], $data));
-			$prop[$i]['ac_hide'] =  rozaReplaceParam(rozaReplaceField($prop[$i]['ac_hide'], $data));
+			if($prop[$i]['ac_disable']) $prop[$i]['ac_disable'] =  rozaReplaceParam(rozaReplaceField($prop[$i]['ac_disable'], $data));
+			if($prop[$i]['ac_hide']) $prop[$i]['ac_hide'] =  rozaReplaceParam(rozaReplaceField($prop[$i]['ac_hide'], $data));
 
 			//----------------------------------------------------------------------------------------------------------------------------------- element lookup
 			if($prop[$i]['element']=='dropdown') {

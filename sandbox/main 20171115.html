@@ -36,19 +36,68 @@
 
 						<div class="clearfix"></div>
 
+						<!-- menu profile quick info -->
+						<!--
+						<div class="profile clearfix">
+							<div class="profile_pic">
+								<img src="images/coisox.jpg" alt="..." class="img-circle profile_img">
+							</div>
+							<div class="profile_info">
+								<span>Selamat Datang,</span>
+								<h2>Aizal Manan</h2>
+							</div>
+						</div>
+						-->
+						<!-- /menu profile quick info -->
+
+						<br />
+
 						<!-- sidebar menu -->
 						<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 							<div class="menu_section">
-
+								<!--
+								<ul class="nav side-menu">
+									<li>
+										<a menu-level="1" menu-id="1"><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+											<li>
+												<a menu-level="2" menu-id="2">Dashboard</a>
+												<ul class="nav child_menu">
+													<li>
+														<a menu-level="3" menu-id="3">Sub menu-level 3</a>
+													</li>
+												</ul>
+											</li>
+											<li>
+												<a menu-level="2" menu-id="4">Dashboard2</a>
+												<ul class="nav child_menu">
+													<li>
+														<a menu-level="3" menu-id="5">Sub menu-level 3</a>
+													</li>
+												</ul>
+											</li>
+											<li><a menu-level="2" menu-id="6">Dashboard3</a></li>
+										</ul>
+									</li>
+									<li>
+										<a menu-level="1" menu-id="7"><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+										<ul class="nav child_menu">
+										  <li><a menu-level="2" menu-id="8">General Form</a></li>
+										  <li><a menu-level="2" menu-id="9">Advanced Components</a></li>
+										</ul>
+									  </li>
+								</ul>
+								-->
+								
 								<template v-if="menu.level==1">
-									<div v-for="m1,index in menu.list" v-if="!accessControl(m1,'ac_remove')" class="metro_container" :class="{active:activeMetro==index}" @click="metroClick(m1,'m1',index)">
+									<div v-for="m1,index in menu.list" v-if="!accessControl(m1,'ac_remove')" class="metro_container" @click="onclick(m1); if(!m1.onclick) menu.level=2; menu.parentIndex=++index; setBreadcrumbBuffer(1, m1['label'+globalLanguage]);">
 										<i :class="m1.icon" aria-hidden="true"></i>
 										<div class="metro_title">{{m1['label'+globalLanguage]}}</div>
 									</div>
 								</template>
-
+								
 								<template v-if="menu.level==2">
-									<div v-for="m2,index in menu.list[menu.parentIndex].list" v-if="!accessControl(m2,'ac_remove')" class="metro_container" :class="{active:activeMetro==menu.parentIndex+'>'+index}" @click="metroClick(m2,'m2',index)">
+									<div class="metro_container" v-for="m2 in menu.list[menu.parentIndex-1].list" v-if="!accessControl(m2,'ac_remove')" @click="onclick(m2); setBreadcrumbBuffer(2, m2['label'+globalLanguage]);">
 										<i :class="m2.icon" aria-hidden="true"></i>
 										<div class="metro_title">{{m2['label'+globalLanguage]}}</div>
 									</div>
@@ -183,7 +232,7 @@
 					
 						<div class="secondnav pull-left"><ol class="breadcrumb" v-html="breadcrumb"></ol></div>
 						
-						<!-- =========================================================================================================================================== taskbar -->
+						<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- taskbar -->
 						<div class="secondnav pull-right">
 							<span v-for="item in taskbar" v-if="!accessControl(item,'ac_remove')">
 								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i :class="item.icon"></i> {{item['label'+globalLanguage]}}</button>
@@ -197,8 +246,7 @@
 
 						<div class="row panelWrapper">
 							<div v-for="p in ['leftPanel', 'rightPanel', 'fullPanel']" :id="p" v-if="panel[p].show">
-
-								<!-- =========================================================================================================================================== panel for standardlist -->
+								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for standardlist -->
 								<div class="x_panel" v-if="panel[p].type=='standardlist'">
 									<div class="x_title">
 										<h2>{{panel[p].prop[0]['label'+globalLanguage]}}</h2>
@@ -219,9 +267,9 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content p-0 standardlist">
+									<div class="x_content p-0">
 										<ul class="list-group">
-											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:activeStandardlist==item.ROZA_ID}" @click="activeStandardlist=item.ROZA_ID; onclick(item)" class="list-group-item">
+											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:item.ROZA_ID==activeItem}" @click="activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
 												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
 												<div class="pull-right">{{item.ROZA_TIME}}</div>
 												<div class="clearfix"></div>
@@ -231,10 +279,10 @@
 										</ul>
 									</div>
 								</div>
-								<!-- =========================================================================================================================================== panel for ui -->
+								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for ui -->
 								<div class="x_panel" v-else-if="panel[p].type=='ui'">
 									<div class="x_content p-0">
-										<div data-parsley-validate class="form-horizontal form-label-left formMain" style="margin-top:-5px">
+										<form data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px">
 											<template v-for="item in panel[p].prop" v-if="item.element!='data'">
 											
 													<!-- Title -->
@@ -244,71 +292,8 @@
 													</div>
 													
 													<!-- Element -->
-													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton','tabs'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
-														
-														<div v-if="['inlinehtml','blockhtml'].indexOf(item.element)>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
-														
-														<template v-else-if="item.element=='tabs'">
-															<div role="tabpanel" data-example-id="togglable-tabs">
-																<ul class="nav nav-tabs bar_tabs" role="tablist">
-																	<li v-for="sub, index in item.list" v-if="!accessControl(sub,'ac_remove')" role="presentation" :class="{active:index==0, ac_disable:accessControl(sub,'ac_disable')}" @click="rozaSetTab(sub)"><a href="#tab_content" role="tab" data-toggle="tab">{{sub['label'+globalLanguage]}}</a></li>
-																</ul>
-																<div class="tab-content">
-																	<div role="tabpanel" class="tab-pane active" id="tab_content">
-																		
-																		<!-- =========================================================================================================================================== ui in tab -->
-																		<div data-parsley-validate class="form-horizontal form-label-left formTab">
-																			<template v-for="sub in tab.prop" v-if="sub.element!='data'">
-																			
-																					<!-- Title -->
-																					<div v-if="!accessControl(sub,'ac_remove') && sub.element=='title'" class="x_title" :class="{ac_disable:accessControl(sub,'ac_disable'), ac_hide:accessControl(sub,'ac_hide')}">
-																						<h2 :id="sub.id" :name="sub.id">{{sub['label'+globalLanguage]}}</h2>
-																						<div class="clearfix"></div>
-																					</div>
-																					
-																					<!-- Element -->
-																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						
-																						<div v-if="['inlinehtml','blockhtml'].indexOf(sub.element)>-1 && sub.fullwidth" :class="sub.element" v-html="sub.value"></div>
-
-																						<template v-else>
-																							<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+globalLanguage]}}</label>
-																							<div class="col-xs-9">
-																								<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub.placeholder" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
-																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
-																									<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+globalLanguage]}}</option>
-																								</select>
-																								<textarea v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub.placeholder" :maxlength="sub.maxlength" rows="4">{{sub.value}}</textarea>
-																								<div v-if="sub.element.indexOf('html')>-1" :class="sub.element" v-html="sub.value"></div>
-																								<div v-if="sub.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
-																								<button v-if="sub.element=='button'" type="button" class="btn btn-success" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)" :id="sub.id" :name="sub.id">{{sub['label'+globalLanguage]}}</button>
-																								<template v-if="sub.element=='formbutton'">
-																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaClearPanel()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
-																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
-																									<button type="button" class="btn btn-success" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
-																								</template>
-																							</div>													
-																						</template>
-																						
-																					</div>
-																					
-																					<!-- Not Supported -->
-																					<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+globalLanguage]}}</label>
-																						<div class="col-xs-9">
-																							<input class="form-control not-supported" value="Element type not supported" readonly>
-																						</div>
-																					</div>
-																				
-																			</template>
-																		</div>
-																		<!-- =========================================================================================================================================== ui in tab end -->
-																		
-																	</div>
-																</div>
-															</div>
-														</template>
-														
+													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','inlinehtml','blockhtml','file', 'button','formbutton'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
+														<div v-if="item.element.indexOf('html')>-1 && item.fullwidth" :class="item.element" v-html="item.value"></div>
 														<template v-else>
 															<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+globalLanguage]}}</label>
 															<div class="col-xs-9">
@@ -327,7 +312,6 @@
 																</template>
 															</div>													
 														</template>
-														
 													</div>
 													
 													<!-- Not Supported -->
@@ -339,19 +323,19 @@
 													</div>
 												
 											</template>
-										</div>
+										</form>
 									</div>
 								</div>
-								<!-- =========================================================================================================================================== panel for search result -->
+								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for search result -->
 								<div class="x_panel" v-else-if="panel.fullPanel.type=='searchresult'">
 									<div class="x_content p-0">
 										<div class="" role="tabpanel" data-example-id="togglable-tabs">
 											<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-												<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab">All</a></li>
-												<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab">Module</a></li>
-												<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab">Document</a></li>
-												<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab">Images</a></li>
-												<li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab">Video</a></li>
+												<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">All</a></li>
+												<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Module</a></li>
+												<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Document</a></li>
+												<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Images</a></li>
+												<li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Video</a></li>
 											</ul>
 											<div id="myTabContent" class="tab-content">
 												<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
@@ -509,8 +493,7 @@
 										</div>
 									</div>
 								</div>
-								<!-- =========================================================================================================================================== panel for search result end -->
-								
+								<!----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- panel for search result end -->
 							</div>
 						</div>
 					</div>
@@ -518,7 +501,7 @@
 				<!-- /page content -->
 			</div>
 			
-			<!-- =========================================================================================================================================== Modal Global Search -->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ Modal Global Search -->
 			<div id="modalGlobalSearch" class="modal fade" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -536,7 +519,7 @@
 				</div>
 			</div>
 			
-			<!-- =========================================================================================================================================== Modal General -->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ Modal General -->
 			<div id="modalGeneral" class="modal fade" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -559,7 +542,7 @@
 
 		<script src="lib/jquery.min.js"></script>
 		<script src="lib/vue.js"></script>
-		<!--<script src="lib/popper.min.js"></script>-->
+		<script src="lib/popper.min.js"></script>
 		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
 		<script src="lib/bootstrap-notify.min.js"></script>
 		<script src="lib/fastclick.js"></script>

@@ -154,6 +154,62 @@
   }
 ]
 
+//=========================================================== Contoh borang ada tab: ID 6
+
+[
+	{
+		"element": "title",
+		"labelbi": "Sample Table",
+		"labelbm": "Contoh Table"
+	},
+	{
+		"element" : "blockhtml",
+		"value": "<iframe src='dev/html/UI_SampleTable.html'></iframe>",
+		"fullwidth" : true
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"value": "Aizal bin Si Pulan",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+		"maxlength" : 20,
+		"placeholderbi" : "insert name",
+		"placeholderbm" : "masukkan nama",
+		"required" : true
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"value": "CK171115",
+		"labelbi" : "Code",
+		"labelbm" : "Kod",
+		"placeholderbi" : "insert code",
+		"placeholderbm" : "masukkan kod",
+		"required" : true
+	},
+	{
+		"element": "title",
+		"labelbi": "Sample Tab",
+		"labelbm": "Contoh Tab"
+	},
+	{
+		"element": "tabs",
+		"list": [
+			{
+				"labelbm": "Tab 1",
+				"labelbi": "Tab 1",
+				"ui": 7
+			},
+			{
+				"labelbm": "Tab 2",
+				"labelbi": "Tab 2",
+				"ui": 7
+			}
+		]
+	}
+]
+
 //=========================================================== Menu
 
 {
