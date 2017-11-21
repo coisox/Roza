@@ -1,6 +1,4 @@
-rozaSetTaskbar();
-
 rozaSetPanel({
 	panel: 'leftPanel',
-	ui: 5
+	ui: 4
 });

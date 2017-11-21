@@ -1,9 +1,6 @@
-rozaSetTaskbar({ui:3});
-
 rozaSetPanel({
 	panel: 'leftPanel',
-	ui: 1,
-	callback: function() {
-		console.log('UI_SampleStaffList is ready');
-	}
+	ui: 1
 });
+
+rozaSetTaskbar({ui:2});

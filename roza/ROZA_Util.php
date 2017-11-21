@@ -1,8 +1,6 @@
 <?php
 
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
-$globalUserId = '-1';
-$globalUserName = 'Roza';
 $conn = new mysqli('ilims.ansi.com.my', 'admin', 'Xs2mysql_admin', 'roza');
 
 if(mysqli_connect_errno()) {
@@ -98,6 +96,17 @@ function rozaExecuteQuery($sql, $params) {
 	$stmt->bind_param($types, ...$params);
 	
 	$stmt->execute();
+	
+	if($stmt->error) {
+		$error = $stmt->error;
+		$stmt = $conn->prepare("INSERT INTO roza_log (log_message, log_sql) VALUES (?, ?)");
+		$stmt->bind_param('ss', $error, $sql);
+		$stmt->execute();
+		$stmt->close();
+		echo json_encode(['status' => 'System error occured and has been reported ('.$conn->insert_id.')']);
+		die();
+	}
+	
 	$result = $stmt->get_result();
 	$stmt->close();
 
@@ -142,8 +151,9 @@ function rozaGetArray2D($sql, $param) {
 	while($row = $rs->fetch_assoc()) {
 		$obj = json_decode($row[$rs->fetch_fields()[0]->name], true);
 		if($obj['ROZA_TIME']) {
-			$obj['ROZA_TIME'] = date_format(new DateTime($obj['ROZA_TIME']),"d/m/y H:iA");
-			$obj['ROZA_EPOCH'] = date_format(new DateTime($obj['ROZA_TIME']),"U");
+			$ROZA_TIME = $obj['ROZA_TIME'];
+			$obj['ROZA_TIME'] = date_format(new DateTime($ROZA_TIME),"d/m/y H:iA");
+			$obj['ROZA_EPOCH'] = date_format(new DateTime($ROZA_TIME),"U");
 		}
 		$list[] = $obj;
 	}
@@ -167,10 +177,19 @@ function rozaGetUi_BAK($id) {
 }
 
 function rozaGetParam($name) {
-	if($name=='globalUserId') return $GLOBALS['globalUserId'];
-	else if($name=='globalUserName') return $GLOBALS['globalUserName'];
-	else if($name=='globalUserRole') return $GLOBALS['globalUserRole'];
+	if($name=='globalUserId') return $_SESSION['globalUserId'];
+	else if($name=='globalUserName') return $_SESSION['globalUserName'];
+	else if($name=='globalUserRole') return $_SESSION['globalUserRole'];
+	else if($name=='globalLanguage') return $_SESSION['globalLanguage'];
 	else return isset($_GET[$name])?$_GET[$name]:'undefined';
+}
+
+function rozaHasRole($array) {
+	$match = 0;
+	for($x=0; $x<count($_SESSION['globalUserRole']); $x++) {
+		if(in_array($_SESSION['globalUserRole'][$x], $array)) $match++;
+	}
+	return $match;
 }
 
 ?>

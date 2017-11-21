@@ -283,8 +283,8 @@
 																								<div v-if="sub.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
 																								<button v-if="sub.element=='button'" type="button" class="btn btn-success" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)" :id="sub.id" :name="sub.id">{{sub['label'+globalLanguage]}}</button>
 																								<template v-if="sub.element=='formbutton'">
-																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaClearPanel()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
-																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
+																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaClearData()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
+																									<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="rozaResetData()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
 																									<button type="button" class="btn btn-success" :class="{ac_disable:accessControl(sub,'ac_disable')}" @click="onclick(sub)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
 																								</template>
 																							</div>													
@@ -321,8 +321,8 @@
 																<div v-if="item.element=='file'" class="dropzone" :load="bindDropzone('leftPanel')"></div>
 																<button v-if="item.element=='button'" type="button" class="btn btn-success" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="onclick(item)" :id="item.id" :name="item.id">{{item['label'+globalLanguage]}}</button>
 																<template v-if="item.element=='formbutton'">
-																	<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="rozaClearPanel()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
-																	<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="rozaResetPanel()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
+																	<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="rozaClearData()">{{globalLanguage=='bm'?'Kosongkan':'Clear'}}</button>
+																	<button type="button" class="btn btn-primary" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="rozaResetData()">{{globalLanguage=='bm'?'Nilai Asal':'Default'}}</button>
 																	<button type="button" class="btn btn-success" :class="{ac_disable:accessControl(item,'ac_disable')}" @click="onclick(item)">{{globalLanguage=='bm'?'Hantar':'Send'}}</button>
 																</template>
 															</div>													

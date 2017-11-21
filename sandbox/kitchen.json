@@ -5,25 +5,62 @@
 		"labelbi": "List of Officer",
 		"labelbm": "Senarai Pegawai",
 		"onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js?staff_id=[[ROZA_ID]]')",
-		"source": "SELECT JSON_OBJECT('ROZA_ID', staff_id, 'ROZA_TITLE', staff_data->>'$.name', 'ROZA_DESC', CONCAT(staff_data->>'$.position', ', ', staff_data->>'$.group', ', ', (SELECT lov_data->>'$.labelbm' state FROM sample_lov WHERE lov_category = 'state' AND lov_data->>'$.value' = staff_data->>'$.state')), 'ROZA_TIME', staff_timeupdate) 'DESC' FROM sample_staff ORDER BY staff_timeupdate"
+		"source": "SL_SampleStaff.sql",
+		"parameterize": ["{{dummy}}"]
 	}
 ]
 
+//=========================================================== Taskbar: ID 2
 
-//"sort": [{"labelbm":"Masa", "labelbi":"Time", "param":"time"}, {"labelbm":"Tajuk", "labelbi":"Title", "param":"title"}],
+[
+  {
+    "element": "taskbar",
+    "icon": "fa fa-plus",
+    "labelbi": "New",
+    "labelbm": "Baru",
+    "list" : [
+      {
+        "labelbi": "Officer Registration",
+        "labelbm": "Daftar Pegawai",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
+      },
+      {
+        "labelbi": "Vendor Registration",
+        "labelbm": "Daftar Vendor"
+      }
+    ]
+  },
+  {
+    "element": "taskbar",
+    "icon": "fa fa-list",
+    "labelbi": "List",
+    "labelbm": "Senarai",
+    "list" : [
+      {
+        "labelbi": "Officer",
+        "labelbm": "Pegawai",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffList.js')"
+      },
+      {
+        "labelbi": "Vendor",
+        "labelbm": "Vendor"
+      }
+    ]
+  }
+]
 
-//=========================================================== Maklumat Staff: ID 2
+//=========================================================== Maklumat Staff: ID 3
 [
 	{
 		"element": "data",
-		"source": "SELECT JSON_MERGE(staff_data, '{\"comment\":\"Testing 123\"}')  FROM sample_staff WHERE staff_id = ?",
-		"parameterized" : [
+		"source": "DATA_SampleStaff.sql",
+		"parameterize" : [
 			"{{staff_id}}"
 		]
 	},
 	{
 		"element": "data",
-		"source": "SELECT JSON_OBJECT('today', DATE_FORMAT(CURDATE(), '%Y%m%d'))"
+		"source": "DATA_SampleToday.sql"
 	},
 	{
 		"element": "title",
@@ -62,40 +99,16 @@
 	{
 		"element": "dropdown",
 		"id": "state",
-		"lookup": "SELECT lov_data FROM sample_lov WHERE lov_category = 'state'",
+		"source": "LOV_SampleState.sql",
 		"labelbi": "State",
-		"labelbm": "Negeri",
-		"onchange": "stateChanged()"
+		"labelbm": "Negeri"
 	},
 	{
 		"element": "dropdown",
 		"id": "gender",
-		"lookup": "SELECT lov_data FROM sample_lov WHERE lov_category = 'gender'",
+		"source": "LOV_SampleGender.sql",
 		"labelbi": "Gender",
 		"labelbm": "Jantina"
-	},
-	{
-		"element": "dropdown",
-		"id": "status",
-		"labelbi": "Status",
-		"labelbm": "Status",
-		"lookup": [
-			{
-				"labelbi": "",
-				"labelbm": "",
-				"value": ""
-			},
-			{
-				"labelbi": "Permanent",
-				"labelbm": "Tetap",
-				"value": "T"
-			},
-			{
-				"labelbi": "Contract",
-				"labelbm": "Kontrak",
-				"value": "K"
-			}
-		]
 	},
 	{
 		"element": "textarea",
@@ -109,49 +122,8 @@
 	},
 	{
 		"element": "formbutton",
-		"onclick": "rozaSubmitPanel({\"file\":\"BL_SampleSubmit.php\"})"
+		"onclick": "rozaSubmitData({\"target\":\"BL_SampleSubmit.php\"})"
 	}
-]
-
-//=========================================================== Taskbar: ID 3
-
-[
-  {
-    "element": "taskbar",
-    "icon": "fa fa-plus",
-    "labelbi": "New",
-    "labelbm": "Baru",
-    "list" : [
-      {
-        "labelbi": "Officer Registration",
-        "labelbm": "Daftar Pegawai",
-        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
-      },
-      {
-        "labelbi": "Vendor Registration",
-        "labelbm": "Daftar Vendor",
-        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
-      }
-    ]
-  },
-  {
-    "element": "taskbar",
-    "icon": "fa fa-list",
-    "labelbi": "List",
-    "labelbm": "Senarai",
-    "list" : [
-      {
-        "labelbi": "Officer",
-        "labelbm": "Pegawai",
-        "onclick": "rozaCallLandingFile('UI_SampleStaffList.js')"
-      },
-      {
-        "labelbi": "Vendor",
-        "labelbm": "Vendor",
-        "onclick": "rozaCallLandingFile('UI_SampleVendorList.js')"
-      }
-    ]
-  }
 ]
 
 //=========================================================== Contoh borang ada tab: ID 6
@@ -161,6 +133,20 @@
 		"element": "title",
 		"labelbi": "Sample Table",
 		"labelbm": "Contoh Table"
+	},
+	{
+		"id": "datatables",
+		"element": "table",
+		"tools": true,
+		"bulkaction": [
+			{
+				"labelbm": "Padam",
+				"labelbi": "Delete",
+				"onclick": "bulkDelete"
+			}
+		],
+		"ajax": "dev/php/AJAX_SampleDatatables.php",
+		"add": "addDatatables()"
 	},
 	{
 		"element" : "blockhtml",

@@ -187,10 +187,29 @@
 		
 		<script src="lib/jquery.min.js"></script>
 		<script>
+			var prefix = 'ILIMS_';
+			if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
+
 			$('form').submit(function(e){
 				e.preventDefault();
-				localStorage.setItem('ILIMS_globalUserRole', $('#username').val());
-				window.location = 'main.html';
+				
+				$.ajax({
+					type: "GET",
+					dataType: "json",
+					url: "roza/ROZA_Login.php",
+					data: {"username": $("#username").val(), "password": $("#password").val(), "globalLanguage": localStorage.getItem(prefix+'globalLanguage')},
+					success: function(data){
+						if(data.status=='ok') {
+							localStorage.setItem(prefix+'globalUserId', data.globalUserId);
+							localStorage.setItem(prefix+'globalUserName', data.globalUserName);
+							localStorage.setItem(prefix+'globalUserRole', data.globalUserRole);
+							window.location = 'main.html';
+						}
+						else {
+							alert(data.status);
+						}
+					}
+				});
 			});
 		</script>
 	</body>

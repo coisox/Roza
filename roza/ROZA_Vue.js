@@ -1,8 +1,10 @@
 var prefix = 'ILIMS_';
 var xxx;
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaResetPanel, rozaSubmitPanel, rozaHasRole;
-var globalUserId, globalUserName, globalUserRole, globalLanguage = '';
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole;
+var globalUserId, globalUserName, globalUserRole, globalLanguage;
 
+if(!localStorage.getItem(prefix+'globalUserId')) localStorage.setItem(prefix+'globalUserId', '-1');
+if(!localStorage.getItem(prefix+'globalUserName')) localStorage.setItem(prefix+'globalUserName', 'Roza');
 if(!localStorage.getItem(prefix+'globalUserRole')) localStorage.setItem(prefix+'globalUserRole', '');
 if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
 if(!localStorage.getItem(prefix+'Favourites')) localStorage.setItem(prefix+'Favourites', '[{"label":"Test Global Search 123","keyword":"Test Global Search 123"},{"label":"Test Global Search 456","keyword":"Test Global Search 456"}]');
@@ -23,9 +25,9 @@ function initVue() {
 		el: '#roza',
 		data: {
 			globalSearchKeyword: '',
-			globalUserId: '-1',
-			globalUserName: 'Roza',
-			globalUserRole: [],
+			globalUserId: localStorage.getItem(prefix+'globalUserId'),
+			globalUserName: localStorage.getItem(prefix+'globalUserName'),
+			globalUserRole: localStorage.getItem(prefix+'globalUserRole').split(','),
 			globalLanguage: localStorage.getItem(prefix+'globalLanguage'),
 			breadcrumb: '',
 			breadcrumbBuffer: '',
@@ -111,10 +113,10 @@ function initVue() {
 			loadTabContent: function(item) {
 				
 			},
-			rozaHasRole: function(a) {
+			rozaHasRole: function(array) {
 				var match = 0;
 				for(var x=0; x<this.globalUserRole.length; x++) {
-					if(a.indexOf(this.globalUserRole[x])>-1) match++;
+					if(array.indexOf(this.globalUserRole[x])>-1) match++;
 				}
 				return match;
 			},
@@ -130,18 +132,18 @@ function initVue() {
 				}
 				else $('#modalGeneral').modal('hide');
 			},
-			rozaClearPanel: function() {
+			rozaClearData: function() {
 				$('.x_content [data-default]').not('.ac_disable, .ac_hide').each(function(){
 					$(this).val('');
 				});
 			},
-			rozaResetPanel: function() {
+			rozaResetData: function() {
 				$('.x_content [data-default]').each(function(){
 					$(this).val($(this).attr('data-default'));
 				});
 			},
-			rozaSubmitPanel: function(opt) {
-				$.getJSON('dev/php/'+opt.file+'?'+$('.x_content .formMain').serialize()+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+			rozaSubmitData: function(opt) {
+				$.getJSON('dev/php/'+opt.target+'?'+$('.x_content .formMain').serialize()+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 					if(data.status=='ok') {
 						roza.rozaModal({
 							labelbm: 'Data telah dihantar',
@@ -198,6 +200,11 @@ function initVue() {
 					this.panel.leftPanel.show = !(opt.panel=='fullPanel');
 					this.panel.rightPanel.show = !(opt.panel=='fullPanel');
 					this.panel.fullPanel.show = (opt.panel=='fullPanel');
+					
+					if(opt.panel!='rightPanel') {
+						roza.panel.rightPanel.prop = {};
+						roza.taskbar = {};
+					}
 
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
@@ -341,8 +348,9 @@ function initVue() {
 			rozaBindLov = this.rozaBindLov;
 			rozaGetParam = this.rozaGetParam;
 			rozaModal = this.rozaModal;
-			rozaResetPanel = this.rozaResetPanel;
-			rozaSubmitPanel = this.rozaSubmitPanel;
+			rozaClearData = this.rozaClearData;
+			rozaResetData = this.rozaResetData;
+			rozaSubmitData = this.rozaSubmitData;
 			rozaHasRole = this.rozaHasRole;
 		},
 		updated: function() {

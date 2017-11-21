@@ -61,4 +61,9 @@
 	print_r(count($xxx));
 	print_r($xxx[0]);
 	print_r($xxx);
+	
+	echo "<br>=======================================================<br>";
+	foreach("aaa.sql" as $key => $value)  {
+		echo $key;
+	}
 ?>
