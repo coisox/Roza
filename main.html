@@ -250,8 +250,8 @@
 														
 														<template v-else-if="item.element=='tabs'">
 															<div role="tabpanel" data-example-id="togglable-tabs">
-																<ul class="nav nav-tabs bar_tabs" role="tablist">
-																	<li v-for="sub, index in item.list" v-if="!accessControl(sub,'ac_remove')" role="presentation" :class="{active:index==0, ac_disable:accessControl(sub,'ac_disable')}" @click="rozaSetTab(sub)"><a href="#tab_content" role="tab" data-toggle="tab">{{sub['label'+globalLanguage]}}</a></li>
+																<ul class="nav nav-tabs bar_tabs" role="tablist" :id="item.id" v-if="!accessControl(item,'ac_remove')" :class="{ac_disable:accessControl(item,'ac_disable')}">
+																	<li v-for="sub, index in item.list" v-if="!accessControl(sub,'ac_remove')" role="presentation" :class="{active:index==0, ac_disable:accessControl(sub,'ac_disable')}" @click="rozaSetTab(sub)" :id="sub.id"><a href="#tab_content" role="tab" data-toggle="tab">{{sub['label'+globalLanguage]}}</a></li>
 																</ul>
 																<div class="tab-content">
 																	<div role="tabpanel" class="tab-pane active" id="tab_content">
