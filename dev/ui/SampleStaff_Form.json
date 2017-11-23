@@ -1,0 +1,88 @@
+[
+	{
+		"element" : "data",
+		"parameterize" : [
+			"{{staff_id}}"
+		],
+		"source" : "SampleStaff_Data.sql"
+	},
+	{
+		"element" : "data",
+		"source" : "LOV_Today.sql"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "Officer Info",
+		"labelbm" : "Maklumat Pegawai"
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+		"maxlength" : 20,
+		"placeholderbi" : "insert name",
+		"placeholderbm" : "masukkan nama",
+		"required" : true
+	},
+	{
+		"element" : "text",
+		"id" : "group",
+		"labelbi" : "Group",
+		"labelbm" : "Kumpulan",
+		"maxlength" : 20,
+		"placeholderbi" : "insert group",
+		"placeholderbm" : "masukkan kumpulan",
+		"required" : true
+	},
+	{
+		"element" : "text",
+		"id" : "position",
+		"labelbi" : "Position",
+		"labelbm" : "Jawatan",
+		"placeholderbi" : "insert position",
+		"placeholderbm" : "masukkan jawatan",
+		"required" : true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "state",
+		"labelbi" : "State",
+		"labelbm" : "Negeri",
+		"source" : "LOV_SampleState.sql"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "gender",
+		"labelbi" : "Gender",
+		"labelbm" : "Jantina",
+		"source" : "LOV_SampleGender.sql"
+	},
+	{
+		"element" : "textarea",
+		"id" : "comment",
+		"labelbi" : "Comment",
+		"labelbm" : "Komen",
+		"maxlength" : 255,
+		"placeholderbi" : "insert comment",
+		"placeholderbm" : "masukkan komen",
+		"required" : true
+	},
+	{
+		"element" : "tabs",
+		"list" : [
+			{
+				"labelbm" : "Tab 1",
+				"ui" : "SampleStaff_Taskbar.json"
+			},
+			{
+				"labelbm" : "Tab 2",
+				"ui" : "SampleStaff_Taskbar.json"
+			}
+		]
+	},
+	{
+		"element" : "formbutton",
+		"onclick" : "rozaSubmitData({\"target\":\"BL_SampleSubmit.php\"})"
+	}
+]

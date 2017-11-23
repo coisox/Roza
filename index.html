@@ -8,6 +8,10 @@
 		
 		<title>AGC ILIMS</title>
 				
+		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/custom.css" rel="stylesheet">
 		<style>
 			@font-face {
 				font-family: Roboto;
@@ -186,6 +190,7 @@
 		</div>
 		
 		<script src="lib/jquery.min.js"></script>
+		<script src="lib/bootstrap-notify.min.js"></script>
 		<script>
 			var prefix = 'ILIMS_';
 			if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
@@ -206,7 +211,7 @@
 							window.location = 'main.html';
 						}
 						else {
-							alert(data.status);
+							$.notify({message:data.status},{type:'danger', delay:4000});
 						}
 					}
 				});

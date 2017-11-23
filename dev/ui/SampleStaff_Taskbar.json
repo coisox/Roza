@@ -1,0 +1,36 @@
+[
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-plus",
+		"labelbi" : "New",
+		"labelbm" : "Baru",
+		"list" : [
+			{
+				"labelbi" : "Officer Registration",
+				"labelbm" : "Daftar Pegawai",
+				"onclick" : "rozaCallLandingFile('SampleStaff_Form.js')"
+			},
+			{
+				"labelbi" : "Vendor Registration",
+				"labelbm" : "Daftar Vendor"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-list",
+		"labelbi" : "List",
+		"labelbm" : "Senarai",
+		"list" : [
+			{
+				"labelbi" : "Officer",
+				"labelbm" : "Pegawai",
+				"onclick" : "rozaCallLandingFile('SampleStaff_Standardlist.js')"
+			},
+			{
+				"labelbi" : "Vendor",
+				"labelbm" : "Vendor"
+			}
+		]
+	}
+]

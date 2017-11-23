@@ -24,7 +24,6 @@
 	position: relative;
 }
 .metro_container {
-	background: #374A5E;
     float: left;
     margin: 10px 0px 0px 10px;
 	padding-top: 20px;
@@ -34,33 +33,25 @@
 	transition: all .3s ease-in-out;
 	cursor: pointer;
 }
-.metro_container:hover {
-	background: #1ABB9C;
-}
 .metro_container.active {
-	background: #337AB7;
 	transition: all .3s ease-in-out;
 }
 .metro_container.active * {
-	color: white;
 	transition: all .3s ease-in-out;
 }
 .metro_container i {
 	font-size: 30px !important;
-	color: #C8CDD2;
 }
 .main_menu .fa {
 	width: initial;
 }
 .metro_title {
 	font-size: 12px;
-	color: #C8CDD2;
 	text-align: center;
 	width: 100%;
 	padding: 10px 0;
 }
 .sidebar-footer {
-	background: #172D44;
 	text-align: center;
 }
 .form-control:focus, .single-line:focus {
@@ -242,11 +233,19 @@ body.nav-sm .metro_container {
     height: 50px;
 	padding-top: 10px;
 }
+.metro_container i,
+.metro_container .metro_title
+{
+    transition: all .3s ease-in-out;
+}
 body.nav-sm .metro_container .metro_title,
 body.nav-sm .sidebar-footer,
 body.nav-sm .logo_normal,
 body.nav-md .logo_small {
 	display: none;
+}
+.logo_small {
+	margin-top: 12px;
 }
 [data-notify="progressbar"] {
 	margin-bottom: 0px;
@@ -295,7 +294,7 @@ body.nav-md .logo_small {
     background: transparent;
     border: 0;
 }
-.x_content a {
+.x_content a:not([role=tab]) {
 	color: #0080FF !important;
 }
 iframe {
@@ -304,6 +303,12 @@ iframe {
 }
 .modal-footer .btn+.btn {
     margin-left: 0;
+}
+.modal-body {
+    padding: 10px;
+}
+.modal-footer {
+    padding: 10px 15px 5px 15px;
 }
 .form-group .btn {
     margin-bottom: initial;

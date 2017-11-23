@@ -3,6 +3,8 @@ var xxx;
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole;
 var globalUserId, globalUserName, globalUserRole, globalLanguage;
 
+if(!localStorage.getItem(prefix+'conf')) localStorage.setItem(prefix+'conf', '{}');
+if(!localStorage.getItem(prefix+'globalUserPic')) localStorage.setItem(prefix+'globalUserPic', 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUwNSA1MDUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwNSA1MDU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6IzMyNEE1RTsiIGN4PSIyNTIuNSIgY3k9IjI1Mi41IiByPSIyNTIuNSIvPg0KPHBhdGggc3R5bGU9ImZpbGw6IzRDREJDNDsiIGQ9Ik00MzcuMSwyODguOGMwLDY0LjQtODIuNiwxMDEuOC0xODQuNiwxMDEuOGMtMTAxLjksMC0xODQuNi0zNy40LTE4NC42LTEwMS44czgyLjctMTMxLjMsMTg0LjYtMTMxLjMNCglTNDM3LjEsMjI0LjUsNDM3LjEsMjg4Ljh6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojMkM5OTg0OyIgZD0iTTQzNi44LDI3Ni40Yy0xNC4xLDQxLjgtOTEuMyw3My43LTE4NC4zLDczLjdTODIuNCwzMTguMiw2OC4zLDI3Ni41DQoJCWM0MS42LDI4LjcsMTA4LjYsNDcuMywxODQuMiw0Ny4zQzMyOC4yLDMyMy43LDM5NS4yLDMwNS4xLDQzNi44LDI3Ni40eiIvPg0KCTxlbGxpcHNlIHN0eWxlPSJmaWxsOiMyQzk5ODQ7IiBjeD0iMjgyLjUiIGN5PSIyODIuNCIgcng9IjExIiByeT0iMTciLz4NCgk8ZWxsaXBzZSBzdHlsZT0iZmlsbDojMkM5OTg0OyIgY3g9IjIyMi41IiBjeT0iMjgyLjQiIHJ4PSIxMSIgcnk9IjE3Ii8+DQo8L2c+DQo8Zz4NCgk8Y2lyY2xlIHN0eWxlPSJmaWxsOiM0Q0RCQzQ7IiBjeD0iMzcyLjIiIGN5PSIyMDcuNCIgcj0iNjYuNyIvPg0KCTxjaXJjbGUgc3R5bGU9ImZpbGw6IzRDREJDNDsiIGN4PSIxMzIuOCIgY3k9IjIwNy40IiByPSI2Ni43Ii8+DQo8L2c+DQo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNFNkU5RUU7IiBjeD0iMzcyLjIiIGN5PSIyMDcuNCIgcj0iNTEuNyIvPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojMzI0QTVFOyIgY3g9IjM3Mi4yIiBjeT0iMjA3LjQiIHI9IjM3LjYiLz4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIGN4PSIzNjAuNSIgY3k9IjE3My4zIiByPSI5LjQiLz4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6I0U2RTlFRTsiIGN4PSIxMzIuOCIgY3k9IjIwNy40IiByPSI1MS43Ii8+DQo8Y2lyY2xlIHN0eWxlPSJmaWxsOiMzMjRBNUU7IiBjeD0iMTMyLjgiIGN5PSIyMDcuNCIgcj0iMzcuNiIvPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojRkZGRkZGOyIgY3g9IjEyMS4yIiBjeT0iMTczLjMiIHI9IjkuNCIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=');
 if(!localStorage.getItem(prefix+'globalUserId')) localStorage.setItem(prefix+'globalUserId', '-1');
 if(!localStorage.getItem(prefix+'globalUserName')) localStorage.setItem(prefix+'globalUserName', 'Roza');
 if(!localStorage.getItem(prefix+'globalUserRole')) localStorage.setItem(prefix+'globalUserRole', '');
@@ -24,7 +26,9 @@ function initVue() {
 	roza = new Vue({
 		el: '#roza',
 		data: {
+			conf: JSON.parse(localStorage.getItem(prefix+'conf')),
 			globalSearchKeyword: '',
+			globalUserPic: localStorage.getItem(prefix+'globalUserPic'),
 			globalUserId: localStorage.getItem(prefix+'globalUserId'),
 			globalUserName: localStorage.getItem(prefix+'globalUserName'),
 			globalUserRole: localStorage.getItem(prefix+'globalUserRole').split(','),
@@ -165,14 +169,14 @@ function initVue() {
 				for(var i=1; i<param.length; i++) this.sessionParam[param[i].split('=')[0]] = param[i].split('=')[1];
 				//================================================================================================
 				
-				$.getScript('dev/js/'+file, function(data, textStatus, jqxhr) {}).fail(function(){
-					if(arguments[1]=='error') roza.toast(file+': Not found');
+				$.getScript('dev/landing/'+file, function(data, textStatus, jqxhr) {}).fail(function(){
+					if(arguments[1]=='error') roza.toast('Landing file not found: '+file);
 					else {
 						roza.toast(file+': '+arguments[2].toString().replace('ReferenceError: ', ''));
 						$.ajax({
 							crossDomain: true,
 							dataType: "script",
-							url: 'dev/js/'+file
+							url: 'dev/landing/'+file
 						});
 					}
 				});
@@ -206,7 +210,7 @@ function initVue() {
 						roza.taskbar = {};
 					}
 
-					$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
 							roza.panel[opt.panel].prop = data.prop;
 							roza.panel[opt.panel].type = data.prop[0].element=='standardlist'?'standardlist':'ui';
@@ -234,7 +238,7 @@ function initVue() {
 			},
 			rozaSetTaskbar: function(opt) {
 				if(opt) {
-					$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui, function(data){
+					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui, function(data){
 						if(data.status=='ok') {
 							roza.taskbar = data.prop;
 							if(opt.callback) opt.callback(data);
@@ -247,7 +251,7 @@ function initVue() {
 				}
 			},
 			rozaSetTab: function(opt) {
-				$.getJSON('roza/ROZA_GetUi.php?ROZA_UIID='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 					if(data.status=='ok') {
 						roza.tab.prop = data.prop;
 					}
@@ -330,6 +334,11 @@ function initVue() {
 					if(data.status=='ok') roza.menu.list = data.data;
 					else roza.toast(data.status);
 				});
+			},
+			confTheme: function() {
+				this.conf.theme = $('#confTheme').val();
+				$('#theme').attr('href', 'css/'+$('#confTheme').val()+'.css');
+				localStorage.setItem(prefix+'conf', JSON.stringify(this.conf));
 			}
 		},
 		created: function() {
@@ -406,6 +415,11 @@ function initVue() {
 				});
 				
 				this.getMenu();
+				
+				$('#confTheme').val(this.conf.theme);
+				this.confTheme();
+				
+				$('body').css('opacity',1);
 			});
 		}
 	});

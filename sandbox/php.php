@@ -66,4 +66,5 @@
 	foreach("aaa.sql" as $key => $value)  {
 		echo $key;
 	}
+	
 ?>

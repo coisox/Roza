@@ -2,7 +2,8 @@
 	require_once('ROZA_Util.php');
 	
 	$data = [];
-	$prop = rozaGetArray("SELECT ui_data FROM roza_ui WHERE ui_id = ".$_GET['ROZA_UIID'], null);
+	//$prop = rozaGetArray("SELECT ui_data FROM roza_ui WHERE ui_id = ".$_GET['ROZA_UIID'], null);
+	$prop = json_decode(file_get_contents('../dev/ui/'.$_GET['ROZA_UI']), true);
 
 	for($i=0; $i<count($prop); $i++) {
 		
@@ -25,19 +26,59 @@
 		
 		//========================================================================================= data
 		if($prop[$i]['element']=='data') {
-			$data = array_merge($data, rozaGetArray(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']));
-			if(!rozaHasRole(['debug'])) {
-				unset($prop[$i]['source']);
-				unset($prop[$i]['parameterize']);
+			if(!$prop[$i]['source']) {
+				$error = 'Property "source" not defined for element data';
+				$stmt = $conn->prepare("INSERT INTO roza_log (log_message) VALUES (?)");
+				$stmt->bind_param('s', $error);
+				$stmt->execute();
+				$stmt->close();
+				echo json_encode(['status' => 'System error occured and has been reported ('.$conn->insert_id.')']);
+				die();
+			}
+			else if(!file_get_contents('../dev/sql/'.$prop[$i]['source'])) {
+				$error = 'SQL file not found: '.$prop[$i]['source'];
+				$stmt = $conn->prepare("INSERT INTO roza_log (log_message) VALUES (?)");
+				$stmt->bind_param('s', $error);
+				$stmt->execute();
+				$stmt->close();
+				echo json_encode(['status' => 'System error occured and has been reported ('.$conn->insert_id.')']);
+				die();
+			}
+			else {
+				$data = array_merge($data, rozaGetArray(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']));
+				if(!rozaHasRole(['debug'])) {
+					unset($prop[$i]['source']);
+					unset($prop[$i]['parameterize']);
+				}
 			}
 		}
 		
 		//========================================================================================= build list for standardlist or dropdown
 		if($prop[$i]['element']=='standardlist' || $prop[$i]['element']=='dropdown') {
-			$prop[$i]['list'] = rozaGetArray2D(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']);
-			if(!rozaHasRole(['debug'])) {
-				unset($prop[$i]['source']);
-				unset($prop[$i]['parameterize']);
+			if(!$prop[$i]['source']) {
+				$error = 'Property "source" not defined for element data';
+				$stmt = $conn->prepare("INSERT INTO roza_log (log_message) VALUES (?)");
+				$stmt->bind_param('s', $error);
+				$stmt->execute();
+				$stmt->close();
+				echo json_encode(['status' => 'System error occured and has been reported ('.$conn->insert_id.')']);
+				die();
+			}
+			else if(!file_get_contents('../dev/sql/'.$prop[$i]['source'])) {
+				$error = 'SQL file not found: '.$prop[$i]['source'];
+				$stmt = $conn->prepare("INSERT INTO roza_log (log_message) VALUES (?)");
+				$stmt->bind_param('s', $error);
+				$stmt->execute();
+				$stmt->close();
+				echo json_encode(['status' => 'System error occured and has been reported ('.$conn->insert_id.')']);
+				die();
+			}
+			else {
+				$prop[$i]['list'] = rozaGetArray2D(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']);
+				if(!rozaHasRole(['debug'])) {
+					unset($prop[$i]['source']);
+					unset($prop[$i]['parameterize']);
+				}
 			}
 		}
 		

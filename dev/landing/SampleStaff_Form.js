@@ -1,4 +1,4 @@
 rozaSetPanel({
 	panel: rozaGetParam('staff_id')?'rightPanel':'fullPanel',
-	ui: 3
+	ui: 'SampleStaff_Form.json'
 });
