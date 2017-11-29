@@ -63,8 +63,6 @@
 	print_r($xxx);
 	
 	echo "<br>=======================================================<br>";
-	foreach("aaa.sql" as $key => $value)  {
-		echo $key;
-	}
+	echo date_format(new DateTime(),"U");
 	
 ?>

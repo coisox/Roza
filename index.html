@@ -193,7 +193,7 @@
 		<script src="lib/bootstrap-notify.min.js"></script>
 		<script>
 			var prefix = 'ILIMS_';
-			if(!localStorage.getItem(prefix+'globalLanguage')) localStorage.setItem(prefix+'globalLanguage', 'bm');
+			if(!localStorage.getItem(prefix+'rozaLanguage')) localStorage.setItem(prefix+'rozaLanguage', 'bm');
 
 			$('form').submit(function(e){
 				e.preventDefault();
@@ -202,12 +202,12 @@
 					type: "GET",
 					dataType: "json",
 					url: "roza/ROZA_Login.php",
-					data: {"username": $("#username").val(), "password": $("#password").val(), "globalLanguage": localStorage.getItem(prefix+'globalLanguage')},
+					data: {"username": $("#username").val(), "password": $("#password").val(), "rozaLanguage": localStorage.getItem(prefix+'rozaLanguage')},
 					success: function(data){
 						if(data.status=='ok') {
-							localStorage.setItem(prefix+'globalUserId', data.globalUserId);
-							localStorage.setItem(prefix+'globalUserName', data.globalUserName);
-							localStorage.setItem(prefix+'globalUserRole', data.globalUserRole);
+							localStorage.setItem(prefix+'rozaUserId', data.rozaUserId);
+							localStorage.setItem(prefix+'rozaUserName', data.rozaUserName);
+							localStorage.setItem(prefix+'rozaUserRole', data.rozaUserRole);
 							window.location = 'main.html';
 						}
 						else {

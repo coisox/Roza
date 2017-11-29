@@ -1,3 +1,6 @@
+body {
+	overflow: hidden;
+}
 .right_navbar {
 	position: fixed !important;
 	top: 57px;
@@ -32,6 +35,7 @@
     text-align: center;
 	transition: all .3s ease-in-out;
 	cursor: pointer;
+	border: 1px solid transparent !important;
 }
 .metro_container.active {
 	transition: all .3s ease-in-out;
@@ -208,21 +212,25 @@ label {
 }
 .panelWrapper {
 	display: table;
-	width: calc(100% + 20px);
+	width: calc(100% + 10px);
 }
 #leftPanel, #rightPanel, #fullPanel {
 	display: table-cell;
 	width: 400px;
-	padding-right: 10px;
-    padding-left: 10px;
 	box-sizing: content-box;
 	vertical-align: top;
 }
+#leftPanel {
+	padding-right: 10px;
+}
 #rightPanel {
+	padding-right: 10px;
+    padding-left: 10px;
 	width: auto;
 	border-left: 1px solid #E6E9ED;
 }
 #fullPanel {
+	padding-right: 10px;
 	width: 100%;
 }
 .toggle a {
@@ -293,9 +301,6 @@ body.nav-md .logo_small {
     padding: 5px;
     background: transparent;
     border: 0;
-}
-.x_content a:not([role=tab]) {
-	color: #0080FF !important;
 }
 iframe {
 	width: 100%;
@@ -372,22 +377,36 @@ select.form-control {
 	-moz-appearance: none;
 	appearance: none;
 	background: url(../images/down-arrow.svg) no-repeat right 10px center;
+	padding-right: 25px;
 }
-.ac_disable {
+.form-control.ac_disable {
 	pointer-events: none;
 	border-color: transparent !important;
 	padding-left: 0;
 }
+.table_actions.ac_disable {
+	pointer-events: none;
+	opacity: 0.3;
+}
 .ac_hide {
 	display: none;
 }
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+	z-index: initial;
+}
+[class^=col-]:first-child {
+	padding-left: 0;
+}
+[class^=col-]:last-child {
+	padding-right: 0;
+}
 .x_content.p-0 {
-	max-height: calc(100vh - 171px);
+	height: calc(100vh - 171px);
 	overflow-x: hidden;
     overflow-y: scroll;
 }
 .x_content.p-0.standardlist {
-	max-height: calc(100vh - 220px);
+	height: calc(100vh - 220px);
 }
 .x_content.p-0::-webkit-scrollbar {
     width: 0px;
@@ -400,4 +419,47 @@ select.form-control {
 }
 .list-group {
 	margin-bottom: 0;
+}
+.horizontal > label {
+    margin-right: 20px;
+}
+.vertical > label {
+    display: block;
+	margin-bottom: 5px;
+}
+[id^=VueTables__limit] {
+	margin-left: 5px;
+}
+.VueTables__sortable:last-child {
+	pointer-events: none;
+	width: 1px;
+	text-align: center;
+}
+.VueTables__sortable:last-child .VueTables__sort-icon {
+	display: none;
+}
+.VueTables__table td:last-child {
+	text-align: center;
+	white-space: nowrap;
+}
+.VueTables__table td:last-child a {
+	position: relative;
+	margin: 0 5px;
+}
+.pagination {
+	margin: 0;
+}
+.daterangepicker {
+	background: white;
+    padding: 0;
+}
+.daterangepicker .daterangepicker_input {
+	display: none;
+}
+.ranges {
+    padding-top: 5px;
+}
+.calendar-table .table-condensed > thead > tr > th {
+	padding: 6px;
+	border-radius: 0;
 }

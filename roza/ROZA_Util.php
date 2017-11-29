@@ -45,9 +45,13 @@ function rozaReplaceParam($string) {
 	return $string;
 }
 
-function rozaReplaceField($string, $fields) {
+function rozaReplaceField($string, $fields, $proceedIfNotSet) {
 	preg_match_all("/(\[\[)(.*)(\]\])/U", $string, $pat_array);
-	for($i=0; $i<count($pat_array[0]); $i++) $string = str_replace('[['.$pat_array[2][$i].']]', $fields[$pat_array[2][$i]], $string);
+	for($i=0; $i<count($pat_array[0]); $i++) {
+		if($proceedIfNotSet || $fields[$pat_array[2][$i]]) {
+			$string = str_replace('[['.$pat_array[2][$i].']]', $fields[$pat_array[2][$i]], $string);
+		}
+	}
 	
 	return $string;
 }
@@ -166,17 +170,19 @@ function rozaGetUi_BAK($id) {
 }
 
 function rozaGetParam($name) {
-	if($name=='globalUserId') return $_SESSION['globalUserId'];
-	else if($name=='globalUserName') return $_SESSION['globalUserName'];
-	else if($name=='globalUserRole') return $_SESSION['globalUserRole'];
-	else if($name=='globalLanguage') return $_SESSION['globalLanguage'];
+	if($name=='rozaUserId') return $_SESSION['rozaUserId'];
+	else if($name=='rozaUserName') return $_SESSION['rozaUserName'];
+	else if($name=='rozaUserRole') return $_SESSION['rozaUserRole'];
+	else if($name=='rozaLanguage') return $_SESSION['rozaLanguage'];
+	else if($name=='rozaTimestamp') return date_format(new DateTime(),"U");
+	
 	else return isset($_GET[$name])?$_GET[$name]:'undefined';
 }
 
 function rozaHasRole($array) {
 	$match = 0;
-	for($x=0; $x<count($_SESSION['globalUserRole']); $x++) {
-		if(in_array($_SESSION['globalUserRole'][$x], $array)) $match++;
+	for($x=0; $x<count($_SESSION['rozaUserRole']); $x++) {
+		if(in_array($_SESSION['rozaUserRole'][$x], $array)) $match++;
 	}
 	return $match;
 }

@@ -43,9 +43,6 @@ body
 {
     color: white;
 }
-.sidebar-footer {
-	background: #172D44;
-}
 .site_title i {
     border: 1px solid #EAEAEA;
 	color: #EAEAEA;
@@ -61,7 +58,7 @@ body
     background-color: #337AB7;
     border-color: #337AB7;
 }
-.btn-success {
+.btn-success, .btn-success:focus, .btn-success:active:focus {
     background: #26B99A;
     border: 1px solid rgba(0,0,0,.2);
 }
@@ -69,7 +66,7 @@ body
     background: #229D83;
     border: 1px solid rgba(0,0,0,.2);
 }
-.btn-primary {
+.btn-primary, .btn-primary:focus, .btn-primary:active:focus {
 	background-color: #337ab7;
     border: 1px solid rgba(0,0,0,.2);
 }
@@ -89,4 +86,36 @@ ul.bar_tabs>li.active {
 }
 ul.bar_tabs {
 	border-bottom: 1px solid #E6E9ED;
+}
+.table-responsive thead {
+    background: #2A3F54;
+    color: white;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #2A3F54;
+    border-color: #2A3F54;
+}
+.icheckbox_flat-green, .iradio_flat-green {
+	background: url(theme-night-sky.png) no-repeat;
+}
+.daterangepicker .calendar-table thead tr:first-child {
+	background: #26B99A;
+	color: white;
+}
+.daterangepicker th.available:hover {
+	background-color: #229D83;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+	background: #337ab7;
+}
+.daterangepicker:after {
+	border-bottom: 6px solid #26B99A;
+}
+.ranges .btn-default {
+	color: white;
+    background-color: #337ab7;
+    border-color: rgba(0,0,0,.2);
+}
+.ranges .btn-default:hover {
+    background-color: #2B679B;
 }

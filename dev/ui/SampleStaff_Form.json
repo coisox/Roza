@@ -1,88 +1,180 @@
 [
 	{
-		"element" : "data",
-		"parameterize" : [
+		"element": "data",
+		"source": "SampleStaff_Data.sql",
+		"parameterize": [
 			"{{staff_id}}"
-		],
-		"source" : "SampleStaff_Data.sql"
+		]
 	},
 	{
-		"element" : "data",
-		"source" : "LOV_Today.sql"
+		"element": "data",
+		"source": "LOV_Today.sql"
 	},
 	{
-		"element" : "title",
-		"labelbi" : "Officer Info",
-		"labelbm" : "Maklumat Pegawai"
+		"element": "title",
+		"labelbi": "Element 'title'",
+		"labelbm": "Elemen 'title'"
 	},
 	{
-		"element" : "text",
-		"id" : "name",
-		"labelbi" : "Name",
-		"labelbm" : "Nama",
-		"maxlength" : 20,
-		"placeholderbi" : "insert name",
-		"placeholderbm" : "masukkan nama",
-		"required" : true
+		"element": "text",
+		"id": "name",
+		"labelbi": "Element 'text'",
+		"labelbm": "Elemen 'text'",
+		"placeholderbi": "insert name",
+		"placeholderbm": "masukkan nama",
+		"maxlength": 20,
+		"required": true
 	},
 	{
-		"element" : "text",
-		"id" : "group",
-		"labelbi" : "Group",
-		"labelbm" : "Kumpulan",
-		"maxlength" : 20,
-		"placeholderbi" : "insert group",
-		"placeholderbm" : "masukkan kumpulan",
-		"required" : true
+		"element": "textarea",
+		"id": "comment",
+		"labelbi": "Element 'textarea'",
+		"labelbm": "Elemen 'textarea'",
+		"placeholderbi": "insert comment",
+		"placeholderbm": "masukkan komen",
+		"maxlength": 255,
+		"required": true
 	},
 	{
-		"element" : "text",
-		"id" : "position",
-		"labelbi" : "Position",
-		"labelbm" : "Jawatan",
-		"placeholderbi" : "insert position",
-		"placeholderbm" : "masukkan jawatan",
-		"required" : true
+		"element": "dropdown",
+		"id": "state",
+		"source": "LOV_SampleState.sql",
+		"labelbi": "Element 'dropdown'",
+		"labelbm": "Elemen 'dropdown'"
 	},
 	{
-		"element" : "dropdown",
-		"id" : "state",
-		"labelbi" : "State",
-		"labelbm" : "Negeri",
-		"source" : "LOV_SampleState.sql"
+		"element": "checkbox",
+		"id": "club",
+		"source": "LOV_SampleClub.sql",
+		"labelbi": "Element 'checkbox' horizontal",
+		"labelbm": "Elemen 'checkbox' horizontal",
+		"style": "horizontal"
 	},
 	{
-		"element" : "dropdown",
-		"id" : "gender",
-		"labelbi" : "Gender",
-		"labelbm" : "Jantina",
-		"source" : "LOV_SampleGender.sql"
+		"element": "checkbox",
+		"id": "club2",
+		"source": "LOV_SampleClub.sql",
+		"labelbi": "Element 'checkbox' vertical",
+		"labelbm": "Elemen 'checkbox' vertical",
+		"style": "vertical"
 	},
 	{
-		"element" : "textarea",
-		"id" : "comment",
-		"labelbi" : "Comment",
-		"labelbm" : "Komen",
-		"maxlength" : 255,
-		"placeholderbi" : "insert comment",
-		"placeholderbm" : "masukkan komen",
-		"required" : true
+		"element": "radio",
+		"id": "gender",
+		"source": "LOV_SampleGender.sql",
+		"labelbi": "Element 'radio' horizontal",
+		"labelbm": "Elemen 'radio' horizontal",
+		"style": "horizontal"
 	},
 	{
-		"element" : "tabs",
-		"list" : [
+		"element": "radio",
+		"id": "gender2",
+		"source": "LOV_SampleGender.sql",
+		"value": "[[gender]]",
+		"labelbi": "Element 'radio' vertical",
+		"labelbm": "Elemen 'radio' vertical",
+		"style": "vertical"
+	},
+	{
+		"element": "datepicker",
+		"id": "datepicker",
+		"labelbi": "Element 'datepicker' single",
+		"labelbm": "Elemen 'datepicker' single",
+		"style": "single"
+	},
+	{
+		"element": "datepicker",
+		"id": "datepicker",
+		"labelbi": "Element 'datepicker' range",
+		"labelbm": "Elemen 'datepicker' range",
+		"style": "range"
+	},
+	{
+		"element": "file",
+		"id": "file",
+		"labelbi": "Element 'file'",
+		"labelbm": "Elemen 'file'"
+	},
+	{
+		"element": "title",
+		"labelbi": "Element 'formbutton'",
+		"labelbm": "Elemen 'formbutton'"
+	},
+	{
+		"element": "formbutton",
+		"action": "SampleStaff_Submit.php"
+	},
+	{
+		"element": "title",
+		"labelbi": "Element 'html'",
+		"labelbm": "Elemen 'html'"
+	},
+	{
+		"element": "html",
+		"id": "html",
+		"style": "block",
+		"fullwidth": true,
+		"value": "<iframe src='dev/html/SampleComplex.html?{{rozaTimestamp}}' height='416'></iframe>"
+	},
+	{
+		"element": "title",
+		"labelbi": "Element 'tabs'",
+		"labelbm": "Elemen 'tabs'"
+	},
+	{
+		"element": "tabs",
+		"list": [
 			{
-				"labelbm" : "Tab 1",
-				"ui" : "SampleStaff_Taskbar.json"
+				"labelbi": "Tab 1",
+				"labelbm": "Tab 1",
+				"ui": "SampleStaff_Tab.json"
 			},
 			{
-				"labelbm" : "Tab 2",
-				"ui" : "SampleStaff_Taskbar.json"
+				"labelbi": "Tab 2",
+				"labelbm": "Tab 2",
+				"ui": "SampleStaff_Tab.json"
 			}
 		]
 	},
 	{
-		"element" : "formbutton",
-		"onclick" : "rozaSubmitData({\"target\":\"BL_SampleSubmit.php\"})"
+		"element": "title",
+		"labelbi": "Element 'table'",
+		"labelbm": "Elemen 'table'"
+	},
+	{
+		"element": "table",
+		"id": "table",
+		"source": "SampleStaff_Table.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Date",
+				"labelbm": "Tarikh",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Description",
+				"labelbm": "Keterangan",
+				"value": "[[data3]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		}
 	}
 ]
