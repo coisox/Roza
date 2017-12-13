@@ -1,17 +1,30 @@
-SELECT JSON_OBJECT(
-	'data1', '1',
-	'data2', SYSDATE(),
-	'data3', 'Testing 123'
-)
-UNION
-SELECT JSON_OBJECT(
-	'data1', '2',
-	'data2', SYSDATE(),
-	'data3', 'Testing 456'
-)
-UNION
-SELECT JSON_OBJECT(
-	'data1', '3',
-	'data2', SYSDATE(),
-	'data3', 'Testing 789'
-)
+SELECT JSON_OBJECT('data1', '1', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 1') UNION
+SELECT JSON_OBJECT('data1', '2', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 2') UNION
+SELECT JSON_OBJECT('data1', '3', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 3') UNION
+SELECT JSON_OBJECT('data1', '4', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 4') UNION
+SELECT JSON_OBJECT('data1', '5', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 5') UNION
+SELECT JSON_OBJECT('data1', '6', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 6') UNION
+SELECT JSON_OBJECT('data1', '7', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 7') UNION
+SELECT JSON_OBJECT('data1', '8', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 8') UNION
+SELECT JSON_OBJECT('data1', '9', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 9') UNION
+SELECT JSON_OBJECT('data1', '10', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 10') UNION
+SELECT JSON_OBJECT('data1', '11', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 11') UNION
+SELECT JSON_OBJECT('data1', '12', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 12') UNION
+SELECT JSON_OBJECT('data1', '13', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 13') UNION
+SELECT JSON_OBJECT('data1', '14', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 14') UNION
+SELECT JSON_OBJECT('data1', '15', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 15') UNION
+SELECT JSON_OBJECT('data1', '16', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 16') UNION
+SELECT JSON_OBJECT('data1', '17', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 17') UNION
+SELECT JSON_OBJECT('data1', '18', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 18') UNION
+SELECT JSON_OBJECT('data1', '19', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 19') UNION
+SELECT JSON_OBJECT('data1', '20', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 20') UNION
+SELECT JSON_OBJECT('data1', '21', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 21') UNION
+SELECT JSON_OBJECT('data1', '22', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 22') UNION
+SELECT JSON_OBJECT('data1', '23', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 23') UNION
+SELECT JSON_OBJECT('data1', '24', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 24') UNION
+SELECT JSON_OBJECT('data1', '25', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 25') UNION
+SELECT JSON_OBJECT('data1', '26', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 26') UNION
+SELECT JSON_OBJECT('data1', '27', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 27') UNION
+SELECT JSON_OBJECT('data1', '28', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 28') UNION
+SELECT JSON_OBJECT('data1', '29', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 29') UNION
+SELECT JSON_OBJECT('data1', '30', 'data2', DATE_FORMAT(SYSDATE(), '%d/%m/%Y'), 'data3', 'Testing 30')

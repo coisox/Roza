@@ -1,0 +1,24 @@
+[
+	{
+		"element": "text",
+		"id": "name",
+		"labelbi": "Element 'text'",
+		"labelbm": "Elemen 'text'",
+		"placeholderbi": "insert name",
+		"placeholderbm": "masukkan nama",
+		"maxlength": 20,
+		"required": true,
+		"value": "Lorem Ipsum"
+	},
+	{
+		"element": "textarea",
+		"id": "comment",
+		"labelbi": "Element 'textarea'",
+		"labelbm": "Elemen 'textarea'",
+		"placeholderbi": "insert comment",
+		"placeholderbm": "masukkan komen",
+		"maxlength": 255,
+		"required": true,
+		"value": "Lorem Ipsum 123"
+	}
+]

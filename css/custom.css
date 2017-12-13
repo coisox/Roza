@@ -1,6 +1,10 @@
 body {
 	overflow: hidden;
 }
+textarea {
+    box-sizing: border-box;
+    resize: none;
+}
 .right_navbar {
 	position: fixed !important;
 	top: 57px;
@@ -58,8 +62,14 @@ body {
 .sidebar-footer {
 	text-align: center;
 }
+[contenteditable].form-control {
+	height: initial;
+}
 .form-control:focus, .single-line:focus {
 	border-color: #1ABB9C;
+}
+label.control-label {
+	font-weight: bold;
 }
 .form-switch {
 	padding: 6px 0;
@@ -231,7 +241,7 @@ label {
 }
 #fullPanel {
 	padding-right: 10px;
-	width: 100%;
+	width: 100% !important;
 }
 .toggle a {
 	padding: 0 10px 0 0;
@@ -269,11 +279,11 @@ body.nav-md .logo_small {
     color: #E74C3C;
 	padding-left: 0;
 }
-.inlinehtml, .blockhtml {
+.inline, .block {
 	border-color: transparent !important;
 	padding: 7px 0;
 }
-.blockhtml {
+.block {
 	padding: 0;
 }
 .tabs {
@@ -296,11 +306,46 @@ body.nav-md .logo_small {
 .dropdown-menu {
 	background: #EEEEEE;
 }
-.filterString {
+.dropdown-menu li {
+	white-space: nowrap;
+    max-width: calc(100vw - 40px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.zzzfilterString {
 	width: 100%;
     padding: 5px;
     background: transparent;
     border: 0;
+}
+.modal .x_panel {
+	border: 0;
+}
+.modal .x_content.p-0 {
+	height: initial;
+}
+.filterRow .adv1, .filterRow .adv2, .filterRow .adv3, .filterRow .adv4, .filterRow .adv5 {
+	display: inline-block;
+	margin-right: 2px;
+}
+.filterRow .adv1 {
+	width: 150px;
+}
+.filterRow .adv2 {
+	width: 160px;
+}
+.filterRow .adv3 {
+	width: 152px;
+}
+.filterRow .adv4 {
+	margin-bottom: 2px;
+}
+.filterRow .adv5 {
+	margin-right: 0;
+	margin-bottom: 2px;
+}
+.filterRow .btn i {
+	padding-top: 3px;
 }
 iframe {
 	width: 100%;
@@ -318,13 +363,11 @@ iframe {
 .form-group .btn {
     margin-bottom: initial;
 }
-.roza-tooltip:hover:after {
+[class^=roza-tooltip]:hover:after {
 	position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
     display: block;
     content: attr(data-title);
+	white-space: nowrap;
     background: #424242;
     color: white;
     padding: 4px;
@@ -334,17 +377,34 @@ iframe {
     font-weight: normal;
 	z-index: 1;
 }
-.roza-tooltip:hover:before {
+[class^=roza-tooltip]:hover:before {
     background: #424242;
     display: block;
     position: absolute;
-    top: calc(100% + 5px);
-    left: 50%;
     content: '';
     width: 10px;
     height: 10px;
-    transform: translateX(-50%) rotate(45deg);
 	z-index: 1;
+}
+.roza-tooltip-bottom:hover:after {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.roza-tooltip-bottom:hover:before {
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+}
+.roza-tooltip-left:hover:after {
+    top: 50%;
+    right: calc(100% + 8px);
+    transform: translateY(-50%);
+}
+.roza-tooltip-left:hover:before {
+    top: 50%;
+    right: calc(100% + 5px);
+    transform: translateY(-50%) rotate(45deg);
 }
 .mail_list {
 	border-bottom: 0;
@@ -376,18 +436,28 @@ select.form-control {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	background: url(../images/down-arrow.svg) no-repeat right 10px center;
+	background: url(../images/icon-down-arrow.svg) no-repeat right 10px center;
 	padding-right: 25px;
+}
+select.form-control.ac_disable {
+	background: none;
 }
 .form-control.ac_disable {
 	pointer-events: none;
 	border-color: transparent !important;
 	padding-left: 0;
 }
-.table_actions.ac_disable {
-	pointer-events: none;
-	opacity: 0.3;
+/*
+.radio label.ac_disable .iradio_flat-green.checked {
+    opacity: 0;
+	margin-right: -23px;
 }
+.radio label.ac_disable .iradio_flat-green:not(.checked),
+.radio label.ac_disable .iradio_flat-green:not(.checked) + span
+{
+	display: none;
+}
+*/
 .ac_hide {
 	display: none;
 }
@@ -427,25 +497,6 @@ select.form-control {
     display: block;
 	margin-bottom: 5px;
 }
-[id^=VueTables__limit] {
-	margin-left: 5px;
-}
-.VueTables__sortable:last-child {
-	pointer-events: none;
-	width: 1px;
-	text-align: center;
-}
-.VueTables__sortable:last-child .VueTables__sort-icon {
-	display: none;
-}
-.VueTables__table td:last-child {
-	text-align: center;
-	white-space: nowrap;
-}
-.VueTables__table td:last-child a {
-	position: relative;
-	margin: 0 5px;
-}
 .pagination {
 	margin: 0;
 }
@@ -463,3 +514,97 @@ select.form-control {
 	padding: 6px;
 	border-radius: 0;
 }
+ul.bar_tabs>li:not(.active) a {
+	border-top-right-radius: 4px;
+}
+ul.bar_tabs li:after {
+    position: absolute;
+    content: '';
+    width: 100vw;
+    height: 1px;
+    background: #DDDDDD;
+}
+/* ================================================================================== Vue Table */
+[id^=VueTables__limit] {
+	margin-left: 5px;
+}
+.VueTables .actions_column {
+	width: 100px;
+	pointer-events: none;
+	text-align: center;
+	white-space: nowrap;
+}
+.VueTables .actions_column .VueTables__sort-icon {
+	display: none;
+}
+.VueTables .actions_column a {
+	position: relative;
+	margin: 0 5px;
+}
+.VueTables .actions_column .VueTables__Tindakan-filter-wrapper {
+	display: none;
+}
+.VueTables .actions_icon.ac_disable {
+	pointer-events: none;
+	opacity: 0.3;
+}
+.VueTables .form-control {
+	border-radius: 4px;
+	font-weight: normal;
+}
+.VueTables__filters-row {
+	background: #E0E0E0;
+}
+.VueTables .vueTableAddContainer {
+	margin-bottom: 10px;
+}
+.VueTables.vueTableAdd {
+	float: right;
+	margin-right: 0;
+}
+.VueTables .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+	border-bottom-width: 0;
+}
+.VueTables__filters-row input {
+	background: white url(../images/icon-filter.svg) no-repeat right 10px center;
+	background-size: 
+}
+/* ================================================================================== FAB */
+.fab {
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	z-index: 100;
+}
+.fab a {
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+	border-radius: 50%;
+	display: block;
+	color: white;
+	text-align: center;
+    font-size: 20px;
+	padding-top: 15px;
+	width: 56px;
+	height: 56px;
+	margin: 10px auto 0;
+	position: relative;
+	-webkit-transition: .3s;
+	transition: .3s;
+	cursor: pointer;
+}
+.fab a:not(:last-child) {
+	opacity: 0;
+	padding-top: 7px;
+	width: 40px;
+	height: 40px;
+	-webkit-transform: translateY(50px) scale(0.4);
+	-ms-transform: translateY(50px) scale(0.4);
+	transform: translateY(50px) scale(0.4);	
+}
+.fab:hover a:not(:last-child) {
+	opacity: 1;
+	-webkit-transform: translateY(0) scale(1);
+	-ms-transform: translateY(0) scale(1);
+	transform: translateY(0) scale(1);
+}
+/* ================================================================================== FAB END */

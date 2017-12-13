@@ -1,28 +1,30 @@
 var prefix = 'ILIMS_';
-var xxx;
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole;
-var rozaUserId, rozaUserName, rozaUserRole, rozaLanguage;
+var currentVersion = 'v171213';
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
+if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
 if(!localStorage.getItem(prefix+'conf')) localStorage.setItem(prefix+'conf', '{"theme":"theme-night-sky"}');
-if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUwNSA1MDUiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUwNSA1MDU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6IzMyNEE1RTsiIGN4PSIyNTIuNSIgY3k9IjI1Mi41IiByPSIyNTIuNSIvPg0KPHBhdGggc3R5bGU9ImZpbGw6IzRDREJDNDsiIGQ9Ik00MzcuMSwyODguOGMwLDY0LjQtODIuNiwxMDEuOC0xODQuNiwxMDEuOGMtMTAxLjksMC0xODQuNi0zNy40LTE4NC42LTEwMS44czgyLjctMTMxLjMsMTg0LjYtMTMxLjMNCglTNDM3LjEsMjI0LjUsNDM3LjEsMjg4Ljh6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojMkM5OTg0OyIgZD0iTTQzNi44LDI3Ni40Yy0xNC4xLDQxLjgtOTEuMyw3My43LTE4NC4zLDczLjdTODIuNCwzMTguMiw2OC4zLDI3Ni41DQoJCWM0MS42LDI4LjcsMTA4LjYsNDcuMywxODQuMiw0Ny4zQzMyOC4yLDMyMy43LDM5NS4yLDMwNS4xLDQzNi44LDI3Ni40eiIvPg0KCTxlbGxpcHNlIHN0eWxlPSJmaWxsOiMyQzk5ODQ7IiBjeD0iMjgyLjUiIGN5PSIyODIuNCIgcng9IjExIiByeT0iMTciLz4NCgk8ZWxsaXBzZSBzdHlsZT0iZmlsbDojMkM5OTg0OyIgY3g9IjIyMi41IiBjeT0iMjgyLjQiIHJ4PSIxMSIgcnk9IjE3Ii8+DQo8L2c+DQo8Zz4NCgk8Y2lyY2xlIHN0eWxlPSJmaWxsOiM0Q0RCQzQ7IiBjeD0iMzcyLjIiIGN5PSIyMDcuNCIgcj0iNjYuNyIvPg0KCTxjaXJjbGUgc3R5bGU9ImZpbGw6IzRDREJDNDsiIGN4PSIxMzIuOCIgY3k9IjIwNy40IiByPSI2Ni43Ii8+DQo8L2c+DQo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNFNkU5RUU7IiBjeD0iMzcyLjIiIGN5PSIyMDcuNCIgcj0iNTEuNyIvPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojMzI0QTVFOyIgY3g9IjM3Mi4yIiBjeT0iMjA3LjQiIHI9IjM3LjYiLz4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIGN4PSIzNjAuNSIgY3k9IjE3My4zIiByPSI5LjQiLz4NCjxjaXJjbGUgc3R5bGU9ImZpbGw6I0U2RTlFRTsiIGN4PSIxMzIuOCIgY3k9IjIwNy40IiByPSI1MS43Ii8+DQo8Y2lyY2xlIHN0eWxlPSJmaWxsOiMzMjRBNUU7IiBjeD0iMTMyLjgiIGN5PSIyMDcuNCIgcj0iMzcuNiIvPg0KPGNpcmNsZSBzdHlsZT0iZmlsbDojRkZGRkZGOyIgY3g9IjEyMS4yIiBjeT0iMTczLjMiIHI9IjkuNCIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=');
 if(!localStorage.getItem(prefix+'rozaUserId')) localStorage.setItem(prefix+'rozaUserId', '-1');
 if(!localStorage.getItem(prefix+'rozaUserName')) localStorage.setItem(prefix+'rozaUserName', 'Roza');
 if(!localStorage.getItem(prefix+'rozaUserRole')) localStorage.setItem(prefix+'rozaUserRole', '');
 if(!localStorage.getItem(prefix+'rozaLanguage')) localStorage.setItem(prefix+'rozaLanguage', 'bm');
 if(!localStorage.getItem(prefix+'Favourites')) localStorage.setItem(prefix+'Favourites', '[{"label":"Test Global Search 123","keyword":"Test Global Search 123"},{"label":"Test Global Search 456","keyword":"Test Global Search 456"}]');
 
+var rozaLanguage = localStorage.getItem(prefix+'rozaLanguage');
+
 $(document).ready(function(){
-	$('#leftPanel').width(localStorage.getItem(prefix+'PanelSize')?localStorage.getItem(prefix+'PanelSize'):400);
 	initVue();
 });
 
 Vue.use(VueTables.ClientTable, {
 	compileTemplates: true,
-	filterByColumn: false,
-		texts: {
+	filterByColumn: true,
+	texts: {
 		filter: '',
-		filterPlaceholder: localStorage.getItem(prefix+'rozaLanguage')=='bm'?'Carian...':'Search...',
-		limit: localStorage.getItem(prefix+'rozaLanguage')=='bm'?'Rekod: ':'Records: ',
+		filterBy: '',
+		filterPlaceholder: rozaLanguage=='bm'?'Carian...':'Search...',
+		limit: rozaLanguage=='bm'?'Rekod: ':'Records: ',
+		count: rozaLanguage=='bm'?"Menunjukkan {from} hingga {to} daripada {count} rekod|{count} rekod|Satu rekod":"Showing {from} to {to} of {count} records|{count} records|One record"
 	}
 });
 
@@ -32,6 +34,7 @@ function initVue() {
 		data: {
 			conf: JSON.parse(localStorage.getItem(prefix+'conf')),
 			globalSearchKeyword: '',
+			rozaVersion: localStorage.getItem(prefix+'rozaVersion'),
 			rozaUserPic: localStorage.getItem(prefix+'rozaUserPic'),
 			rozaUserId: localStorage.getItem(prefix+'rozaUserId'),
 			rozaUserName: localStorage.getItem(prefix+'rozaUserName'),
@@ -46,12 +49,13 @@ function initVue() {
 				list: []
 			},
 			activeMetro: '',
-			activeStandardlist: '',
-			taskbar: {},
-			tab: {
-				init: true,
-				prop: {}
+			standardlist: {
+				activeItem: '',
+				sortBy: ''
 			},
+			taskbar: {},
+			tabLevel1: {},
+			tabLevel2: {},
 			panel: {
 				leftPanel: {
 					filterString: '',
@@ -73,7 +77,8 @@ function initVue() {
 				},
 			},
 			dropzoneAction: 'main.html',
-			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites'))
+			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
+			callbackQue: []
 		},
 		methods: {
 			metroClick: function(item, level, index) {
@@ -97,6 +102,7 @@ function initVue() {
 				}
 			},
 			onclick: function(item) {
+				console.log(item);
 				eval(item.onclick);
 			},
 			onchange: function(item) {
@@ -105,13 +111,58 @@ function initVue() {
 			toast: function(html) {
 				$.notify({message:html},{type:'danger', delay:4000});
 			},
+			sortList: function(panel, sort) {
+				if(this.standardlist.sortBy == sort+'_ASC') this.standardlist.sortBy = sort+'_DESC';
+				else this.standardlist.sortBy = sort+'_ASC';
+				
+				this.panel[panel].prop[0].list.sort(function(a, b){
+					
+					//EPOCH. only numbers can use minus operation
+					if(roza.standardlist.sortBy == 'ROZA_EPOCH_ASC') return a[sort] - b[sort];
+					else if(roza.standardlist.sortBy == 'ROZA_EPOCH_DESC') return b[sort] - a[sort];
+					
+					//TITLE. text can only use bigger smaller operation
+					else if(roza.standardlist.sortBy == 'ROZA_TITLE_ASC') {
+						if(a[sort]==b[sort]) return 0;
+						else if(a[sort]<b[sort]) return -1;
+						else if(a[sort]>b[sort]) return 1;
+					}
+					else {
+						if(a[sort]==b[sort]) return 0;
+						else if(a[sort]<b[sort]) return 1;
+						else if(a[sort]>b[sort]) return -1;
+					}
+				});
+			},
 			filteredList: function(panel) {
 				return this.panel[panel].prop[0].list.filter(function(item) {
 					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(roza.panel[panel].filterString.toLowerCase()) > -1
 				})
 			},
-			loadTabContent: function(item) {
-				
+			accessControl: function(item, ac) {
+				try {
+					return eval(item[ac]);
+				}
+				catch(err) {
+					$.getJSON('roza/ROZA_LogError.php?msg=Condition in '+ac+' problem: '+err.message, function(data) {
+						roza.toast('System error occured and has been reported ('+data.log_id+')');
+					});
+				}
+			},
+			console: function(text) {
+				console.log(text);
+			},
+			addFilterRow: function(p, e) {
+				if(e==undefined) {
+					$('#'+p+' .filterRow:last').after($('#'+p+' .filterRow:last').clone());
+					$('#'+p+' .filterRow:last .adv1, #'+p+' .filterRow:last .adv2, #'+p+' .filterRow:last .adv3').val('');
+				}
+				else if($('#'+p+' .filterRow').size()==1){
+					$('#'+p+' .filterRow:last .adv1, #'+p+' .filterRow:last .adv2, #'+p+' .filterRow:last .adv3').val('');
+				}
+				else {
+					$(e).parents('.filterRow').remove();
+				}
 			},
 			rozaHasRole: function(array) {
 				var match = 0;
@@ -120,15 +171,12 @@ function initVue() {
 				}
 				return match;
 			},
-			accessControl: function(item, ac) {
-				return eval(item[ac]);
-			},
-			populateTd: function(row) {
-				return
-			},
 			rozaModal: function(opt) {
-				if(opt)  {
-					$('#modalGeneral #btnCancel').toggle(opt.cancel);
+				if(opt) {
+					console.log(opt.title);
+					$('#modalGeneral .modal-title').html('').html(opt.title);
+					$('#modalGeneral .modal-header').toggle(opt.title?true:false);
+					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
 					$('#modalGeneral .modal-body').html('').html(opt['label'+this.rozaLanguage]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
@@ -139,15 +187,23 @@ function initVue() {
 				$('.x_content [data-default]').not('.ac_disable, .ac_hide').each(function(){
 					$(this).val('');
 				});
+				$('div[contentEditable]').each(function(){
+					$(this).html('');
+				});
 			},
 			rozaResetData: function() {
 				$('.x_content [data-default]').each(function(){
 					$(this).val($(this).attr('data-default'));
 				});
+				$('div[contentEditable]').each(function(){
+					$(this).html($(this).attr('data-default'));
+				});
 			},
 			rozaSubmitData: function(opt) {
 				if(!opt.file) {
-					roza.toast('Property "file" not defined for rozaSubmitData()');
+					$.getJSON('roza/ROZA_LogError.php?msg=Property "file" not defined for rozaSubmitData()', function(data) {
+						roza.toast('System error occured and has been reported ('+data.log_id+')');
+					});
 				}
 				else {
 					$.ajax({
@@ -159,12 +215,15 @@ function initVue() {
 									labelbm: 'Data telah dihantar',
 									labelbi: 'Data has been sent'
 								});
-								if(opt.callback) opt.callback(data);
 							}
 							else roza.toast(data.status);
 						},
 						error: function(data) {
-							if(data.status==404) roza.toast('PHP file not found: '+opt.target);
+							if(data.status==404) {
+								$.getJSON('roza/ROZA_LogError.php?msg=PHP file not found: '+opt.target, function(data) {
+									roza.toast('System error occured and has been reported ('+data.log_id+')');
+								});
+							}
 						}
 					});
 				}
@@ -186,7 +245,11 @@ function initVue() {
 				//================================================================================================
 				
 				$.getScript('dev/landing/'+file, function(data, textStatus, jqxhr) {}).fail(function(){
-					if(arguments[1]=='error') roza.toast('Landing file not found: '+file);
+					if(arguments[1]=='error') {
+						$.getJSON('roza/ROZA_LogError.php?msg=Landing file not found: '+file, function(data) {
+							roza.toast('System error occured and has been reported ('+data.log_id+')');
+						});
+					}
 					else {
 						roza.toast(file+': '+arguments[2].toString().replace('ReferenceError: ', ''));
 						$.ajax({
@@ -195,14 +258,6 @@ function initVue() {
 							url: 'dev/landing/'+file
 						});
 					}
-				});
-			},
-			sortList: function(panel, sort) {
-				this.panel[panel].prop[0].list.sort(function(a, b){
-					if(sort=='epoch') return a[sort] - b[sort];
-					else if(a[sort]==b[sort]) return 0;
-					else if(a[sort]<b[sort]) return -1;
-					else if(a[sort]>b[sort]) return 1;
 				});
 			},
 			rozaSetPanel: function(opt) {
@@ -215,15 +270,17 @@ function initVue() {
 					
 					if(opt.panel!='rightPanel') {
 						roza.panel.rightPanel.prop = {};
-						roza.taskbar = {};
+						roza.panel.rightPanel.type = '';
+						//roza.taskbar = {}; Hari tu Masri mcm perlukan nie
 					}
 
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
-							
 							for(var x=0; x<data.prop.length; x++) {
+								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
+								
 								if(data.prop[x].element=='table') {
-									roza['vueTable'] = [];
+									if(!roza['vueTable']) roza['vueTable'] = [];
 									roza['vueTable'][data.prop[x].id] = [];
 									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
@@ -233,14 +290,29 @@ function initVue() {
 											actionedit: 'micro',
 											actiondelete: 'micro',
 											ac_remove: 'micro'
+										},
+										columnsClasses: {
+											Action: 'actions_column',
+											Tindakan: 'actions_column'
 										}
 									};
+									
+									if(data.prop[x].onadd) {
+										roza['vueTable'][data.prop[x].id]['onadd'] = [];
+										roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = data.prop[x].onadd?roza.accessControl(data.prop[x].onadd, 'ac_remove'):false;
+										roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
+									}
 								}
+								
+								//set default tab
+								else if(data.prop[x].element=='tabs') {
+									roza.rozaDefaultTab(data.prop[x].list, 1);
+								}		
 							}
 							
 							roza.panel[opt.panel].prop = data.prop;
 							roza.panel[opt.panel].type = data.prop[0].element=='standardlist'?'standardlist':'ui';
-							
+
 							if(data.prop[0].element=='standardlist') roza.setBreadcrumbBuffer(3, data.prop[0]['label'+roza.rozaLanguage]);
 							else if(opt.panel!='rightPanel'){
 								for(var x=0; x<data.prop.length; x++) {
@@ -248,10 +320,6 @@ function initVue() {
 								}
 							}
 							roza.breadcrumb = roza.breadcrumbBuffer;
-
-							roza.tab.init = false;
-
-							if(opt.callback) opt.callback(data);
 						}
 						else roza.toast(data.status);
 					});
@@ -266,8 +334,10 @@ function initVue() {
 				if(opt) {
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui, function(data){
 						if(data.status=='ok') {
+							for(var x=0; x<data.prop.length; x++) {
+								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
+							}
 							roza.taskbar = data.prop;
-							if(opt.callback) opt.callback(data);
 						}
 						else roza.toast(data.status);
 					});
@@ -276,10 +346,59 @@ function initVue() {
 					roza.taskbar = {};
 				}
 			},
-			rozaSetTab: function(opt) {
-				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+			rozaDefaultTab: function(list, level) {
+				var activated = false;
+				
+				for(var x=0; x<list.length; x++) {
+					if(this.accessControl(list[x],'ac_default')) {
+						this.rozaSetTab(list[x], level);
+						$('#'+list[x].id).addClass('active');
+						activated = true;
+					}
+				}
+				
+				//if not set, activate first tab
+				if(!activated) {
+					this.rozaSetTab(list[0], level);
+					setTimeout(function(){
+						$('.nav.nav-tabs.level'+level+' li:first').addClass('active');
+					}, 1);
+				}
+			},
+			rozaSetTab: function(list, level) {
+				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 					if(data.status=='ok') {
-						roza.tab.prop = data.prop;
+						for(var x=0; x<data.prop.length; x++) {
+							if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
+							
+							if(data.prop[x].element=='table') {
+								if(!roza['vueTable']) roza['vueTable'] = [];
+								roza['vueTable'][data.prop[x].id] = [];
+								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
+								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
+								roza['vueTable'][data.prop[x].id]['option'] = {
+									columnsDisplay: {
+										actionview: 'micro',
+										actionedit: 'micro',
+										actiondelete: 'micro',
+										ac_remove: 'micro'
+									}
+								};
+								
+								if(data.prop[x].onadd) {
+									roza['vueTable'][data.prop[x].id]['onadd'] = [];
+									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = data.prop[x].onadd?roza.accessControl(data.prop[x].onadd, 'ac_remove'):false;
+									roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
+								}
+							}
+							
+							//set default tab in tab
+							else if(level==1 && data.prop[x].element=='tabs') {
+								roza.rozaDefaultTab(data.prop[x].list, 2);
+							}
+						}
+							
+						roza['tabLevel'+level] = data.prop;
 					}
 					else roza.toast(data.status);
 				});
@@ -310,20 +429,20 @@ function initVue() {
 				});
 			},
 			confTheme: function() {
+				if($('#confTheme').val()==null) $('#confTheme').val('theme-night-sky');
 				this.conf.theme = $('#confTheme').val();
-				$('#theme').attr('href', 'css/'+$('#confTheme').val()+'.css');
+				$('#theme').attr('href', 'css/'+this.conf.theme+'.css?'+currentVersion);
 				localStorage.setItem(prefix+'conf', JSON.stringify(this.conf));
 			}
 		},
-		events: {
+		events_BAK: {
 			'vuetable:action': function(action, data) {
-				console.log('vuetable:action', action, data);
 				if(action=='view-item') {
 					alert('view clicked');
 				}
 			},
 			'vuetable:load-error': function(response) {
-				console.log('Load Error: ', response);
+				//console.log('Load Error: ', response);
 			}
 		},
 		created: function() {
@@ -348,11 +467,6 @@ function initVue() {
 			rozaHasRole = this.rozaHasRole;
 		},
 		updated: function() {
-			if(!this.tab.init) {
-				this.tab.init = true;
-				$('.bar_tabs li:nth-child(1)').click();
-			}
-			
 			$('input.flat').iCheck({
 				checkboxClass: 'icheckbox_flat-green',
 				radioClass: 'iradio_flat-green'
@@ -390,6 +504,34 @@ function initVue() {
 					});
 				}
 			});
+			
+			while (this.callbackQue.length) {
+				var callback = this.callbackQue.shift();
+				if(typeof eval(callback.split('(')[0]) == 'function') eval(callback);
+				else {
+					$.getJSON('roza/ROZA_LogError.php?msg='+callback+' is not defined', function(data) {
+						roza.toast('System error occured and has been reported ('+data.log_id+')');
+					});
+				}
+			}
+
+			$('.VueTables').each(function(){				
+				var id = $(this).attr('id');
+				if(roza['vueTable'][id]['onadd'] && !roza['vueTable'][id]['onadd']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
+					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd" onclick="'+roza['vueTable'][id]['onadd']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
+				}
+				else if(roza['vueTable'][id]['onadd']['ac_remove']) {
+					$('#'+id+' .vueTableAdd').remove();
+				}
+			});
+			
+			$('textarea[data-autoresize]').each(function() {
+				var offset = this.offsetHeight - this.clientHeight;
+				var resizeTextarea = function(el) {
+					$(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+				};
+				$(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+			});
 		},
 		mounted: function() {
 			this.$nextTick(function () {
@@ -414,6 +556,8 @@ function initVue() {
 				*/
 				//====================================================================
 
+				$('#leftPanel').width(localStorage.getItem(prefix+'PanelSize')?localStorage.getItem(prefix+'PanelSize'):400);
+				
 				$('#leftPanel').resizable({
 					handles: "e",
 					resize: function(event, ui) {
@@ -443,10 +587,46 @@ function initVue() {
 				this.confTheme();
 				
 				$('body').css('opacity',1);
+				
+				if(this.rozaVersion != currentVersion) {
+					this.rozaVersion = currentVersion;
+					localStorage.setItem(prefix+'rozaVersion', currentVersion);
+					localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
+					this.rozaUserPic = 'images/alien.png';
+					this.rozaModal({
+						labelbm:
+							'<p>Add (mockup) advance filtering for element standardlist.</p>'+
+							'<p>For more complete details, see <a href="./manual" target="_blank">Roza Manual</a></p>',
+						labelbi:
+							'<p>Add (mockup) advance filtering for element standardlist.</p>'+
+							'<p>For more complete details, see <a href="./manual" target="_blank">Roza Manual</a></p>',
+						title: currentVersion
+					});
+				}
 			});
 		}
 	});
 };
+
+function advanceIsDatepicker(e) {
+	xxx = e;
+	if($(e).find(':selected').attr('element')=='datepicker') {
+		$(e).parent().find('.adv3').daterangepicker({
+			singleDatePicker: true,
+			locale: {
+				format: 'DD/MM/YYYY'
+			}
+		}, function(start, end, label) {
+			//console.log(start.toISOString(), end.toISOString(), label);
+		});
+	}
+	else {
+		if($(e).parent().find('.adv3').data('daterangepicker')) {
+			$(e).parent().find('.adv3').data('daterangepicker').remove();
+			console.log('destroyed');
+		}
+	}
+}
 
 /*
 function addFavourite_BAK() {

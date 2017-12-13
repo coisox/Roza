@@ -2,21 +2,27 @@
 	require_once('ROZA_Util.php');
 	
 	$data = [];
-	//$prop = rozaGetArray("SELECT ui_data FROM roza_ui WHERE ui_id = ".$_GET['ROZA_UIID'], null);
-	$prop = json_decode(file_get_contents('../dev/ui/'.$_GET['ROZA_UI']), true);
+	$prop = file_get_contents('../dev/ui/'.$_GET['ROZA_UI']);
+	$prop = json_decode(preg_replace('!/\*.*?\*/!s', '', $prop), true);
+
 
 	for($i=0; $i<count($prop); $i++) {
 		
 		//========================================================================================= replace {{param_name}}
-		foreach($prop[$i] as $key => $value)  {
-			if(gettype($prop[$i][$key])=='string') {
+		foreach($prop[$i] as $key => $value) {
+			if (in_array($key, ['onprint', 'onedit', 'onclear', 'ondefault', 'onsave',		'onview','ondelete','onadd'])) {
+				foreach($prop[$i][$key] as $key2 => $value2) {
+					if(gettype($prop[$i][$key][$key2])=='string') $prop[$i][$key][$key2] = rozaReplaceParam($prop[$i][$key][$key2]);
+				}
+			}
+			else if(gettype($prop[$i][$key])=='string') {
 				$prop[$i][$key] = rozaReplaceParam($prop[$i][$key]);
 			}
 			else { //kalo bukan string dah tentu array
 				for($j=0; $j<count($prop[$i][$key]); $j++) {
 					if(gettype($prop[$i][$key][$j])=='string') $prop[$i][$key][$j] = rozaReplaceParam($prop[$i][$key][$j]);
 					else { //kalo bukan string dah tentu object
-						foreach($prop[$i][$key][$j] as $key2 => $value2)  {
+						foreach($prop[$i][$key][$j] as $key2 => $value2) {
 							if(gettype($prop[$i][$key][$j][$key2])=='string') $prop[$i][$key][$j][$key2] = rozaReplaceParam($prop[$i][$key][$j][$key2]);
 						}
 					}
@@ -53,6 +59,28 @@
 			}
 		}
 		
+		//========================================================================================= replace [[data_name]]
+		foreach($prop[$i] as $key => $value) {
+			if (in_array($key, ['onprint', 'onedit', 'onclear', 'ondefault', 'onsave',		'onview','ondelete','onadd'])) {
+				foreach($prop[$i][$key] as $key2 => $value2) {
+					if(gettype($prop[$i][$key][$key2])=='string') $prop[$i][$key][$key2] = rozaReplaceField($prop[$i][$key][$key2], $data, false);
+				}
+			}
+			else if(gettype($prop[$i][$key])=='string') {
+				$prop[$i][$key] = rozaReplaceField($prop[$i][$key], $data, false);
+			}
+			else { //kalo bukan string dah tentu array
+				for($j=0; $j<count($prop[$i][$key]); $j++) {
+					if(gettype($prop[$i][$key][$j])=='string') $prop[$i][$key][$j] = rozaReplaceField($prop[$i][$key][$j], $data, false);
+					else { //kalo bukan string dah tentu object
+						foreach($prop[$i][$key][$j] as $key2 => $value2) {
+							if(gettype($prop[$i][$key][$j][$key2])=='string') $prop[$i][$key][$j][$key2] = rozaReplaceField($prop[$i][$key][$j][$key2], $data, false);
+						}
+					}
+				}
+			}
+		}
+		
 		//========================================================================================= build list for standardlist, dropdown, radio, checkbox, table
 		if(in_array($prop[$i]['element'], ['standardlist', 'dropdown', 'radio', 'checkbox', 'table'])) {
 			if(!$prop[$i]['source']) {
@@ -82,11 +110,11 @@
 			}
 		}
 		
-		//========================================================================================= preprocessing vueTable
+		//========================================================================================= preprocessing table to vueTable compatible
 		if($prop[$i]['element']=='table') {
 			$prop[$i]['list2'] = [];
 			$hasAction = false;
-			$actions = ['onview', 'onedit', 'ondelete'];
+			$actions = ['onview', 'onedit', 'ondelete', 'onadd'];
 
 			for($j=0; $j<count($prop[$i]['column']); $j++) {
 				
@@ -103,7 +131,7 @@
 					for($k=0; $k<count($prop[$i]['list']); $k++) {
 						$prop[$i]['list2'][$k][$colname] = rozaReplaceField($prop[$i]['column'][$j]['value'], $prop[$i]['list'][$k], false);
 						
-						for($l=0; $l<3; $l++) {
+						for($l=0; $l<count($actions); $l++) {
 							if($prop[$i][$actions[$l]]['onclick']) {
 								$hasAction = true;
 								$prop[$i]['list2'][$k][$actions[$l]]['onclick'] = rozaReplaceField($prop[$i][$actions[$l]]['onclick'], $prop[$i]['list'][$k], false);
@@ -139,15 +167,20 @@
 		}
 		
 		//========================================================================================= replace [[data_name]]
-		foreach($prop[$i] as $key => $value)  {
-			if(gettype($prop[$i][$key])=='string') {
+		foreach($prop[$i] as $key => $value) {
+			if (in_array($key, ['onprint', 'onedit', 'onclear', 'ondefault', 'onsave',		'onview','ondelete','onadd'])) {
+				foreach($prop[$i][$key] as $key2 => $value2) {
+					if(gettype($prop[$i][$key][$key2])=='string') $prop[$i][$key][$key2] = rozaReplaceField($prop[$i][$key][$key2], $data, true);
+				}
+			}
+			else if(gettype($prop[$i][$key])=='string') {
 				$prop[$i][$key] = rozaReplaceField($prop[$i][$key], $data, true);
 			}
 			else { //kalo bukan string dah tentu array
 				for($j=0; $j<count($prop[$i][$key]); $j++) {
 					if(gettype($prop[$i][$key][$j])=='string') $prop[$i][$key][$j] = rozaReplaceField($prop[$i][$key][$j], $data, true);
 					else { //kalo bukan string dah tentu object
-						foreach($prop[$i][$key][$j] as $key2 => $value2)  {
+						foreach($prop[$i][$key][$j] as $key2 => $value2) {
 							if(gettype($prop[$i][$key][$j][$key2])=='string') $prop[$i][$key][$j][$key2] = rozaReplaceField($prop[$i][$key][$j][$key2], $data, true);
 						}
 					}
@@ -156,7 +189,7 @@
 		}
 
 		//========================================================================================= bind data
-		if($prop[$i]['element']!='standardlist' && $prop[$i]['element']!='data' && $data[$prop[$i]['id']]) {
+		if(!in_array($prop[$i]['element'], ['standardlist', 'data', 'table']) && $data[$prop[$i]['id']]) {
 			$prop[$i]['value'] = $data[$prop[$i]['id']];
 		}
 		

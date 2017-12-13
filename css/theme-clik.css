@@ -77,15 +77,12 @@ body
 .form-control:focus, .single-line:focus {
     border-color: #FF2F59;
 }
-ul.bar_tabs>li.active {
-    border-right: 6px solid #FF2F59;
-}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
+.vueTableAdd
+{
     border: 1px solid #FF2F59;
-	border-bottom: 3px solid white;
-}
-ul.bar_tabs {
-	border-bottom: 1px solid #FF2F59;
+	background: #FF2F59;
+	color: white;
 }
 .table-responsive thead {
     background: #FF2F59;
@@ -118,4 +115,18 @@ ul.bar_tabs {
 }
 .ranges .btn-default:hover {
     background-color: #4C2B42;
+}
+.fab a:nth-child(1) { background: #FF9D5B; }
+.fab a:nth-child(2) { background: #F65B5B; }
+.fab a:nth-child(3) { background: #BF6DA1; }
+.fab a:nth-child(4) { background: #C895CE; }
+.fab a:nth-child(5) { background: #815F9A; }
+.fab a:last-child { background: #FF2F59; }
+th.VueTables__sortable {
+    border-left: 1px solid #FF2F59 !important;
+    border-top: 1px solid #FF2F59 !important;
+    border-bottom: 1px solid #FF2F59 !important;
+}
+th.VueTables__sortable:last-child {
+    border-right: 1px solid #FF2F59 !important;
 }

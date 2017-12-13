@@ -1,3 +1,10 @@
+rozaClearData and rozaResetData not fully working on datepicker
+
+check ROZA_GetUI.php --> slow or network?
+
+lepas buka global search, bila click kat module punya standardlist, kat rightPanel ada global search
+
+
 Log system konsep graphical mcm Panda Antivirus
 	Click Node nampak description
 	Node ala2 timeline
@@ -7,30 +14,3 @@ Log timelapse every query
 audit trail after success query non select
 
 custom attribute for element (data-xxx)
-
-
-
-FAB
-https://codepen.io/ruslan_khomiak/pen/QGmwMP
-<div class="fab">
-	<span class="fab-action-button">
-		<i class="fa fa-checvron-up"></i>
-	</span>
-	<ul class="fab-buttons">
-		<li class="fab-buttons__item">
-			<a class="fab-buttons__link">
-				<i class="fa fa-file"></i>
-			</a>
-		</li>
-		<li class="fab-buttons__item">
-			<a class="fab-buttons__link">
-				<i class="fa fa-file-text"></i>
-			</a>
-		</li>
-		<li class="fab-buttons__item">
-			<a class="fab-buttons__link">
-				<i class="fa fa-paper-plane"></i>
-			</a>
-		</li>
-	</ul>
-</div>

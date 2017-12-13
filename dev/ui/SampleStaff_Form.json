@@ -8,12 +8,19 @@
 	},
 	{
 		"element": "data",
-		"source": "LOV_Today.sql"
+		"source": "DATA_SampleToday.sql"
 	},
 	{
 		"element": "title",
 		"labelbi": "Element 'title'",
-		"labelbm": "Elemen 'title'"
+		"labelbm": "Elemen 'title'",
+		"style": "freeze"
+	},
+	{
+		"element": "html",
+		"style": "block",
+		"fullwidth": true,
+		"value": "<div style='background:#E74C3C; padding:10px; color:white; border-radius:4px;'><b>Note:</b> In display mode, all input will look like label. Click the FAB and choose EDIT to switch to edit mode.</div>"
 	},
 	{
 		"element": "text",
@@ -23,7 +30,8 @@
 		"placeholderbi": "insert name",
 		"placeholderbm": "masukkan nama",
 		"maxlength": 20,
-		"required": true
+		"required": true,
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "textarea",
@@ -33,30 +41,37 @@
 		"placeholderbi": "insert comment",
 		"placeholderbm": "masukkan komen",
 		"maxlength": 255,
-		"required": true
+		"required": true,
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "dropdown",
 		"id": "state",
 		"source": "LOV_SampleState.sql",
 		"labelbi": "Element 'dropdown'",
-		"labelbm": "Elemen 'dropdown'"
+		"labelbm": "Elemen 'dropdown'",
+		"onload": "onloadState()",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "checkbox",
 		"id": "club",
 		"source": "LOV_SampleClub.sql",
+		"value": "CHESS",
 		"labelbi": "Element 'checkbox' horizontal",
 		"labelbm": "Elemen 'checkbox' horizontal",
-		"style": "horizontal"
+		"style": "horizontal",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "checkbox",
 		"id": "club2",
 		"source": "LOV_SampleClub.sql",
+		"value": "CHESS",
 		"labelbi": "Element 'checkbox' vertical",
 		"labelbm": "Elemen 'checkbox' vertical",
-		"style": "vertical"
+		"style": "vertical",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "radio",
@@ -64,7 +79,8 @@
 		"source": "LOV_SampleGender.sql",
 		"labelbi": "Element 'radio' horizontal",
 		"labelbm": "Elemen 'radio' horizontal",
-		"style": "horizontal"
+		"style": "horizontal",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "radio",
@@ -73,36 +89,85 @@
 		"value": "[[gender]]",
 		"labelbi": "Element 'radio' vertical",
 		"labelbm": "Elemen 'radio' vertical",
-		"style": "vertical"
+		"style": "vertical",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "datepicker",
 		"id": "datepicker",
 		"labelbi": "Element 'datepicker' single",
 		"labelbm": "Elemen 'datepicker' single",
-		"style": "single"
+		"style": "single",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "datepicker",
 		"id": "datepicker",
 		"labelbi": "Element 'datepicker' range",
 		"labelbm": "Elemen 'datepicker' range",
-		"style": "range"
+		"style": "range",
+		"ac_disable": "'{{mode}}'!='edit'"
 	},
 	{
 		"element": "file",
 		"id": "file",
 		"labelbi": "Element 'file'",
-		"labelbm": "Elemen 'file'"
+		"labelbm": "Elemen 'file'",
+		"ac_remove": "'{{mode}}'!='edit'"
+	},
+	{
+		"element": "groupbutton",
+		"id": "groupbutton",
+		"list": [
+			{
+				"labelbi": "Button 1",
+				"labelbm": "Butang 1",
+				"onclick": "alert(1)",
+				"ac_remove": false
+			},
+			{
+				"labelbi": "Button 2",
+				"labelbm": "Butang 2",
+				"onclick": "alert(2)",
+				"ac_remove": false
+			},
+			{
+				"labelbi": "Button 3",
+				"labelbm": "Butang 3",
+				"onclick": "alert(3)",
+				"ac_remove": false
+			}
+		]
 	},
 	{
 		"element": "title",
-		"labelbi": "Element 'formbutton'",
-		"labelbm": "Elemen 'formbutton'"
+		"labelbi": "To put 'groupbutton' below tabs or table, set fullwidth:true",
+		"labelbm": "Untuk menggunakan 'groupbutton' di bawah tabs atau table, setkan fullwidth:true"
 	},
 	{
-		"element": "formbutton",
-		"action": "SampleStaff_Submit.php"
+		"element": "groupbutton",
+		"id": "groupbutton",
+		"fullwidth": true,
+		"list": [
+			{
+				"labelbi": "Button 1",
+				"labelbm": "Butang 1",
+				"onclick": "alert(1)",
+				"ac_remove": false
+			},
+			{
+				"labelbi": "Button 2",
+				"labelbm": "Butang 2",
+				"onclick": "alert(2)",
+				"ac_remove": false
+			},
+			{
+				"labelbi": "Button 3",
+				"labelbm": "Butang 3",
+				"onclick": "alert(3)",
+				"ac_remove": false
+			}
+		]
 	},
 	{
 		"element": "title",
@@ -119,20 +184,83 @@
 	{
 		"element": "title",
 		"labelbi": "Element 'tabs'",
-		"labelbm": "Elemen 'tabs'"
+		"labelbm": "Elemen 'tabs'",
+		"style": "fixed"
 	},
 	{
 		"element": "tabs",
+		"style": "fixed",
 		"list": [
 			{
 				"labelbi": "Tab 1",
 				"labelbm": "Tab 1",
-				"ui": "SampleStaff_Tab.json"
+				"ui": "SampleStaff_Tab.json",
+				"ac_default": true
 			},
 			{
 				"labelbi": "Tab 2",
 				"labelbm": "Tab 2",
-				"ui": "SampleStaff_Tab.json"
+				"ui": "SampleStaff_Form2.json"
+			},
+			{
+				"labelbi": "Tab 3",
+				"labelbm": "Tab 3",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 4",
+				"labelbm": "Tab 4",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 5",
+				"labelbm": "Tab 5",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 6",
+				"labelbm": "Tab 6",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 7",
+				"labelbm": "Tab 7",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 8",
+				"labelbm": "Tab 8",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 9",
+				"labelbm": "Tab 9",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 10",
+				"labelbm": "Tab 10",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 11",
+				"labelbm": "Tab 11",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 12",
+				"labelbm": "Tab 12",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 13",
+				"labelbm": "Tab 13",
+				"ui": "SampleStaff_TabLvl2.json"
+			},
+			{
+				"labelbi": "Tab 14",
+				"labelbm": "Tab 14",
+				"ui": "SampleStaff_TabLvl2.json"
 			}
 		]
 	},
@@ -145,36 +273,80 @@
 		"element": "table",
 		"id": "table",
 		"source": "SampleStaff_Table.sql",
-		"tool": true,
-		"column": [
+		"batchaction": [
 			{
-				"labelbi": "ID",
-				"labelbm": "ID",
-				"value": "[[data1]]",
-				"ac_remove": true
+				"labelbi": "Delete",
+				"labelbm": "Hapus",
+				"onclick": "batchDelete()"
 			},
+			{
+				"labelbi": "Email",
+				"labelbm": "Email",
+				"onclick": "batchEmail()"
+			}
+		],
+		"column": [
 			{
 				"labelbi": "Date",
 				"labelbm": "Tarikh",
-				"value": "[[data2]]"
+				"value": "[[data2]]",
+				"ac_remove": false
 			},
 			{
 				"labelbi": "Description",
 				"labelbm": "Keterangan",
-				"value": "[[data3]]"
+				"value": "[[data3]]",
+				"ac_remove": false
 			}
 		],
 		"onview":
 		{
-			"onclick": "alert('View for [[data3]]')"
+			"onclick": "alert('View for [[data3]]')",
+			"ac_disable": false
 		},
 		"onedit":
 		{
-			"onclick": "alert('Edit for [[data3]]')"
+			"onclick": "alert('Edit for [[data3]]')",
+			"ac_disable": "'{{mode}}'!='edit'"
 		},
 		"ondelete":
 		{
-			"ac_disable": true
+			"ac_disable": "'{{mode}}'!='edit'"
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')",
+			"ac_remove": "'{{mode}}'!='edit'"
+		}
+	},
+	{
+		"element": "fab",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onedit":
+		{
+			"onclick": "rozaCallLandingFile('SampleStaff_Form.js?staff_id={{staff_id}}&mode=edit')",
+			"ac_remove": "'{{mode}}'=='edit'"
+		},
+		"onview":
+		{
+			"onclick": "rozaCallLandingFile('SampleStaff_Form.js?staff_id={{staff_id}}&mode=view')",
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"onclear":
+		{
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"ondefault":
+		{
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')",
+			"ac_remove": "'{{mode}}'!='edit'"
 		}
 	}
 ]
