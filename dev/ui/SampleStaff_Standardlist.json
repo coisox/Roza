@@ -8,15 +8,16 @@
 		"filter": [
 			{
 				"element": "text",
-				"labelbi": "State",
-				"labelbm": "Negeri",
-				"parameter": "state"
-			},
-			{
-				"element": "text",
 				"labelbi": "Position",
 				"labelbm": "Jawatan",
 				"parameter": "position"
+			},
+			{
+				"element": "dropdown",
+				"source": "LOV_SampleState.sql",
+				"labelbi": "State",
+				"labelbm": "Negeri",
+				"parameter": "state"
 			},
 			{
 				"element": "datepicker",

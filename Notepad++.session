@@ -1,0 +1,12 @@
+<NotepadPlus>
+    <Session activeView="0">
+        <mainView activeIndex="0">
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="26662" startPos="0" endPos="0" selMode="0" lang="HTML" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\main.html" backupFilePath="" originalFileLastModifTimestamp="1513667444" />
+            <File firstVisibleLine="306" xOffset="0" scrollWidth="586" startPos="6315" endPos="6315" selMode="0" lang="CSS" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\css\custom.css" backupFilePath="" originalFileLastModifTimestamp="1513822147" />
+            <File firstVisibleLine="10" xOffset="0" scrollWidth="1172" startPos="2454" endPos="2454" selMode="0" lang="PHP" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_GetUi.php" backupFilePath="" originalFileLastModifTimestamp="1514279716" />
+            <File firstVisibleLine="600" xOffset="0" scrollWidth="805" startPos="23118" endPos="23118" selMode="0" lang="Javascript" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_Vue.js" backupFilePath="" originalFileLastModifTimestamp="1513918827" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1681" startPos="789" endPos="789" selMode="0" lang="Normal Text" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\ui\SampleStaff_Form.json" backupFilePath="" originalFileLastModifTimestamp="1514269240" />
+        </mainView>
+        <subView activeIndex="0" />
+    </Session>
+</NotepadPlus>

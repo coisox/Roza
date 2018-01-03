@@ -1,0 +1,56 @@
+[
+	{
+		"title": "Pejabat Peguam Negara",
+		"id": 1,
+		"children": [
+			{
+				"title": "Pejabat Peguam Cara Negara",
+				"id": 2,
+				"children": [
+					{
+						"title": "Sektor Litigasi",
+						"id": 4,
+						"children": [
+							{
+								"title": "Pendakwaan",
+								"id": 10
+							},
+							{
+								"title": "Guaman",
+								"id": 11
+							},
+							{
+								"title": "Perbicaraan dan Rayuan",
+								"id": 12
+							}
+						]
+					},
+					{
+						"title": "Pejabat Peguam Cara Negara II",
+						"id": 5
+					},
+					{
+						"title": "Penyelidikan",
+						"id": 6
+					},
+					{
+						"title": "Pengurusan",
+						"id": 7
+					},
+					{
+						"title": "Sektor Penasihat, Pejabat TPCN III",
+						"id": 8
+					},
+					{
+						"title": "I-CELLS",
+						"id": 9
+					}
+				]
+			},
+			{
+				"title": "Pejabat Peguam Cara Negara II",
+				"id": 3
+			}
+		]
+	}
+]

@@ -1,0 +1,48 @@
+[
+	{
+		"element": "title",
+		"labelbm": "Tan Sri Dato' Sri Haji Mohamed Apandi Bin Haji Ali"
+	},
+	{
+		"element": "html",
+		"fullwidth": true,
+		"value": "<iframe src='dev/html/B8/B8_ProfilePic.html' height='216'></iframe>"
+	},
+	{
+		"element": "text",
+		"labelbm": "Jawatan",
+		"value": "AG",
+		"ac_disable": true
+	},
+	{
+		"element": "text",
+		"labelbm": "Gred",
+		"value": "Turus I",
+		"ac_disable": true
+	},
+	{
+		"element": "datepicker",
+		"id": "datepicker",
+		"labelbm": "Tarikh Perkhidmatan",
+		"style": "range"
+	},
+	{
+		"element": "text",
+		"labelbm": "Medan 1"
+	},
+	{
+		"element": "text",
+		"labelbm": "Medan 2"
+	},
+	{
+		"element": "text",
+		"labelbm": "Medan 3"
+	},
+	{
+		"element": "fab",
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	}
+]

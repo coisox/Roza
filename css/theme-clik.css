@@ -116,12 +116,13 @@ body
 .ranges .btn-default:hover {
     background-color: #4C2B42;
 }
-.fab a:nth-child(1) { background: #FF9D5B; }
-.fab a:nth-child(2) { background: #F65B5B; }
-.fab a:nth-child(3) { background: #BF6DA1; }
-.fab a:nth-child(4) { background: #C895CE; }
-.fab a:nth-child(5) { background: #815F9A; }
-.fab a:last-child { background: #FF2F59; }
+.fab .padder:nth-child(1) a { background: #FF2F59; }
+.fab .padder:nth-child(2) a { background: #815F9A; }
+.fab .padder:nth-child(3) a { background: #C895CE; }
+.fab .padder:nth-child(4) a { background: #BF6DA1; }
+.fab .padder:nth-child(5) a { background: #F65B5B; }
+.fab .padder:nth-child(6) a { background: #FF9D5B; }
+
 th.VueTables__sortable {
     border-left: 1px solid #FF2F59 !important;
     border-top: 1px solid #FF2F59 !important;

@@ -20,7 +20,7 @@
 		"element": "html",
 		"style": "block",
 		"fullwidth": true,
-		"value": "<div style='background:#E74C3C; padding:10px; color:white; border-radius:4px;'><b>Note:</b> In display mode, all input will look like label. Click the FAB and choose EDIT to switch to edit mode.</div>"
+		"value": "<div style='background:#E74C3C; padding:10px; color:white; border-radius:4px;'><b>Note:</b> In view mode, all input with \"ac_dualmode\" property will look like label. You can switch to edit mode through FAB button.</div>"
 	},
 	{
 		"element": "text",
@@ -31,7 +31,7 @@
 		"placeholderbm": "masukkan nama",
 		"maxlength": 20,
 		"required": true,
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "textarea",
@@ -42,7 +42,7 @@
 		"placeholderbm": "masukkan komen",
 		"maxlength": 255,
 		"required": true,
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "dropdown",
@@ -51,7 +51,7 @@
 		"labelbi": "Element 'dropdown'",
 		"labelbm": "Elemen 'dropdown'",
 		"onload": "onloadState()",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "checkbox",
@@ -61,7 +61,7 @@
 		"labelbi": "Element 'checkbox' horizontal",
 		"labelbm": "Elemen 'checkbox' horizontal",
 		"style": "horizontal",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "checkbox",
@@ -71,7 +71,7 @@
 		"labelbi": "Element 'checkbox' vertical",
 		"labelbm": "Elemen 'checkbox' vertical",
 		"style": "vertical",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "radio",
@@ -80,7 +80,7 @@
 		"labelbi": "Element 'radio' horizontal",
 		"labelbm": "Elemen 'radio' horizontal",
 		"style": "horizontal",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "radio",
@@ -90,7 +90,7 @@
 		"labelbi": "Element 'radio' vertical",
 		"labelbm": "Elemen 'radio' vertical",
 		"style": "vertical",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "datepicker",
@@ -98,7 +98,7 @@
 		"labelbi": "Element 'datepicker' single",
 		"labelbm": "Elemen 'datepicker' single",
 		"style": "single",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "datepicker",
@@ -106,28 +106,28 @@
 		"labelbi": "Element 'datepicker' range",
 		"labelbm": "Elemen 'datepicker' range",
 		"style": "range",
-		"ac_disable": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "file",
 		"id": "file",
 		"labelbi": "Element 'file'",
 		"labelbm": "Elemen 'file'",
-		"ac_remove": "'{{mode}}'!='edit'"
+		"ac_dualmode": true
 	},
 	{
 		"element": "groupbutton",
 		"id": "groupbutton",
 		"list": [
 			{
-				"labelbi": "Button 1",
-				"labelbm": "Butang 1",
+				"labelbi": "Button 1 no ac_dualmode",
+				"labelbm": "Butang 1 tiada ac_dualmode",
 				"onclick": "alert(1)",
 				"ac_remove": false
 			},
 			{
-				"labelbi": "Button 2",
-				"labelbm": "Butang 2",
+				"labelbi": "Button 2 no ac_dualmode",
+				"labelbm": "Butang 2 tiada ac_dualmode",
 				"onclick": "alert(2)",
 				"ac_remove": false
 			},
@@ -135,7 +135,8 @@
 				"labelbi": "Button 3",
 				"labelbm": "Butang 3",
 				"onclick": "alert(3)",
-				"ac_remove": false
+				"ac_remove": false,
+				"ac_dualmode": true
 			}
 		]
 	},
@@ -150,14 +151,14 @@
 		"fullwidth": true,
 		"list": [
 			{
-				"labelbi": "Button 1",
-				"labelbm": "Butang 1",
+				"labelbi": "Button 1 no ac_dualmode",
+				"labelbm": "Butang 1 tiada ac_dualmode",
 				"onclick": "alert(1)",
 				"ac_remove": false
 			},
 			{
-				"labelbi": "Button 2",
-				"labelbm": "Butang 2",
+				"labelbi": "Button 2 no ac_dualmode",
+				"labelbm": "Butang 2 tiada ac_dualmode",
 				"onclick": "alert(2)",
 				"ac_remove": false
 			},
@@ -165,7 +166,8 @@
 				"labelbi": "Button 3",
 				"labelbm": "Butang 3",
 				"onclick": "alert(3)",
-				"ac_remove": false
+				"ac_remove": false,
+				"ac_dualmode": true
 			}
 		]
 	},
@@ -184,12 +186,10 @@
 	{
 		"element": "title",
 		"labelbi": "Element 'tabs'",
-		"labelbm": "Elemen 'tabs'",
-		"style": "fixed"
+		"labelbm": "Elemen 'tabs'"
 	},
 	{
 		"element": "tabs",
-		"style": "fixed",
 		"list": [
 			{
 				"labelbi": "Tab 1",
@@ -266,6 +266,36 @@
 	},
 	{
 		"element": "title",
+		"labelbi": "Element 'accordion'",
+		"labelbm": "Elemen 'accordion'"
+	},
+	{
+		"element": "accordion",
+		"id": "accordion",
+		"list": [
+			{
+				"labelbi": "Accordion 1",
+				"labelbm": "Accordion 1",
+				"id": "acc1",
+				"ui": "SampleStaff_Acc1.json"
+			},
+			{
+				"labelbi": "Accordion 2",
+				"labelbm": "Accordion 2",
+				"id": "acc2",
+				"ui": "SampleStaff_Acc2.json",
+				"ac_default": true
+			},
+			{
+				"labelbi": "Accordion 3",
+				"labelbm": "Accordion 3",
+				"id": "acc3",
+				"ui": "SampleStaff_Acc3.json"
+			}
+		]
+	},
+	{
+		"element": "title",
 		"labelbi": "Element 'table'",
 		"labelbm": "Elemen 'table'"
 	},
@@ -307,16 +337,16 @@
 		"onedit":
 		{
 			"onclick": "alert('Edit for [[data3]]')",
-			"ac_disable": "'{{mode}}'!='edit'"
+			"ac_dualmode": true
 		},
 		"ondelete":
 		{
-			"ac_disable": "'{{mode}}'!='edit'"
+			"ac_dualmode": true
 		},
 		"onadd":
 		{
 			"onclick": "alert('Your new form')",
-			"ac_remove": "'{{mode}}'!='edit'"
+			"ac_dualmode": true
 		}
 	},
 	{
@@ -325,28 +355,9 @@
 		{
 			"onclick": "alert('print')"
 		},
-		"onedit":
-		{
-			"onclick": "rozaCallLandingFile('SampleStaff_Form.js?staff_id={{staff_id}}&mode=edit')",
-			"ac_remove": "'{{mode}}'=='edit'"
-		},
-		"onview":
-		{
-			"onclick": "rozaCallLandingFile('SampleStaff_Form.js?staff_id={{staff_id}}&mode=view')",
-			"ac_remove": "'{{mode}}'!='edit'"
-		},
-		"onclear":
-		{
-			"ac_remove": "'{{mode}}'!='edit'"
-		},
-		"ondefault":
-		{
-			"ac_remove": "'{{mode}}'!='edit'"
-		},
 		"onsave":
 		{
-			"onclick": "alert('save')",
-			"ac_remove": "'{{mode}}'!='edit'"
+			"onclick": "alert('save')"
 		}
 	}
 ]

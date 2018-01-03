@@ -1,0 +1,271 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<title>B8Tree</title>
+
+	<link href="lib/jquery-ui.css" rel="stylesheet">
+	<link href="../../../css/custom.css" rel="stylesheet">
+	<script src="../../../lib/jquery.min.js"></script>
+	<script src="lib/jquery-ui.min.js"></script>
+
+	<script src="lib/jquery.ui-contextmenu.min.js"></script>
+
+	<link href="lib/skin-coisox/ui.fancytree.css" rel="stylesheet">
+	<script src="lib/modules/jquery.fancytree.js"></script>
+	<script src="lib/modules/jquery.fancytree.dnd.js"></script>
+	<script src="lib/modules/jquery.fancytree.edit.js"></script>
+
+	<script type="text/javascript">
+		var CLIPBOARD = null;
+		var tree = null;
+		var titleSitemap = location.search=='?language=bm'?'Papar Struktur':'Show Structure';
+		var titleArrowE = location.search=='?language=bm'?'Kuncupkan':'Collapse';
+		var titleArrowC = location.search=='?language=bm'?'Kembangkan':'Expand';
+
+		/*
+			SOURCE = [
+				{title: "node 1", folder: true, expanded: true, children: [
+					{title: "node 1.1", foo: "a"},
+					{title: "node 1.2", foo: "b"}
+				 ]},
+				{title: "node 2", folder: true, expanded: false, children: [
+					{title: "node 2.1", foo: "c"},
+					{title: "node 2.2", foo: "d"}
+				 ]}
+			];
+		*/
+
+		$(function(){
+
+			tree = $("#tree").fancytree({
+				checkbox: false,
+				titlesTabbable: true,		 // Add all node titles to TAB chain
+				quicksearch: false,				// Jump to nodes when pressing first character
+				click: function (event, data) {
+					data.node.toggleExpanded();
+					parent.rozaSetPanel({
+						panel: 'rightPanel',
+						ui: 'B8_Form.json'
+					});
+				},
+				renderNode: function (event, data) {
+					//console.log("==============");
+					//console.log(data.node.data);
+					
+					if(!data.node['custombutton']) {
+						data.node['custombutton'] = true;
+						
+						var cb1 = $('<div class="custombutton" data-title="'+titleSitemap+'"><div class="sitemap"></div></div>'); //sitemap
+						var cb2 = $('<div class="custombutton" data-title-e="'+titleArrowE+'" data-title-c="'+titleArrowC+'"><div class="arrow"></div></div>'); //arrow
+
+						cb1.click(function(){
+							var tree2 = $('#tree').fancytree('getTree');
+							tree2.reload({source: { url: "tree2.json"}});
+						});
+						
+						if(!data.node.data.picture) $(data.node.span).append(cb1);
+						if(data.node.children) $(data.node.span).append(cb2);
+					}
+				},
+		
+				source: { url: "tree1.json"},
+				extensions: ["dnd"],
+				dnd: {
+					preventVoidMoves: true,
+					preventRecursiveMoves: true,
+					autoExpandMS: 400,
+					dragStart: function(node, data) {
+						return true;
+					},
+					dragEnter: function(node, data) {
+						// return ["before", "after"];
+						return true;
+					},
+					dragDrop: function(node, data) {
+						data.otherNode.moveTo(node, data.hitMode);
+					}
+				},
+				activate: function(event, data){
+					console.log(data);
+				}
+			}).on("nodeCommand", function(event, data){
+				// Custom event handler that is triggered by keydown-handler and
+				// context menu:
+				var refNode, moveMode,
+					tree = $(this).fancytree("getTree"),
+					node = tree.getActiveNode();
+
+				switch( data.cmd ) {
+				case "moveUp":
+					refNode = node.getPrevSibling();
+					if( refNode ) {
+						node.moveTo(refNode, "before");
+						node.setActive();
+					}
+					break;
+				case "moveDown":
+					refNode = node.getNextSibling();
+					if( refNode ) {
+						node.moveTo(refNode, "after");
+						node.setActive();
+					}
+					break;
+				case "indent":
+					refNode = node.getPrevSibling();
+					if( refNode ) {
+						node.moveTo(refNode, "child");
+						refNode.setExpanded();
+						node.setActive();
+					}
+					break;
+				case "outdent":
+					if( !node.isTopLevel() ) {
+						node.moveTo(node.getParent(), "after");
+						node.setActive();
+					}
+					break;
+				case "rename":
+					node.editStart();
+					break;
+				case "remove":
+					refNode = node.getNextSibling() || node.getPrevSibling() || node.getParent();
+					node.remove();
+					if( refNode ) {
+						refNode.setActive();
+					}
+					break;
+				case "addChild":
+					node.editCreateNode("child", "");
+					break;
+				case "addSibling":
+					node.editCreateNode("after", "");
+					break;
+				case "cut":
+					CLIPBOARD = {mode: data.cmd, data: node};
+					break;
+				case "copy":
+					CLIPBOARD = {
+						mode: data.cmd,
+						data: node.toDict(function(n){
+							delete n.key;
+						})
+					};
+					break;
+				case "clear":
+					CLIPBOARD = null;
+					break;
+				case "paste":
+					if( CLIPBOARD.mode === "cut" ) {
+						// refNode = node.getPrevSibling();
+						CLIPBOARD.data.moveTo(node, "child");
+						CLIPBOARD.data.setActive();
+					} else if( CLIPBOARD.mode === "copy" ) {
+						node.addChildren(CLIPBOARD.data).setActive();
+					}
+					break;
+				default:
+					alert("Unhandled command: " + data.cmd);
+					return;
+				}
+
+			// }).on("click dblclick", function(e){
+			//	 console.log( e, $.ui.fancytree.eventToString(e) );
+
+			}).on("keydown", function(e){
+				var cmd = null;
+
+				// console.log(e.type, $.ui.fancytree.eventToString(e));
+				switch( $.ui.fancytree.eventToString(e) ) {
+				case "ctrl+shift+n":
+				case "meta+shift+n": // mac: cmd+shift+n
+					cmd = "addChild";
+					break;
+				case "ctrl+c":
+				case "meta+c": // mac
+					cmd = "copy";
+					break;
+				case "ctrl+v":
+				case "meta+v": // mac
+					cmd = "paste";
+					break;
+				case "ctrl+x":
+				case "meta+x": // mac
+					cmd = "cut";
+					break;
+				case "ctrl+n":
+				case "meta+n": // mac
+					cmd = "addSibling";
+					break;
+				case "del":
+				case "meta+backspace": // mac
+					cmd = "remove";
+					break;
+				// case "f2":	// already triggered by ext-edit pluging
+				//	 cmd = "rename";
+				//	 break;
+				case "ctrl+up":
+					cmd = "moveUp";
+					break;
+				case "ctrl+down":
+					cmd = "moveDown";
+					break;
+				case "ctrl+right":
+				case "ctrl+shift+right": // mac
+					cmd = "indent";
+					break;
+				case "ctrl+left":
+				case "ctrl+shift+left": // mac
+					cmd = "outdent";
+				}
+				if( cmd ){
+					$(this).trigger("nodeCommand", {cmd: cmd});
+					// e.preventDefault();
+					// e.stopPropagation();
+					return false;
+				}
+			});
+
+			/*
+			 * Tooltips
+			 */
+			// $("#tree").tooltip({
+			//	 content: function () {
+			//		 return $(this).attr("title");
+			//	 }
+			// });
+
+			/*
+			 * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
+			 */
+			$("#tree").contextmenu({
+				delegate: "span.fancytree-node",
+				menu: [
+					{title: "Delete <kbd>Del</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+					{title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
+					{title: "Copy <kbd>Ctrl+C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+					{title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true },
+					{title: "----"},
+					{title: "New sibling", cmd: "addSibling", uiIcon: "ui-icon-plus" },
+					{title: "New child", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" }
+					],
+				beforeOpen: function(event, ui) {
+					var node = $.ui.fancytree.getNode(ui.target);
+					$("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+					node.setActive();
+				},
+				select: function(event, ui) {
+					var that = this;
+					setTimeout(function(){
+						$(that).trigger("nodeCommand", {cmd: ui.cmd});
+					}, 100);
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div id="tree"></div>
+</body>
+</html>

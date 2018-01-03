@@ -1,0 +1,8 @@
+[
+	{
+		"element": "html",
+		"style": "block",
+		"fullwidth": true,
+		"value": "<iframe src='dev/html/B8/B8_Tree.html?language={{rozaLanguage}}' onload='resizeIframe(this)'></iframe>"
+	}
+]

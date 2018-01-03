@@ -1,5 +1,5 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v171213';
+var currentVersion = 'v180103';
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
@@ -54,10 +54,12 @@ function initVue() {
 				sortBy: ''
 			},
 			taskbar: {},
+			accordions: {},
 			tabLevel1: {},
 			tabLevel2: {},
 			panel: {
 				leftPanel: {
+					//initQueryBuilder: false,
 					filterString: '',
 					type: '',
 					prop: {},
@@ -78,7 +80,8 @@ function initVue() {
 			},
 			dropzoneAction: 'main.html',
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
-			callbackQue: []
+			callbackQue: [],
+			viewMode: true
 		},
 		methods: {
 			metroClick: function(item, level, index) {
@@ -102,7 +105,6 @@ function initVue() {
 				}
 			},
 			onclick: function(item) {
-				console.log(item);
 				eval(item.onclick);
 			},
 			onchange: function(item) {
@@ -152,17 +154,53 @@ function initVue() {
 			console: function(text) {
 				console.log(text);
 			},
+			/*
+			resetQueryBuilder: function(p) {
+				$('#'+p+'QueryBuilder').queryBuilder('reset');
+				this.panel[p].filterString = '';
+			},
+			submitQueryBuilder: function(p) {
+				console.log("submitQueryBuilder");
+				console.log($('#'+p+'QueryBuilder').queryBuilder('getRules'));
+			},
+			*/
 			addFilterRow: function(p, e) {
 				if(e==undefined) {
 					$('#'+p+' .filterRow:last').after($('#'+p+' .filterRow:last').clone());
 					$('#'+p+' .filterRow:last .adv1, #'+p+' .filterRow:last .adv2, #'+p+' .filterRow:last .adv3').val('');
+					$('#'+p+' .filterRow:last').removeClass('bad');
 				}
 				else if($('#'+p+' .filterRow').size()==1){
 					$('#'+p+' .filterRow:last .adv1, #'+p+' .filterRow:last .adv2, #'+p+' .filterRow:last .adv3').val('');
+					$('#'+p+' .filterRow:last').removeClass('bad');
 				}
 				else {
 					$(e).parents('.filterRow').remove();
 				}
+			},
+			clearFilterRow: function(p) {
+				$('#'+p+' .filterRow').not(':last').remove();
+				$('#'+p+' .filterRow:last .adv1, #'+p+' .filterRow:last .adv2, #'+p+' .filterRow:last .adv3').val('');
+				this.panel[p].filterString = '';
+			},
+			submitFilterRow: function(p) {
+				$('#'+p+' .filterRow').each(function(){
+					if($(this).find('.adv1').val()=='' || $(this).find('.adv2').val()=='' || $(this).find('.adv3').val()=='') {
+						$(this).addClass('bad');
+					}
+					else {
+						$(this).removeClass('bad');
+					}
+				});
+				if($('#'+p+' .filterRow.bad').size()==0) {
+					console.log(JSON.stringify($('#'+p+' .filterRow select, #'+p+' .filterRow input').serialize()));
+				}
+				/*
+				this.rozaSetPanel({
+					panel: p,
+					ui: 'SampleStaff_Standardlist.json'
+				});
+				*/
 			},
 			rozaHasRole: function(array) {
 				var match = 0;
@@ -173,7 +211,6 @@ function initVue() {
 			},
 			rozaModal: function(opt) {
 				if(opt) {
-					console.log(opt.title);
 					$('#modalGeneral .modal-title').html('').html(opt.title);
 					$('#modalGeneral .modal-header').toggle(opt.title?true:false);
 					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
@@ -268,6 +305,8 @@ function initVue() {
 					this.panel.rightPanel.show = !(opt.panel=='fullPanel');
 					this.panel.fullPanel.show = (opt.panel=='fullPanel');
 					
+					if($('#'+opt.panel+'QueryBuilder.query-builder').size()) $('#'+opt.panel+'QueryBuilder').queryBuilder('reset');
+
 					if(opt.panel!='rightPanel') {
 						roza.panel.rightPanel.prop = {};
 						roza.panel.rightPanel.type = '';
@@ -299,21 +338,31 @@ function initVue() {
 									
 									if(data.prop[x].onadd) {
 										roza['vueTable'][data.prop[x].id]['onadd'] = [];
-										roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = data.prop[x].onadd?roza.accessControl(data.prop[x].onadd, 'ac_remove'):false;
 										roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
+										roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
+										roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
 									}
 								}
 								
 								//set default tab
 								else if(data.prop[x].element=='tabs') {
 									roza.rozaDefaultTab(data.prop[x].list, 1);
-								}		
+								}
+								
+								//set default accordion
+								else if(data.prop[x].element=='accordion') {
+									roza.rozaDefaultAccordion(data.prop[x].list);
+								}
+								
 							}
 							
 							roza.panel[opt.panel].prop = data.prop;
 							roza.panel[opt.panel].type = data.prop[0].element=='standardlist'?'standardlist':'ui';
 
-							if(data.prop[0].element=='standardlist') roza.setBreadcrumbBuffer(3, data.prop[0]['label'+roza.rozaLanguage]);
+							if(data.prop[0].element=='standardlist') {
+								roza.setBreadcrumbBuffer(3, data.prop[0]['label'+roza.rozaLanguage]);
+								//roza.panel.leftPanel.initQueryBuilder = true;
+							}
 							else if(opt.panel!='rightPanel'){
 								for(var x=0; x<data.prop.length; x++) {
 									if(data.prop[x].element=='title') roza.setBreadcrumbBuffer(3, data.prop[x]['label'+roza.rozaLanguage]);
@@ -346,6 +395,19 @@ function initVue() {
 					roza.taskbar = {};
 				}
 			},
+			rozaDefaultAccordion: function(list) {
+				var hasDefault = false;
+				
+				for(var x=0; x<list.length; x++) {
+					if(this.accessControl(list[x],'ac_default')) {
+						hasDefault = true;
+						setTimeout(function(){ roza.rozaSetAccordion(list[x]); }); //setTimeout tanpa number bertindak sebagai nextTick
+						break;
+					}
+				}
+				
+				if(!hasDefault) setTimeout(function(){ roza.rozaSetAccordion(list[0]); }); //setTimeout tanpa number bertindak sebagai nextTick
+			},
 			rozaDefaultTab: function(list, level) {
 				var activated = false;
 				
@@ -364,6 +426,49 @@ function initVue() {
 						$('.nav.nav-tabs.level'+level+' li:first').addClass('active');
 					}, 1);
 				}
+			},
+			rozaSetAccordion: function(list) {
+				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+					if(data.status=='ok') {
+						for(var x=0; x<data.prop.length; x++) {
+							if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
+							
+							if(data.prop[x].element=='table') {
+								if(!roza['vueTable']) roza['vueTable'] = [];
+								roza['vueTable'][data.prop[x].id] = [];
+								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
+								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
+								roza['vueTable'][data.prop[x].id]['option'] = {
+									columnsDisplay: {
+										actionview: 'micro',
+										actionedit: 'micro',
+										actiondelete: 'micro',
+										ac_remove: 'micro'
+									}
+								};
+								
+								if(data.prop[x].onadd) {
+									roza['vueTable'][data.prop[x].id]['onadd'] = [];
+									roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
+									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
+									roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
+								}
+							}
+						}
+							
+						roza.accordions[list.id] = data.prop;
+						roza.accordions = JSON.parse(JSON.stringify(roza.accordions));
+						roza.$nextTick(function () {
+							$('.panel-collapse.collapse').collapse('hide');
+							$('.accordion-title').addClass('collapsed');
+							$('#'+list.id).prev().removeClass('collapsed');
+							$('#'+list.id).collapse('show');
+						});
+						
+						//roza['accordions'] = JSON.stringify(roza['accordions']);
+					}
+					else roza.toast(data.status);
+				});
 			},
 			rozaSetTab: function(list, level) {
 				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
@@ -387,8 +492,9 @@ function initVue() {
 								
 								if(data.prop[x].onadd) {
 									roza['vueTable'][data.prop[x].id]['onadd'] = [];
-									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = data.prop[x].onadd?roza.accessControl(data.prop[x].onadd, 'ac_remove'):false;
 									roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
+									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
+									roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
 								}
 							}
 							
@@ -412,7 +518,7 @@ function initVue() {
 			globalSearch: function(event) {
 				if(event.key=='Enter' || event.type=='click') {
 					this.breadcrumb = '<li class="breadcrumb-item"><a>Search result for "'+this.globalSearchKeyword+'"</a></li>';
-					this.panel.fullPanel.type = 'searchresult';
+					this.panel.fullPanel.type = 'custompage_searchresult';
 					this.panel.fullPanel.show = true;
 					this.panel.leftPanel.show = false;
 					this.panel.leftPanel.show = false;
@@ -518,20 +624,32 @@ function initVue() {
 			$('.VueTables').each(function(){				
 				var id = $(this).attr('id');
 				if(roza['vueTable'][id]['onadd'] && !roza['vueTable'][id]['onadd']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
-					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd" onclick="'+roza['vueTable'][id]['onadd']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
+					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['onadd']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['onadd']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
 				}
-				else if(roza['vueTable'][id]['onadd']['ac_remove']) {
+				else if(roza['vueTable'][id]['onadd'] && roza['vueTable'][id]['onadd']['ac_remove']) {
 					$('#'+id+' .vueTableAdd').remove();
 				}
 			});
 			
-			$('textarea[data-autoresize]').each(function() {
-				var offset = this.offsetHeight - this.clientHeight;
-				var resizeTextarea = function(el) {
-					$(el).css('height', 'auto').css('height', el.scrollHeight + offset);
-				};
-				$(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
-			});
+			/*
+			if(this.panel.leftPanel.initQueryBuilder) {
+				this.panel.leftPanel.initQueryBuilder = false;
+				$('#leftPanelQueryBuilder').queryBuilder({
+					filters: [
+						{
+							id: 'c1',
+							label: 'Column 1',
+							type: 'string'
+						},
+						{
+							id: 'c2',
+							label: 'Column 2',
+							type: 'string'
+						}
+					]
+				})
+			}
+			*/
 		},
 		mounted: function() {
 			this.$nextTick(function () {
@@ -570,8 +688,17 @@ function initVue() {
 					$(this).parent('.ui-resizable').removeAttr('style');
 				});
 				
+				/*
 				$('#menu_toggle').click(function(){
 					$('body').toggleClass('nav-md nav-sm');
+				});
+				*/
+				
+				$('.metro-menu-opener').mouseenter(function(){
+					$('.metro-menu-opener').addClass('active');
+				});
+				$('.metro-menu-closer').mouseenter(function(){
+					$('.metro-menu-opener').removeClass('active');
 				});
 				
 				$('#globalSearch').devbridgeAutocomplete({
@@ -595,11 +722,17 @@ function initVue() {
 					this.rozaUserPic = 'images/alien.png';
 					this.rozaModal({
 						labelbm:
-							'<p>Add (mockup) advance filtering for element standardlist.</p>'+
-							'<p>For more complete details, see <a href="./manual" target="_blank">Roza Manual</a></p>',
+							'<p>Element tabs is depreciated.</p>'+
+							'<p>New element accordion introduced to replace tabs.</p>'+
+							'<p>Fixed advance filter layout.</p>'+
+							'<p>Pretty scrollbar is now cross browser.</p>'+
+							'<p>Metro Menu will auto toggle (show/hide) upon mouse enter/leave.</p>',
 						labelbi:
-							'<p>Add (mockup) advance filtering for element standardlist.</p>'+
-							'<p>For more complete details, see <a href="./manual" target="_blank">Roza Manual</a></p>',
+							'<p>Element tabs is depreciated.</p>'+
+							'<p>New element accordion introduced to replace tabs.</p>'+
+							'<p>Fixed advance filter layout.</p>'+
+							'<p>Pretty scrollbar is now cross browser.</p>'+
+							'<p>Metro Menu will auto toggle (show/hide) upon mouse enter/leave.</p>',
 						title: currentVersion
 					});
 				}
@@ -609,8 +742,8 @@ function initVue() {
 };
 
 function advanceIsDatepicker(e) {
-	xxx = e;
 	if($(e).find(':selected').attr('element')=='datepicker') {
+		$(e).parent().find('.adv3').val('');
 		$(e).parent().find('.adv3').daterangepicker({
 			singleDatePicker: true,
 			locale: {

@@ -1,9 +1,58 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
 body {
 	overflow: hidden;
+}
+.metro-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-230px);
+	transition: all .3s ease-in-out;
+	
+	min-height: 100%;
+    width: 230px;
+    padding: 0;
+    display: -ms-flexbox;
+    display: flex;
+    z-index: 4;
+}
+.metro-menu-opener {
+	position: fixed;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	width: 53px;
+	height: 57px;
+}
+.metro-menu-opener.active + .metro-menu-closer + .main_container .metro-menu {
+	transform: translateX(0);
+}
+.metro-menu-closer {
+	display: none;
+	left: 230px;
+	width: calc(100% - 230px);
+	height: 100%;
+	position: fixed;
+	z-index: 3;
+}
+.metro-menu-opener.active + .metro-menu-closer {
+	display: block;
+}
+.nav-md .container.body .right_col,
+.main_container .top_nav
+{
+	margin-left: 0;
 }
 textarea {
     box-sizing: border-box;
     resize: none;
+}
+.fullheight {
+	height: 100%;
 }
 .right_navbar {
 	position: fixed !important;
@@ -324,25 +373,24 @@ body.nav-md .logo_small {
 .modal .x_content.p-0 {
 	height: initial;
 }
+.x_content.p-0.noscroll {
+	overflow-x: initial;
+	overflow-y: initial;
+}
 .filterRow .adv1, .filterRow .adv2, .filterRow .adv3, .filterRow .adv4, .filterRow .adv5 {
 	display: inline-block;
-	margin-right: 2px;
+	margin-right: 5px;
+	float: left;
 }
-.filterRow .adv1 {
-	width: 150px;
+.filterRow .adv1, .filterRow .adv2, .filterRow .adv3 {
+	width: calc(28% - 4px);
 }
-.filterRow .adv2 {
-	width: 160px;
-}
-.filterRow .adv3 {
-	width: 152px;
-}
-.filterRow .adv4 {
+.filterRow .adv4, .filterRow .adv5 {
+	width: calc(8% - 4px);
 	margin-bottom: 2px;
 }
 .filterRow .adv5 {
 	margin-right: 0;
-	margin-bottom: 2px;
 }
 .filterRow .btn i {
 	padding-top: 3px;
@@ -363,7 +411,7 @@ iframe {
 .form-group .btn {
     margin-bottom: initial;
 }
-[class^=roza-tooltip]:hover:after {
+.roza-tooltip-bottom:hover:after, .roza-tooltip-left:hover:after {
 	position: absolute;
     display: block;
     content: attr(data-title);
@@ -377,7 +425,7 @@ iframe {
     font-weight: normal;
 	z-index: 1;
 }
-[class^=roza-tooltip]:hover:before {
+.roza-tooltip-bottom:hover:before, .roza-tooltip-left:hover:before {
     background: #424242;
     display: block;
     position: absolute;
@@ -447,6 +495,9 @@ select.form-control.ac_disable {
 	border-color: transparent !important;
 	padding-left: 0;
 }
+.viewMode .vueTableDualMode {
+	display: none;
+}
 /*
 .radio label.ac_disable .iradio_flat-green.checked {
     opacity: 0;
@@ -473,19 +524,12 @@ select.form-control.ac_disable {
 .x_content.p-0 {
 	height: calc(100vh - 171px);
 	overflow-x: hidden;
-    overflow-y: scroll;
 }
 .x_content.p-0.standardlist {
 	height: calc(100vh - 220px);
 }
-.x_content.p-0::-webkit-scrollbar {
-    width: 0px;
-}
-.x_content.p-0::-webkit-scrollbar-thumb {
-    background: #2A3F54;
-}
-.x_content.p-0::-webkit-scrollbar-track {
-    background-color: #1ABB9C;
+.simplebar-track.horizontal {
+	display: none;
 }
 .list-group {
 	margin-bottom: 0;
@@ -524,15 +568,28 @@ ul.bar_tabs li:after {
     height: 1px;
     background: #DDDDDD;
 }
+/* ================================================================================== Scrollbar */
+.x_content.p-0::-webkit-scrollbar {
+    width: 0px;
+}
+.x_content.p-0::-webkit-scrollbar-thumb {
+    background: #2A3F54;
+}
+.x_content.p-0::-webkit-scrollbar-track {
+    background-color: #1ABB9C;
+}
+
 /* ================================================================================== Vue Table */
 [id^=VueTables__limit] {
 	margin-left: 5px;
 }
-.VueTables .actions_column {
+.VueTables th.actions_column {
 	width: 100px;
 	pointer-events: none;
 	text-align: center;
-	white-space: nowrap;
+}
+.VueTables td.actions_column {
+	text-align: center;
 }
 .VueTables .actions_column .VueTables__sort-icon {
 	display: none;
@@ -576,7 +633,16 @@ ul.bar_tabs li:after {
 	right: 40px;
 	z-index: 100;
 }
-.fab a {
+.fab .padder {
+	padding-top: 10px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+.fab .padder:last-child {
+	padding-top: 0;
+}
+.fab .padder a {
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 	border-radius: 50%;
 	display: block;
@@ -586,25 +652,69 @@ ul.bar_tabs li:after {
 	padding-top: 15px;
 	width: 56px;
 	height: 56px;
-	margin: 10px auto 0;
-	position: relative;
-	-webkit-transition: .3s;
-	transition: .3s;
 	cursor: pointer;
 }
-.fab a:not(:last-child) {
-	opacity: 0;
+.fab .padder:not(:first-child) a {
 	padding-top: 7px;
 	width: 40px;
 	height: 40px;
-	-webkit-transform: translateY(50px) scale(0.4);
-	-ms-transform: translateY(50px) scale(0.4);
-	transform: translateY(50px) scale(0.4);	
 }
-.fab:hover a:not(:last-child) {
+.fab .padder:not(:first-child) {
+	right: 8px;
+	-webkit-transition: .3s;
+	transition: .3s;
+	
+	opacity: 0;
+	-webkit-transform: translateY(0) scale(0.4);
+	-ms-transform: translateY(0) scale(0.4);
+	transform: translateY(0) scale(0.4);	
+}
+.fab:hover .padder:nth-child(2) {
 	opacity: 1;
-	-webkit-transform: translateY(0) scale(1);
-	-ms-transform: translateY(0) scale(1);
-	transform: translateY(0) scale(1);
+	-webkit-transform: translateY(-66px) scale(1);
+	-ms-transform: translateY(-66px) scale(1);
+	transform: translateY(-66px) scale(1);
+}
+.fab:hover .padder:nth-child(3) {
+	opacity: 1;
+	-webkit-transform: translateY(-116px) scale(1);
+	-ms-transform: translateY(-116px) scale(1);
+	transform: translateY(-116px) scale(1);
+}
+.fab:hover .padder:nth-child(4) {
+	opacity: 1;
+	-webkit-transform: translateY(-166px) scale(1);
+	-ms-transform: translateY(-166px) scale(1);
+	transform: translateY(-166px) scale(1);
+}
+.fab:hover .padder:nth-child(5) {
+	opacity: 1;
+	-webkit-transform: translateY(-216px) scale(1);
+	-ms-transform: translateY(-216px) scale(1);
+	transform: translateY(-216px) scale(1);
+}
+.fab:hover .padder:nth-child(6) {
+	opacity: 1;
+	-webkit-transform: translateY(-266px) scale(1);
+	-ms-transform: translateY(-266px) scale(1);
+	transform: translateY(-266px) scale(1);
 }
 /* ================================================================================== FAB END */
+
+/* ================================================================================== ACCORDION START */
+a.panel-title, a.panel-title:focus { /*active*/
+    font-size: unset;
+	font-weight: bold;
+    background: #2A3F54;
+	color: white;
+    padding: 10px;
+    display: block;
+}
+a.panel-title.collapsed, a.panel-title.collapsed:focus { /*not active*/
+    background: #F7F7F7;
+	color: #337AB7;
+}
+.panel-group .panel {
+    overflow: hidden;
+}
+/* ================================================================================== ACCORDION END */

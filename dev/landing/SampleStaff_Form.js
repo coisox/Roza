@@ -4,5 +4,5 @@ rozaSetPanel({
 });
 
 function onloadState() {
-	console.log($('#state').val());
+	alert('State loaded: '+$('#state').val());
 }
