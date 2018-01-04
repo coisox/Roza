@@ -1,0 +1,59 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "Academic Info",
+		"labelbm" : "Maklumat Akademik"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "tahapPendidikan",
+		"labelbi" : "Tahap Pendidikan",
+		"labelbm" : "Tahap Pendidikan",
+		"source" : "HR/LOV/LOV_SM_TahapPendidikan.sql"
+	},
+	{
+		"element" : "text",
+		"id" : "keputusan",
+		"labelbi" : "Result",
+		"labelbm" : "Keputusan"
+	},
+	{
+		"element" : "datepicker",
+		"id" : "tamatbelajar",
+		"labelbi" : "Tahun Tamat Belajar",
+		"labelbm" : "Tahun Tamat Belajar"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "namaInstitusi",
+		"labelbi" : "Nama Institusi",
+		"labelbm" : "Nama Institusi",
+		"source" : "HR/LOV/LOV_SM_Institusi.sql"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "namaInstitusi",
+		"labelbi" : "Pengkhususan Bidang",
+		"labelbm" : "Pengkhususan Bidang",
+		"source" : "HR/LOV/LOV_SM_Bidang.sql"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "negara",
+		"labelbi" : "Negara",
+		"labelbm" : "Negara",
+		"source" : "HR/LOV/LOV_SM_Negara.sql"
+	}
+   {
+      "element": "groupbutton",
+      "id": "groupbutton",
+      "list": [
+         {
+            "labelbi": "Save",
+            "labelbm": "Simpan",
+            "onclick": "rozaSubmitData({\"target\":\"SampleStaff_Submit.php\"})",
+            "ac_remove": false
+         }
+      ]
+   }
+]

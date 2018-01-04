@@ -1,0 +1,25 @@
+[
+   {
+      "element": "title",
+      "labelbi": "List of Disciplinary Offenses",
+      "labelbm": "Senarai Kesalahan Tatatertib"
+   },
+   {
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SenaraiTatatertib.sql",
+      "tool": true,
+      "column": [
+         {
+            "labelbi": "Tatatertib",
+            "labelbm": "Tatatertib",
+            "value": "[[data2]]"
+         },
+         {
+            "labelbi": "Year",
+            "labelbm": "Tahun",
+            "value": "[[data3]]"
+         }
+	]
+   }
+]

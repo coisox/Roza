@@ -1,0 +1,103 @@
+[
+   {
+      "element": "tabs",
+      "list": [
+         {
+            "labelbi": "Personal",
+            "labelbm": "Peribadi",
+			"ui" : "HR/Peribadi/SM_Staff_Form.json"
+         },
+         {
+            "labelbi": "Family Personal",
+            "labelbm": "Peribadi Keluarga",
+			"ui" : "HR/Peribadi/SM_Peribadi_Keluarga.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+         {
+            "labelbi": "Academic",
+            "labelbm": "Akademik",
+			"ui" : "HR/Peribadi/SM_Peribadi_Akademik.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+         {
+            "labelbi": "Medical Record",
+            "labelbm": "Kesihatan (Diri/Tanggungan)",
+			"ui" : "HR/Peribadi/SM_Peribadi_Kesihatan.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Award",
+            "labelbm": "Anugerah",
+			"ui" : "HR/Peribadi/SM_Peribadi_Anugerah.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "LNPT",
+            "labelbm": "LNPT",
+			"ui" : "HR/Peribadi/SM_Peribadi_LNPT.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Training",
+            "labelbm": "Latihan",
+			"ui" : "HR/Peribadi/SM_Peribadi_Latihan.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Service Record",
+            "labelbm": "Rekod Perkhidmatan",
+			"ui" : "HR/Peribadi/SM_Peribadi_Khidmat.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Tatatertib",
+            "labelbm": "Tatatertib",
+			"ui" : "HR/Peribadi/SM_Peribadi_Tatatertib.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || !rozaHasRole(['admin']) || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Tatatertib",
+            "labelbm": "Tatatertib_Int",
+			"ui" : "HR/Peribadi/SM_Peribadi_Tatatertib_Int.json",
+			"ac_remove": "'{{module}}'=='ganjaran' || rozaHasRole(['admin']) || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Form IT.22B",
+            "labelbm": "Borang IT.22B",
+			"ui" : "HR/Perjawatan/SM_Perjawatan_IT22B.json",
+			"ac_remove": "'{{module}}'!='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Form Pen 1",
+            "labelbm": "Jana Borang Pen 1",
+			"ui" : "HR/Perjawatan/SM_Perjawatan_Pen1.json",
+			"ac_remove": "'{{module}}'!='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Appendix C",
+            "labelbm": "Lampiran C",
+			"ui" : "HR/Perjawatan/SM_Perjawatan_LampiranC.json",
+			"ac_remove": "'{{module}}'!='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Appendix B",
+            "labelbm": "Lampiran B",
+			"ui" : "HR/Perjawatan/SM_Perjawatan_LampiranB.json",
+			"ac_remove": "'{{module}}'!='ganjaran' || '{{module}}'=='gcr'"
+         },
+		 {
+            "labelbi": "Finance 8",
+            "labelbm": "Jana Kew 8",
+			"ui" : "HR/Perjawatan/SM_Perjawatan_Kew8.json",
+			"ac_remove": "'{{module}}'!='ganjaran' || '{{module}}'=='gcr'"
+         }
+      ]
+   },
+   {
+      "element": "title",
+      "labelbi": "Employee Display",
+      "labelbm": "Paparan Pegawai",
+      "ac_hide": true
+   }
+]
+

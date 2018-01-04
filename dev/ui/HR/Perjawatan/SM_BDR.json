@@ -1,0 +1,93 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "Senarai Penyediaan Fasa",
+		"labelbm" : "Senarai Penyediaan Fasa"
+	},
+	{
+		"element": "table",
+		"id": "latihan",
+		"source": "HR/SM_SenaraiFasaBDR.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "No Fasa",
+				"labelbm": "No Fasa",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Data Start",
+				"labelbm": "Tarikh Mula",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Date End",
+				"labelbm": "Tarikh Tamat",
+				"value": "[[data4]]"
+			},
+			{
+				"labelbi": "Status",
+				"labelbm": "Status",
+				"value": "[[data5]]"
+			}
+		],
+		"onadd":
+		{
+			"onclick" : "alert ('SM_BDR_Add.json')"
+		}
+	},
+	/*{
+		"element" : "groupbutton",
+		"id" : "group_agihan",
+		"fullwidth" : true,
+		"list" : [
+			{
+				"labelbm" : "Tambah",
+				"onclick" : "rozaCallLandingFile('PP/SemakanUU/UI_PP_SemakanUUAgihanSemulaTugasForm.js?mode=edit')"
+			}
+		]
+	},*/
+	{
+		"element" : "title",
+		"labelbi" : "Maklumat Penyediaan Fasa",
+		"labelbm" : "Maklumat Penyediaan Fasa"
+		/*"ac_remove": "'{{mode}}' != 'tambah' "*/
+	},
+	{
+		"element": "text",
+		"labelbm": "No Fasa"
+		/*"ac_remove": "'{{mode}}' != 'tambah' "*/
+	},
+	{
+		"element": "datepicker",
+		"labelbm": "Tarikh Mula"
+		/*"ac_remove": "'{{mode}}' != 'tambah' "*/
+	},
+	{
+		"element": "datepicker",
+		"labelbm": "Tarikh Tamat"
+		/*"ac_remove": "'{{mode}}' != 'tambah' "*/
+	},
+	{
+		"element": "fab",
+		"onprint": {
+			"onclick": "alert('print')"
+		},
+		"onedit": {
+			"onclick": "alert ('edit')"
+		},
+		"onview": {
+			"onclick": "alert('view')"
+		},
+		"onclear": {
+			"onclick": "alert('clear')"
+		},
+		"ondefault": {
+			"onclick": "alert('default')"
+		},
+		"onsave": {
+			"onclick": "alert('save')"
+		}
+	}
+
+]

@@ -1,0 +1,180 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "APPLICANT INFORMATION",
+		"labelbm" : "MAKLUMAT PEMOHON"
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "icno",
+		"labelbi" : "IC No",
+		"labelbm" : "No. Kad Pengenalan",
+		"ac_disable" : true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "insDate",
+		"labelbi" : "Date of Receive Insurance",
+		"labelbm" : "Tarikh Terima Insurans",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "position",
+		"labelbi" : "Position / Grade",
+		"labelbm" : "Jawatan / Gred",
+		"source" : "HR/LOV/LOV_SM_Position.sql"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "ministry",
+		"labelbi" : "Department / Ministry",
+		"labelbm" : "Jabatan / Kementerian",
+		"source" : "HR/LOV/LOV_SM_Ministry.sql"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "TRAVEL INFORMATION EXTERNAL",
+		"labelbm" : "MAKLUMAT PERJALANAN KE LUAR NEGARA"
+	},
+	{
+		"element" : "datepicker",
+		"id" : "insuDate",
+		"labelbi" : "Duration of Visit",
+		"labelbm" : "Tempoh Lawatan",
+		"style": "range",
+		"ac_dualmode": true
+
+	},
+	{
+		"element" : "text",
+		"id" : "purpose",
+		"labelbi" : "Purpose of Visit",
+		"labelbm" : "Tujuan Lawatan"
+	},
+	{
+		"element" : "text",
+		"id" : "address",
+		"labelbi" : "Address",
+		"labelbm" : "Alamat Semasa Bercuti"
+	},
+	{
+		"element" : "text",
+		"id" : "phone",
+		"labelbi" : "Phone No",
+		"labelbm" : "No. Telefon"
+	},
+	{
+		"element" : "text",
+		"id" : "email",
+		"labelbi" : "Email",
+		"labelbm" : "Emel"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "INFORMATION OF CUTI REHAT INFORMATION (IF REQUIRING CUTI REHAT APPROACH)",
+		"labelbm" : "MAKLUMAT KELULUSAN CUTI REHAT (SEKIRANYA MEMERLUKAN KELULUSAN CUTI REHAT)"
+	},
+	{
+		"element" : "datepicker",
+		"id" : "startLeaveDate",
+		"labelbi" : "Start Date of Leave",
+		"labelbm" : "Tarikh Mula Cuti",
+		"style": "single",
+		"ac_dualmode": true
+
+	},
+	{
+		"element" : "datepicker",
+		"id" : "endLeaveDate",
+		"labelbi" : "End Date of Leave",
+		"labelbm" : "Tarikh Akhir Cuti",
+		"style": "single",
+		"ac_dualmode": true
+
+	},
+	{
+		"element" : "text",
+		"id" : "cntLeave",
+		"labelbi" : "Count of Leave",
+		"labelbm" : "Jumlah Hari Bercuti",
+		"ac_disable" : true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "returnDate",
+		"labelbi" : "Date of Working Back",
+		"labelbm" : "Tarikh Kembali Bekerja",
+		"style": "single",
+		"ac_dualmode": true
+
+	},
+	{
+		"element" : "title",
+		"labelbi" : "UPLOAD RELATED DOCUMENTS",
+		"labelbm" : "MUAT NAIK DOKUMEN BERKAITAN"
+	},
+	{
+		"element": "file",
+		"id": "applyFile",
+		"labelbi": "File Upload",
+		"labelbm": "Muat Naik"
+
+	},
+	{
+		"element" : "title",
+		"labelbi" : "APPLICATION CERTIFICATION",
+		"labelbm" : "PERAKUAN PERMOHONAN"
+	},
+	{
+		"id": "txt1",
+		"element": "html",
+		"value" : "Saya dengan ini mematuhi segala peraturan yang ditetapkan di <b>perenggan6 (i), (ii) dan perenggan 10</b> Surat Pekeliling Am Bilangan 3 Tahun 2012.",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "certDate",
+		"labelbi" : "Date of Cert",
+		"labelbm" : "Tarikh",
+		"style": "single",
+		"ac_dualmode": true
+
+	},
+	{
+		"id": "txt2",
+		"element": "html",
+		"value" : "<i>* potong mana yang tidak berkenaan.</i>",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"id": "txt3",
+		"element": "html",
+		"value" : "<i>** Tarikh Terima Insurans adalah tarikh pegawai menerima insurans yang ditanggung oleh Kerajaan.</i>",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"element": "fab",
+		"ac_remove":"'{{module}}'=='gcr'",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	}
+
+]

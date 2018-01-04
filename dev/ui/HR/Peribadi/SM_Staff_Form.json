@@ -1,0 +1,432 @@
+[   
+	{
+		"element" : "data",
+		"parameterize" : [
+			"{{staff_id}}"
+		],
+		"source" : "HR/SM_Staff_Detail.sql"
+	},
+	{
+		"element" : "data",
+		"source" : "HR/LOV/LOV_Today.sql"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "Personal Update",
+		"labelbm" : "Kemaskini Peribadi"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "htitle",
+		"labelbi" : "Honorary Titles",
+		"labelbm" : "Gelaran",
+		"source" : "HR/LOV/LOV_SM_HTitle.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+    	"ac_disable":true
+	},
+	{
+		"element" : "text",
+		"id" : "icno",
+		"labelbi" : "IcNo",
+		"labelbm" : "No K/P",
+		"ac_disable": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "tlahir",
+		"labelbi" : "Date of Birth",
+		"labelbm" : "Tarikh Lahir",
+		"style": "single",
+		"ac_disable": true
+	},
+	{
+		"element" : "text",
+		"id" : "age",
+		"labelbi" : "Age",
+		"labelbm" : "Umur",
+		"maxlength" : 20,
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "gender",
+		"labelbi" : "Gender",
+		"labelbm" : "Jantina",
+		"source" : "HR/LOV/LOV_SM_Gender.sql",
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "religion",
+		"labelbi" : "Religion",
+		"labelbm" : "Agama",
+		"source" : "HR/LOV/LOV_SM_Agama.sql",
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "citizen",
+		"labelbi" : "Citizenship",
+		"labelbm" : "Kewarganegaraan",
+		"source" : "HR/LOV/LOV_SM_Citizen.sql",
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "race",
+		"labelbi" : "Race",
+		"labelbm" : "Bangsa",
+		"source" : "HR/LOV/LOV_SM_Race.sql",
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "marital",
+		"labelbi" : "Marital Status",
+		"labelbm" : "Taraf Perkahwinan",
+		"source" : "HR/LOV/LOV_SM_Marital.sql",
+		"ac_disable": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "blood",
+		"labelbi" : "Blood Type",
+		"labelbm" : "Kumpulan Darah",
+		"source" : "HR/LOV/LOV_SM_Blood.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "hphone",
+		"labelbi" : "Handphone",
+		"labelbm" : "Telefon Bimbit",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "ophone",
+		"labelbi" : "Office Phone",
+		"labelbm" : "No Tel Pejabat",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "OEmail",
+		"labelbi" : "Official Email",
+		"labelbm" : "Emel Rasmi",
+		"maxlength" : 20,
+		"ac_dualmode":true
+	},
+	{
+		"element" : "text",
+		"id" : "PEmail",
+		"labelbi" : "Personal Email",
+		"labelbm" : "Emel Peribadi",
+		"maxlength" : 20,
+		"ac_dualmode":true
+	},
+	{
+		"element" : "text",
+		"id" : "CEmail",
+		"labelbi" : "Court Email",
+		"labelbm" : "Emel (Kader/Mahkamah)",
+		"maxlength" : 20,
+		"ac_dualmode":true
+	},
+	{
+		"element" : "text",
+		"id" : "PAddress",
+		"labelbi" : "Permanent Address",
+		"labelbm" : "Alamat Tetap",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "state",
+		"labelbi" : "State",
+		"labelbm" : "Negeri",
+		"source" : "HR/LOV/LOV_SM_State.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "PPoscode",
+		"labelbi" : "Poscode",
+		"labelbm" : "Poskod",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element": "checkbox",
+		"id": "cb_address",
+		"labelbi" : "Checkbox",
+		"labelbm" : "Checkbox",
+		"source" : "HR/LOV/LOV_Chkbox.sql",
+		"style": "horizontal",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "MAddress",
+		"labelbi" : "Mail Address",
+		"labelbm" : "Alamat Surat Menyurat",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "Mstate",
+		"labelbi" : "State",
+		"labelbm" : "Negeri",
+		"source" : "HR/LOV/LOV_SM_State.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "MPoscode",
+		"labelbi" : "Poscode",
+		"labelbm" : "Poskod",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "position",
+		"labelbi" : "Position",
+		"labelbm" : "Jawatan",
+		"placeholderbi" : "Enter a position",
+		"placeholderbm" : "Masukkan jawatan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "group",
+		"labelbi" : "Gred",
+		"labelbm" : "Gred",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a group",
+		"placeholderbm" : "Masukkan Gred",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "ADate",
+		"labelbi" : "Date of Appointment",
+		"labelbm" : "Tarikh Lantik",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "CDate",
+		"labelbi" : "Date of Confirm",
+		"labelbm" : "Tarikh Pengesahan Lantikan",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "SDate",
+		"labelbi" : "Date of Service",
+		"labelbm" : "Tarikh Pengesahan Perkhidmatan",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "RDate",
+		"labelbi" : "Date of Retirement",
+		"labelbm" : "Tarikh Persaraan",
+		"style": "single",
+		"ac_disable": true
+	},
+	{
+		"element" : "text",
+		"id" : "retage",
+		"labelbi" : "Retirement Age",	
+		"labelbm" : "Umur Persaraan",
+		"maxlength" : 20,
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "EPFDate",
+		"labelbi" : "Date of EPF",
+		"labelbm" : "Tarikh Pemberian Taraf Berpencen",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "ServiceStatus",
+		"labelbi" : "Service Status",
+		"labelbm" : "Status Perkhidmatan",
+		"source" : "HR/LOV/LOV_SM_ServiceStatus.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "CEndDate",
+		"labelbi" : "End date of contract",
+		"labelbm" : "Tarikh Tamat Kontrak",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "C2EndDate",
+		"labelbi" : "End date of contract",
+		"labelbm" : "Tarikh Tamat Lanjut Kontrak 2",
+		"style": "single",
+		"ac_dualmode": true
+	},		
+	{
+		"element" : "datepicker",
+		"id" : "C3EndDate",
+		"labelbi" : "End date of contract",
+		"labelbm" : "Tarikh Tamat Lanjut Kontrak 3",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "dropdown",
+		"id" : "PlaceCategory",
+		"labelbi" : "Placement Category",
+		"labelbm" : "Kategori Penempatan ",
+		"source" : "HR/LOV/LOV_SM_PlaceCategory.sql",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "unit",
+		"labelbi" : "Unit Name",
+		"labelbm" : "Nama Unit",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a unit",
+		"placeholderbm" : "Masukkan Unit",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "department",
+		"labelbi" : "Department Name",
+		"labelbm" : "Nama Bahagian / Jabatan",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a department",
+		"placeholderbm" : "Masukkan bahagian",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "DAddress",
+		"labelbi" : "Office Address",
+		"labelbm" : "Alamat Pejabat",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a office address",
+		"placeholderbm" : "Masukkan Alamat Pejabat",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "dphone",
+		"labelbi" : "Tel Number",
+		"labelbm" : "No . Tel",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a phone number",
+		"placeholderbm" : "Masukkan no telefon",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "ExtPhone",
+		"labelbi" : "Ext",
+		"labelbm" : "Ext",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a extension no",
+		"placeholderbm" : "Masukkan no sambungan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "supervisor",
+		"labelbi" : "Supervisor",
+		"labelbm" : "Penyelia",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a supervisor",
+		"placeholderbm" : "Masukkan nama penyelia",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "Tsupervisor",
+		"labelbi" : "Training Supervisor",
+		"labelbm" : "Penyelia Latihan",
+		"maxlength" : 20,
+		"placeholderbi" : "Enter a training supervisor",
+		"placeholderbm" : "Masukkan nama penyelia latihan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "file",
+		"id" : "imgUpload",
+		"labelbi" : "Image",
+		"labelbm" : "Gambar",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "eduLoan",
+		"labelbi" : "Education Loan Information ",
+		"labelbm" : "Maklumat Pinjaman Pendidikan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "eduPeriod",
+		"labelbi" : "Education Loan Period",
+		"labelbm" : "Tempoh Pinjaman",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "LoanStartDate",
+		"labelbi" : "Start Date",
+		"labelbm" : "Tarikh Mula",
+		"style": "single",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "LoanEndDate",
+		"labelbi" : "End Date",
+		"labelbm" : "Tarikh Akhir",
+		"style": "single",
+		"ac_dualmode": true
+	},{
+      "element": "title",
+      "labelbi": "Interview Preparation",
+      "labelbm": "Paparan Pegawai",
+      "ac_hide": true
+   },
+	{
+		"element": "fab",
+		"ac_remove":"'{{module}}'=='gcr'",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	}
+]

@@ -5,19 +5,22 @@
 	</head>
 
 	<body>
-		<table id="table">
+		<table id="xxx">
 			<thead>
 				<tr>
+					<th class='handle'>xxx</th>
 					<th class='handle'>header1</th>
 					<th class='handle'>header2</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<td class="drag-handler">x</td>
 					<td>conten1</td>
 					<td>conten2</td>
 				</tr>
 				<tr>
+					<td class="drag-handler">x</td>
 					<td>conten3</td>
 					<td>conten4</td>
 				</tr>
@@ -25,11 +28,11 @@
 		</table>
 	
 		<script src="lib/jquery.min.js"></script>
-		<script src="lib/table-dragger.min.js"></script>
+		<script src="lib/sortable.js"></script>
 		
 		<script>
 			$(document).ready(function(){
-				tableDragger(document.querySelector("#table"), { mode: "row" });
+				
 			});
 		</script>
 	</body>

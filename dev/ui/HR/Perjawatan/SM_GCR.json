@@ -1,0 +1,66 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "Senarai Tuntutan GCR",
+		"labelbm" : "Senarai Tuntutan GCR"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "Borang GCR",
+		"labelbm" : "Borang Gantian Cuti Rehat (PP BIL. 2/2016)"
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+    	"ac_disable":true
+	},
+	{
+		"element" : "text",
+		"id" : "icno",
+		"labelbi" : "IcNo",
+		"labelbm" : "No K/P",
+		"ac_disable": true
+	},
+	{
+		"element" : "text",
+		"id" : "cuti_rehat",
+		"labelbi" : "Cuti Rehat Tahunan",
+		"labelbm" : "Cuti Rehat Tahunan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "tahun_cuti",
+		"labelbi" : "Year",
+		"labelbm" : "Tahun",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "baki_cuti",
+		"labelbi" : "Balance Leave",
+		"labelbm" : "Baki Cuti Tahunan",
+		"ac_dualmode": true
+	},
+	{
+		"element" : "text",
+		"id" : "baki_cuti",
+		"labelbi" : "Bilangan Gantian Cuti Rehat",
+		"labelbm" : "Bilangan Gantian Cuti Rehat",
+		"ac_dualmode": true
+	},
+	{
+		"element": "fab",
+		"ac_remove":"'{{module}}'=='gcr'",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	}
+]

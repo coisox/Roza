@@ -1,0 +1,66 @@
+[
+   {
+      "element": "data",
+      "parameterize": [
+         "{{staff_id}}"
+      ],
+      "source": "HR/SM_Staff_Detail.sql"
+   },
+   {
+      "element": "data",
+      "source": "HR/LOV/LOV_Today.sql"
+   },
+   {
+      "element": "title",
+      "labelbi": "Self Health Info",
+      "labelbm": "Maklumat Kesihatan Diri"
+   },
+   {
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SenaraiKesihatanDiri.sql",
+      "tool": true,
+      "column": [
+         {
+            "labelbi": "Jenis Penyakit",
+            "labelbm": "Jenis Penyakit",
+            "value": "[[data2]]"
+         },
+         {
+            "labelbi": "Tahun",
+            "labelbm": "Tahun",
+            "value": "[[data3]]"
+         },
+         {
+            "labelbi": "Jenis Rawatan",
+            "labelbm": "Jenis Rawatan",
+            "value": "[[data4]]"
+         }
+      ],
+      "onview": {
+         "onclick": "alert('View for [[data2]]')",
+         "ac_disable": true
+      },
+      "onedit": {
+         "onclick" : "rozaCallLandingFile('HR/Peribadi/UI_SM_KesihatanKelBaru.js?jenis=[[data2]]')"
+         "ac_disable": false
+      },
+      "ondelete": {
+         "ac_disable": true
+      }
+   },
+   {
+      "element": "title",
+      "labelbi": "Family Health Info",
+      "labelbm": "Maklumat Kesihatan Keluarga"
+   },
+   {
+      "element": "fab",
+      "onprint": {
+         "onclick": "alert('print')"
+      },
+      "onsave": {
+         "onclick": "alert('save')"
+      }
+   }
+]

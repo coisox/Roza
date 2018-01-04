@@ -211,10 +211,10 @@ function initVue() {
 			},
 			rozaModal: function(opt) {
 				if(opt) {
-					$('#modalGeneral .modal-title').html('').html(opt.title);
-					$('#modalGeneral .modal-header').toggle(opt.title?true:false);
+					$('#modalGeneral .modal-title').html('').html(opt['title'+this.rozaLanguage]);
+					$('#modalGeneral .modal-header').toggle(opt['title'+this.rozaLanguage]?true:false);
 					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
-					$('#modalGeneral .modal-body').html('').html(opt['label'+this.rozaLanguage]);
+					$('#modalGeneral .modal-body').html('').html(opt['content'+this.rozaLanguage]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
 				}
@@ -328,6 +328,7 @@ function initVue() {
 											actionview: 'micro',
 											actionedit: 'micro',
 											actiondelete: 'micro',
+											actiondrag: 'micro',
 											ac_remove: 'micro'
 										},
 										columnsClasses: {
@@ -336,11 +337,11 @@ function initVue() {
 										}
 									};
 									
-									if(data.prop[x].onadd) {
-										roza['vueTable'][data.prop[x].id]['onadd'] = [];
-										roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
-										roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
-										roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
+									if(data.prop[x].action_add) {
+										roza['vueTable'][data.prop[x].id]['action_add'] = [];
+										roza['vueTable'][data.prop[x].id]['action_add']['onclick'] = data.prop[x].action_add.onclick;
+										roza['vueTable'][data.prop[x].id]['action_add']['ac_remove'] = roza.accessControl(data.prop[x].action_add, 'ac_remove');
+										roza['vueTable'][data.prop[x].id]['action_add']['vueTableDualMode'] = roza.accessControl(data.prop[x].action_add, 'ac_dualmode')?'vueTableDualMode':'';
 									}
 								}
 								
@@ -443,15 +444,16 @@ function initVue() {
 										actionview: 'micro',
 										actionedit: 'micro',
 										actiondelete: 'micro',
+										actiondrag: 'micro',
 										ac_remove: 'micro'
 									}
 								};
 								
-								if(data.prop[x].onadd) {
-									roza['vueTable'][data.prop[x].id]['onadd'] = [];
-									roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
-									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
-									roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
+								if(data.prop[x].action_add) {
+									roza['vueTable'][data.prop[x].id]['action_add'] = [];
+									roza['vueTable'][data.prop[x].id]['action_add']['onclick'] = data.prop[x].action_add.onclick;
+									roza['vueTable'][data.prop[x].id]['action_add']['ac_remove'] = roza.accessControl(data.prop[x].action_add, 'ac_remove');
+									roza['vueTable'][data.prop[x].id]['action_add']['vueTableDualMode'] = roza.accessControl(data.prop[x].action_add, 'ac_dualmode')?'vueTableDualMode':'';
 								}
 							}
 						}
@@ -486,15 +488,16 @@ function initVue() {
 										actionview: 'micro',
 										actionedit: 'micro',
 										actiondelete: 'micro',
+										actiondrag: 'micro',
 										ac_remove: 'micro'
 									}
 								};
 								
-								if(data.prop[x].onadd) {
-									roza['vueTable'][data.prop[x].id]['onadd'] = [];
-									roza['vueTable'][data.prop[x].id]['onadd']['onclick'] = data.prop[x].onadd.onclick;
-									roza['vueTable'][data.prop[x].id]['onadd']['ac_remove'] = roza.accessControl(data.prop[x].onadd, 'ac_remove');
-									roza['vueTable'][data.prop[x].id]['onadd']['vueTableDualMode'] = roza.accessControl(data.prop[x].onadd, 'ac_dualmode')?'vueTableDualMode':'';
+								if(data.prop[x].action_add) {
+									roza['vueTable'][data.prop[x].id]['action_add'] = [];
+									roza['vueTable'][data.prop[x].id]['action_add']['onclick'] = data.prop[x].action_add.onclick;
+									roza['vueTable'][data.prop[x].id]['action_add']['ac_remove'] = roza.accessControl(data.prop[x].action_add, 'ac_remove');
+									roza['vueTable'][data.prop[x].id]['action_add']['vueTableDualMode'] = roza.accessControl(data.prop[x].action_add, 'ac_dualmode')?'vueTableDualMode':'';
 								}
 							}
 							
@@ -623,13 +626,24 @@ function initVue() {
 
 			$('.VueTables').each(function(){				
 				var id = $(this).attr('id');
-				if(roza['vueTable'][id]['onadd'] && !roza['vueTable'][id]['onadd']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
-					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['onadd']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['onadd']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
+				if(roza['vueTable'][id]['action_add'] && !roza['vueTable'][id]['action_add']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
+					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['action_add']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['action_add']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
 				}
-				else if(roza['vueTable'][id]['onadd'] && roza['vueTable'][id]['onadd']['ac_remove']) {
+				else if(roza['vueTable'][id]['action_add'] && roza['vueTable'][id]['action_add']['ac_remove']) {
 					$('#'+id+' .vueTableAdd').remove();
 				}
+				
+				Sortable.create(
+					$('#'+id+' tbody')[0],
+					{
+						handle: ".fa-bars",
+						onUpdate: function(event) {
+							if(typeof rozaDragged == 'function') rozaDragged(event);
+						}
+					}
+				);
 			});
+			
 			
 			/*
 			if(this.panel.leftPanel.initQueryBuilder) {

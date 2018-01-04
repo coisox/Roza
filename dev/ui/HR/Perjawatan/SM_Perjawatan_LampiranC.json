@@ -1,0 +1,49 @@
+[	
+	{
+		"element" : "title",
+		"labelbi" : "Number of Days of Rest Break",
+		"labelbm" : "Bilangan Hari Gantian Cuti Rehat"
+	},
+	{
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SearchStaff.sql",
+	  "parameterize" : [
+			"{{id}}"
+		],
+      "column": [
+         {
+            "labelbi": "Year",
+            "labelbm": "Tahun",
+            "value": "2017"
+         },
+		 {
+            "labelbi": "Number of days of GCR",
+            "labelbm": "Bilangan hari GCR",
+            "value": " "
+         },
+		 {
+            "labelbi": "Total (RM)",
+            "labelbm": "Jumlah (RM)",
+            "value": " "
+         }
+      ]
+	},
+	{
+		"element": "groupbutton",
+		"id": "groupbutton",
+		"fullwidth" : true,
+		"list": [
+			{
+				"labelbi": "Save",
+				"labelbm": "Simpan",
+				"onclick": "alert('Simpan')"
+			},
+			{
+				"labelbi": "Appendix C",
+				"labelbm": "Jana Lampiran C",
+				"onclick": "alert('Jana Lampiran C')"
+			}
+		]
+	}
+]

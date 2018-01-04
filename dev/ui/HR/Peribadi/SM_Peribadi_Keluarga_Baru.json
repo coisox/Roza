@@ -1,0 +1,144 @@
+[
+   {
+      "element": "data",
+      "parameterize": [
+         "{{nama}}"
+      ],
+      "source": "HR/SM_Keluarga_Detail.sql"
+   },
+   {
+      "element": "title",
+      "labelbi": "Family Info",
+      "labelbm": "Maklumat Ahli Keluarga"
+   },
+   {
+      "element": "text",
+      "id": "data2",
+      "labelbi": "Name",
+      "labelbm": "Nama",
+      "maxlength": 20,
+      "placeholderbi": "Enter a name",
+      "placeholderbm": "Masukkan nama",
+      "required": true
+   },
+   {
+      "element": "text",
+      "id": "icnoKeluarga",
+      "labelbi": "IcNo",
+      "labelbm": "No K/P",
+      "maxlength": 20,
+      "placeholderbi": "Enter IC Number",
+      "placeholderbm": "Masukkan No Kad Pengenalan",
+      "required": true
+   },
+   {
+      "element": "dropdown",
+      "id": "relID",
+      "labelbi": "Relationship",
+      "labelbm": "Hubungan",
+      "source": "HR/LOV/LOV_SM_Relationship.sql"
+   },
+   {
+      "element": "dropdown",
+      "id": "statusIsteri",
+      "labelbi": "Wife Status",
+      "labelbm": "Status Isteri",
+      "source": "HR/LOV/LOV_SM_StatusIsteri.sql"
+   },
+   {
+      "element": "text",
+      "id": "data4",
+      "labelbi": "Pekerjaan",
+      "labelbm": "Pekerjaan",
+      "maxlength": 20
+   },
+   {
+      "element": "text",
+      "id": "namaMajikan",
+      "labelbi": "Employeer Name",
+      "labelbm": "Nama Majikan",
+      "maxlength": 20
+   },
+   {
+      "element": "textarea",
+      "id": "alamatMajikan",
+      "labelbi": "Employeer Address",
+      "labelbm": "Alamat Majikan",
+      "maxlength": 20
+   },
+   {
+      "element": "datepicker",
+      "id": "data5",
+      "labelbi": "Date of Birth",
+      "labelbm": "Tarikh Lahir",
+      "style": "single"
+   },
+   {
+      "element": "text",
+      "id": "data6",
+      "labelbi": "Age",
+      "labelbm": "Umur",
+      "maxlength": 5
+   },
+   {
+      "element": "textarea",
+      "id": "alamatRumah",
+      "labelbi": "Home Address",
+      "labelbm": "Alamat Rumah",
+      "maxlength": 20
+   },
+   {
+      "element": "dropdown",
+      "id": "state",
+      "labelbi": "State",
+      "labelbm": "Negeri",
+      "source": "HR/LOV/LOV_SM_State.sql"
+   },
+   {
+      "element": "dropdown",
+      "id": "daerah",
+      "labelbi": "Daerah",
+      "labelbm": "Daerah",
+      "source": "HR/LOV/LOV_SM_Daerah.sql"
+   },
+   {
+      "element": "text",
+      "id": "poskod",
+      "labelbi": "Poscode",
+      "labelbm": "Poskod",
+      "maxlength": 5
+   },
+   {
+      "element": "text",
+      "id": "telRumah",
+      "labelbi": "Home Phone Number",
+      "labelbm": "No Telefon Rumah",
+      "maxlength": 20
+   },
+   {
+      "element": "text",
+      "id": "telRumah",
+      "labelbi": "Phone Number",
+      "labelbm": "No Telefon Bimbit",
+      "maxlength": 20
+   },
+   {
+      "element": "text",
+      "id": "email",
+      "labelbi": "Email",
+      "labelbm": "Emel",
+      "maxlength": 20
+   },
+   {
+      "element": "groupbutton",
+      "id": "groupbutton",
+      "list": [
+         {
+            "labelbi": "Save",
+            "labelbm": "Simpan",
+            "onclick": "rozaSubmitData({\"target\":\"SampleStaff_Submit.php\"})",
+            "ac_remove": false
+         }
+      ]
+   }
+]

@@ -28,19 +28,36 @@ body {
 	width: 53px;
 	height: 57px;
 }
-.metro-menu-opener.active + .metro-menu-closer + .main_container .metro-menu {
+.metro-menu-opener.active + .metro-menu-closer + .metro-menu {
 	transform: translateX(0);
 }
 .metro-menu-closer {
-	display: none;
+	position: fixed;
+	z-index: 3;
 	left: 230px;
 	width: calc(100% - 230px);
 	height: 100%;
-	position: fixed;
-	z-index: 3;
+	pointer-events: none;
+	transition: all .3s ease-in-out;
+	background: rgba(255,255,255,0);
 }
 .metro-menu-opener.active + .metro-menu-closer {
+	pointer-events: initial;
+	background: rgba(255,255,255,.8);
+}
+.metro-menu-closer:before {
+	position: fixed;
+	left: 0;
 	display: block;
+	content: '';
+	width: 230px;
+	height: 100%;
+	pointer-events: none;
+	background: rgba(255,255,255,0);
+	transition: all .3s ease-in-out;
+}
+.metro-menu-opener.active + .metro-menu-closer:before {
+	background: rgba(255,255,255,.8);
 }
 .nav-md .container.body .right_col,
 .main_container .top_nav
@@ -584,12 +601,13 @@ ul.bar_tabs li:after {
 	margin-left: 5px;
 }
 .VueTables th.actions_column {
-	width: 100px;
+	width: 1px;
 	pointer-events: none;
 	text-align: center;
 }
 .VueTables td.actions_column {
 	text-align: center;
+	white-space: nowrap;
 }
 .VueTables .actions_column .VueTables__sort-icon {
 	display: none;

@@ -1,0 +1,90 @@
+[
+   {
+      "element": "title",
+      "labelbi": "List of interviews",
+      "labelbm": "Senarai temuduga"
+   },
+   {
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SearchStaff.sql",
+      "parameterize": [
+         "{{id}}"
+      ],
+      "column": [
+         {
+            "labelbi": "Name",
+            "labelbm": "Nama Pegawai",
+            "value": ""
+         },
+         {
+            "labelbi": "Department",
+            "labelbm": "Bahagian",
+            "value": ""
+         },
+         {
+            "labelbi": "Phase",
+            "labelbm": "Fasa",
+            "value": " "
+         },
+         {
+            "labelbi": "Status",
+            "labelbm": "Status",
+            "value": null
+         }
+      ]
+   },
+   {
+      "element": "title",
+      "labelbi": "Interview Place",
+      "labelbm": "Tetapan tempat temuduga"
+   },
+   {
+      "element": "text",
+      "id": "place",
+      "labelbi": "Place",
+      "labelbm": "Tempat Temuduga",
+      "ac_disable": true
+   },
+   {
+      "element": "datepicker",
+      "id": "strDate",
+      "labelbi": "Start Date",
+      "labelbm": "Tarikh Mula",
+      "style": "single",
+      "ac_dualmode": true
+   },
+   {
+      "element": "datepicker",
+      "id": "endDate",
+      "labelbi": "End Date",
+      "labelbm": "Tarikh Akhir",
+      "style": "single",
+      "ac_dualmode": true
+   },
+   {
+      "element": "text",
+      "id": "countCandidate",
+      "labelbi": "Count",
+      "labelbm": "Jumlah Calon",
+      "ac_dualmode": true
+   },
+	{
+		"element": "fab",
+		"ac_remove":"'{{module}}'=='gcr'",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	},
+   {
+      "element": "title",
+      "labelbi": "Interview Preparation",
+      "labelbm": "Persediaan Temuduga",
+      "ac_hide": true
+   }
+]

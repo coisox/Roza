@@ -1,0 +1,47 @@
+[
+   {
+      "element": "title",
+      "labelbi": "Employees Who Work From Home",
+      "labelbm": "Senarai Pegawai Bekerja Dari Rumah"
+   },
+   {
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SearchStaff.sql",
+      "parameterize": [
+         "{{id}}"
+      ],
+      "column": [
+         {
+            "labelbi": "Name",
+            "labelbm": "Nama Pegawai",
+            "value": ""
+         },
+         {
+            "labelbi": "Department",
+            "labelbm": "Bahagian",
+            "value": ""
+         },
+         {
+            "labelbi": "Phase",
+            "labelbm": "Fasa",
+            "value": " "
+         },
+         {
+            "labelbi": "Status",
+            "labelbm": "Status",
+            "value": null
+         }
+      ],
+      "onview": {
+         "ac_disable": true
+      },
+      "onedit": {
+         "onclick": "alert('Kemaskini BDR')"
+      },
+      "ondelete": {
+         "ac_disable": true
+      }
+
+   }
+]

@@ -1,0 +1,189 @@
+[
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-user",
+		"labelbi" : "Personal",
+		"labelbm" : "Peribadi",
+		"ac_remove" : "rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pengarah_sp'])",
+		"list" : [
+			{
+				"labelbi" : "Searching",
+				"labelbm" : "Carian Pegawai",
+				"onclick" : "rozaCallLandingFile('HR/Peribadi/UI_SM_Staff_List.js?module=Peribadi')",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "View",
+				"labelbm" : "Paparan Pegawai",
+				"onclick" : "rozaCallLandingFile('HR/Peribadi/UI_SM_View_Staf.js')"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-calendar-plus-o",
+		"labelbi" : "Application",
+		"labelbm" : "Permohonan",
+		"ac_remove" : "  rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])",
+		"list" : [
+			{
+				"labelbi" : "Overseas Holiday Application",
+				"labelbm" : "Bercuti Ke Luar Negara",
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_MohonBKLN.js')",
+				"ac_remove": "rozaHasRole(['kj'])"
+				
+			},
+			{
+				"labelbi" : "Working From Home",
+				"labelbm" : "Bekerja Dari Rumah",
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_MohonBDR.js')",
+				"ac_remove": "rozaHasRole(['kj'])"
+			},
+			{
+				"labelbi" : "Gantian Cuti Rehat",
+				"labelbm" : "Gantian Cuti Rehat",
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_MohonGCR.js')",
+				"ac_remove": "rozaHasRole(['kj'])"
+			},
+			{
+				"labelbi" : "Pertukaran",
+				"labelbm" : "Pertukaran",
+				"ac_remove": "rozaHasRole(['kj'])"
+			},
+			{
+				"labelbi" : "Tanggung Kerja",
+				"labelbm" : "Tanggung Kerja",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['pengarah_sp'])"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-file-pdf-o",
+		"labelbi" : "Forms",
+		"labelbm" : "Borang",
+		"ac_remove" : "rozaHasRole(['admin_hr']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])",
+		"list" : [
+			{
+				"labelbi" : "Form A",
+				"labelbm" : "Borang A",
+				"onclick" : "alert('Borang A')"
+			},
+			{
+				"labelbi" : "Form B",
+				"labelbm" : "Borang B",
+				"onclick" : "alert('Borang B')"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-list-alt",
+		"labelbi" : "List of Applicants",
+		"labelbm" : "Senarai Permohonan",
+		"ac_remove" : "rozaHasRole(['admin_hr'])",
+		"list" : [
+			{
+				"labelbi" : "Overseas Holiday Application",
+				"labelbm" : "Bercuti Ke Luar Negara", 
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_BKLN_List.js?module=bkln')",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Working From Home",
+				"labelbm" : "Bekerja Dari Rumah",
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_BDR_List.js?module=bdr')",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Gantian Cuti Rehat",
+				"labelbm" : "Gantian Cuti Rehat",
+				"onclick" : "rozaCallLandingFile('HR/Peribadi/UI_SM_Staff_List.js?module=gcr')",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Ganjaran Kontrak",
+				"labelbm" : "Ganjaran Kontrak",
+				"onclick" : "rozaCallLandingFile('HR/Peribadi/UI_SM_Staff_List.js?module=ganjaran')",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Tanggung Kerja",
+				"labelbm" : "Tanggung Kerja",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Naik Pangkat",
+				"labelbm" : "Naik Pangkat",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])"
+			},
+			{
+				"labelbi" : "Pertukaran",
+				"labelbm" : "Pertukaran",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['kj']) || rozaHasRole(['pcn'])"
+			},
+			{
+				"labelbi" : "Ujian Psikometrik",
+				"labelbm" : "Ujian Psikometrik",
+				"ac_remove": "rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn'])"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-file-text-o",
+		"labelbi" : "Psikometric Test",
+		"labelbm" : "Ujian Psikometrik",
+		"ac_remove" : "rozaHasRole(['admin_hr']) || rozaHasRole(['staff']) || rozaHasRole(['admin_pengambilan']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn'])",
+		"list" : [
+			{
+				"labelbi" : "Order",
+				"labelbm" : "Arahan"
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-users",
+		"labelbi" : "Recruitment",
+		"labelbm" : "Pengambilan",
+		"ac_remove" : "rozaHasRole(['admin_hr']) || rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])",
+		"list" : [
+			{
+				"labelbi" : "Officer List Uploaded",
+				"labelbm" : "Muat Naik Senarai Calon",
+				"onclick" : "rozaCallLandingFile('HR/Pengambilan/UI_SM_Pengambilan.js')"
+			},
+			{
+				"labelbi" : "Uploded File List",
+				"labelbm" : "Senarai Fail Muat Naik"
+			},
+			{
+				"labelbi" : "Interview Readiness",
+				"labelbm" : "Persediaan Temuduga",
+				"onclick" : "rozaCallLandingFile('HR/Pengambilan/UI_SM_PUU_List.js')"
+
+			},
+			{
+				"labelbi" : "Confirmation Appointment",
+				"labelbm" : "Lantikan Tetap",
+				"onclick" : "rozaCallLandingFile('HR/Pengambilan/UI_SM_LT_List.js')"
+
+			}
+		]
+	},
+	{
+		"element" : "taskbar",
+		"icon" : "fa fa-id-badge",
+		"labelbi" : "Permanent",
+		"labelbm" : "Perjawatan",
+		"ac_remove" : "rozaHasRole(['admin_hr']) || rozaHasRole(['staff']) || rozaHasRole(['admin_naikpangkat']) || rozaHasRole(['pengarah_ssm']) || rozaHasRole(['kj']) || rozaHasRole(['pcn']) || rozaHasRole(['pengarah_sp'])",
+		"list" : [
+			{
+				"labelbi" : "Penyediaan Fasa Bekerja Dari Rumah",
+				"labelbm" : "Penyediaan Fasa Bekerja Dari Rumah",
+				"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_BDR.js')"
+			}
+		]
+	}
+]

@@ -77,9 +77,10 @@
 		
 		//========================================================================================= preprocessing table to vueTable compatible
 		if($prop[$i]['element']=='table') {
+			$prop[$j]['total'] = count($prop[$i]['list']);
 			$prop[$i]['list2'] = [];
 			$hasAction = false;
-			$actions = ['onview', 'onedit', 'ondelete', 'onadd'];
+			$actions = ['action_view', 'action_edit', 'action_delete', 'action_drag', 'action_add'];
 
 			for($j=0; $j<count($prop[$i]['column']); $j++) {
 				

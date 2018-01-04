@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href="../../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../../lib/iCheck/skins/flat/green.css" rel="stylesheet">
+		<link href="../../../lib/switchery/switchery.min.css" rel="stylesheet">
+		<link href="../../../lib/bootstrap/css/custom.min.css" rel="stylesheet">
+		<link href="../../../css/custom.css" rel="stylesheet">
+		
+		<style>
+			body, html { overflow: hidden; }
+		</style>
+	</head>
+
+	<body>
+	<div class="x_panel p-0">
+			<table id="AddRow" class="table table-striped jambo_table bulk_action" style="border:0;">
+				<thead>
+					<tr class="headings">
+						<!--<th>
+							<input type="checkbox" id="check-all" class="flat">
+						</th>-->
+						<th class="column-title">Tahap Pendidikan </th>
+						<th class="column-title">Keputusan </th>
+                        <th class="column-title">Tahun Tamat Belajar </th>
+                        <th class="column-title">Nama Institusi </th>
+                        <th class="column-title">Pengkhususan Bidang </th>
+                        <th class="column-title">Negara </th>
+						<a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr class="even pointer">
+						<!--<td class="a-center ">
+							<input type="checkbox" class="flat" name="table_records">
+						</td>-->
+						<td class=" ">Sarjana</td>
+						<td class=" ">3.66</td>
+                        <td class=" ">2010</td>
+                        <td class=" ">Universiti Japan</td>
+                        <td class=" ">Media And Governance (Cyber Informatics) - Multimedia Database</td>
+						<td class=" ">Jepun</td>
+					</tr>
+					<tr class="odd pointer">
+						<!--<td class="a-center ">
+							<input type="checkbox" class="flat" name="table_records">
+						</td>-->
+						<td class=" ">Sarjana Muda</td>
+						<td class=" ">3.8</td>
+                        <td class=" ">1998</td>
+                        <td class=" ">Universiti Utara Malaysia</td>
+                        <td class=" ">Teknologi Maklumat</td>
+					   	<td class=" ">Malaysia</td>
+					</tr>
+                    <tr class="odd pointer">
+						<!--<td class="a-center ">
+							<input type="checkbox" class="flat" name="table_records">
+						</td>-->
+						<td class=" ">SPM</td>
+						<td class=" ">10A</td>
+                        <td class=" ">1991</td>
+                        <td class=" ">Kolej Melayu Kuala Kangsar (MCKK)</td>
+                        <td class=" ">-</td>
+					   	<td class=" ">Malaysia</td>
+					</tr>
+                    <tr>
+						<td class=" ">
+							<button onclick="myFunction()">Tambah</button>
+							<script>
+								function myFunction(){
+									var table = document.getElementById("AddRow");
+									var row = table.insertRow(4);
+									var cell1 = row.insertCell(0);
+									var cell2 = row.insertCell(1);
+									var cell3 = row.insertCell(2);
+									var cell4 = row.insertCell(3);
+									var cell5 = row.insertCell(4);
+									var cell6 = row.insertCell(5);
+									cell1.innerHTML = "<input name='tahap' type='text' rows='1' cols='20'>";
+									cell2.innerHTML = "<input name='keputusan' type='text' rows='2' cols='20'>";
+									cell3.innerHTML = "<input name='tamatbelajar' type='text' rows='3' cols='20'>";
+									cell4.innerHTML = "<input name='institusi' type='text' rows='4' cols='20'>";
+									cell5.innerHTML = "<input name='bidang' type='text' rows='5' cols='20'>";
+									cell6.innerHTML = "<input name='negara' type='text' rows='6' cols='20'>";
+								}
+							</script>
+							
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+		
+		<script src="../../../lib/jquery.min.js"></script>
+		<script src="../../../lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../../../lib/nprogress/nprogress.js"></script>
+		<script src="../../../lib/iCheck/icheck.min.js"></script>
+		<script src="../../../lib/switchery/switchery.min.js"></script>
+	</body>
+</html>

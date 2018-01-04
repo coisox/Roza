@@ -1,0 +1,57 @@
+[
+	{
+		"element" : "data",
+		"parameterize" : [
+			"{{staff_id}}"
+		],
+		"source" : "HR/SM_Staff_Detail.sql"
+	},
+	{
+		"element" : "data",
+		"source" : "HR/LOV/LOV_Today.sql"
+	},
+	{
+		"element" : "title",
+		"labelbi" : "List of Awards",
+		"labelbm" : "Senarai Anugerah"
+	},
+	{
+		"element": "table",
+		"id": "latihan",
+		"source": "HR/SM_SenaraiAnugerah.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "Type",
+				"labelbm": "Jenis Anugerah",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Gelaran",
+				"labelbm": "Gelaran",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Pemberi Darjah Kebesaran/Pingat/Anugerah",
+				"labelbm": "Pemberi Darjah Kebesaran/Pingat/Anugerah",
+				"value": "[[data4]]"
+			},
+			{
+				"labelbi": "Tahun Anugerah",
+				"labelbm": "Tahun Anugerah",
+				"value": "[[data5]]"
+			}
+		]
+	},
+	{
+		"element": "fab",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"ac_remove": true
+		}
+	}
+]

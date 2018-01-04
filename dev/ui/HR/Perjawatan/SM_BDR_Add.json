@@ -1,0 +1,42 @@
+[
+	
+	{
+		"element" : "title",
+		"labelbi" : "Maklumat Penyediaan Fasa",
+		"labelbm" : "Maklumat Penyediaan Fasa"
+	},
+	{
+		"element": "text",
+		"labelbm": "No Fasa"
+	},
+	{
+		"element": "datepicker",
+		"labelbm": "Tarikh Mula"
+	},
+	{
+		"element": "datepicker",
+		"labelbm": "Tarikh Tamat"
+	},
+	{
+		"element": "fab",
+		"onprint": {
+			"onclick": "alert('print')"
+		},
+		"onedit": {
+			"onclick": "alert ('edit')"
+		},
+		"onview": {
+			"onclick": "alert('view')"
+		},
+		"onclear": {
+			"onclick": "alert('clear')"
+		},
+		"ondefault": {
+			"onclick": "alert('default')"
+		},
+		"onsave": {
+			"onclick": "alert('save')"
+		}
+	}
+
+]

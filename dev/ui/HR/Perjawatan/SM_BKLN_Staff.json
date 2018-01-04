@@ -1,0 +1,225 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "PART I: EMPLOYEE DETAILS",
+		"labelbm" : "BAHAGIAN I : BUTIRAN DIRI PEGAWAI"
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Nama",
+		"labelbm" : "Nama Penuh",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "posGred",
+		"labelbi" : "Position / Grade",
+		"labelbm" : "Jawatan / Gred Hakiki",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "ic",
+		"labelbi" : "IC Number",
+		"labelbm" : "No. Kad Pengenalan",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "passport",
+		"labelbi" : "Passport No",
+		"labelbm" : "No. Pasport Antarabangsa",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "oAddr",
+		"labelbi" : "Office Address",
+		"labelbm" : "Alamat Jabatan dan No. Telefon",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "hAddr",
+		"labelbi" : "Home Address",
+		"labelbm" : "Alamat Rumah dan No. Telefon",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "email",
+		"labelbi" : "Email",
+		"labelbm" : "Emel",
+		"ac_disable" : true
+	},
+	{
+		"element" : "title",
+		"labelbi" : "PART II: DETAILS OF VISIT",
+		"labelbm" : "BAHAGIAN II : BUTIRAN LAWATAN"
+	},
+	{
+		"element" : "text",
+		"id" : "country",
+		"labelbi" : "Country Visited",
+		"labelbm" : "Negara dilawati",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "purpose",
+		"labelbi" : "Purpose of Visit",
+		"labelbm" : "Tujuan Lawatan",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "date",
+		"labelbm" : "Tarikh Lawatan",
+		"value" : " : mulai (tarikh bertolak dari Malaysia/Negara pegawai berkhidmat) : ",
+		"ac_disable": true
+	},
+	{
+		"element" : "title",
+		"labelbi" : "PART III: DETAILS OF HEALTH INSURANCE PROTECTIVE FACILITIES",
+		"labelbm" : "BAHAGIAN III : BUTIRAN KEMUDAHAN PERLINDUNGAN INSURANS KESIHATAN"
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Nama",
+		"labelbm" : "Nama Waris",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "ic",
+		"labelbi" : "IC Number",
+		"labelbm" : "No. Kad Pengenalan",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "relation",
+		"labelbi" : "Relationship",
+		"labelbm" : "Hubungan dengan Pegawai",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "hhAddr",
+		"labelbi" : "Home Address",
+		"labelbm" : "Alamat Rumah",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "phone",
+		"labelbi" : "Phone No",
+		"labelbm" : "No. Telefon",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "email",
+		"labelbi" : "Email",
+		"labelbm" : "Emel",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "insurance",
+		"labelbi" : "Please submit a claim for health insurance premium to the address below",
+		"labelbm" : "Sila kemukakan tuntutan bayaran premium insurans kesihatan kepada alamat di bawah",
+		"ac_disable" : true
+	},
+	{
+		"element" : "title",
+		"labelbi" : "PART IV: EMPLOYEE VERIFICATION",
+		"labelbm" : "BAHAGIAN IV : PENGESAHAN PEGAWAI"
+	},
+	{
+		"id": "txt1",
+		"element": "html",
+		"value" : "Saya dengan ini mengesahkan maklumat sebagaimana yang dinyatakan di bahagian I, II dan III adalah benar dan memohon kelulusan kemudahan perlindungan insurans kesihatan ke luar negara/negara ketiga atas urusan persendirian",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"element" : "text",
+		"id" : "name",
+		"labelbi" : "Name",
+		"labelbm" : "Nama",
+		"ac_disable" : true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "valPegDate",
+		"labelbi" : "Date",
+		"labelbm" : "Tarikh",
+		"style": "range",
+		"ac_dualmode": true
+
+	},	
+	{
+		"element" : "title",
+		"labelbi" : "PART V: DETERMINATION AND DECISION OF CHIEF DEPARTMENT / HEAD OF REPRESENTATIVES",
+		"labelbm" : "BAHAGIAN V : PENGESAHAN DAN KEPUTUSAN KETUA JABATAN / KETUA PERWAKILAN "
+	},
+	{
+		"id": "txt1",
+		"element": "html",
+		"value" : "<center><b>KEGUNAAN PEJABAT</b><center>",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"id": "txt1",
+		"element": "html",
+		"value" : "Permohonan ke luar negara/ negara ketiga bagi pegawai adalah <b>DILULUSKAN / TIDAK DILULUSKAN*</b>. Saya dengan ini mengesahkan bahawa permohonan kemudahan perlindungan insurans kesihatan ke luar negara/ negara ketiga atas urusan persendirian pegawai <b>MEMATUHI/ TIDAK MEMATUHI*</b> peraturan sebagaimana ditetapkan dalam Pekeliling Perkhidmatan Bilangan 6 Tahun 2015.",
+		"style": "block",
+		"fullwidth": true
+	},
+	{
+		"element" : "text",
+		"id" : "sign",
+		"labelbi" : "Signature",
+		"labelbm" : "Tandatangan",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "stamp",
+		"labelbi" : "Stamp",
+		"labelbm" : "Nama dan Cap rasmi",
+		"ac_disable" : true
+	},
+	{
+		"element" : "text",
+		"id" : "position",
+		"labelbi" : "Position",
+		"labelbm" : "Jawatan",
+		"ac_dualmode" : true
+	},
+	{
+		"element" : "datepicker",
+		"id" : "valKJDate",
+		"labelbi" : "Date",
+		"labelbm" : "Tarikh",
+		"style": "range",
+		"ac_dualmode": true
+
+	},
+	{
+		"element": "fab",
+		"ac_remove":"'{{module}}'=='gcr'",
+		"onprint":
+		{
+			"onclick": "alert('print')"
+		},
+		"onsave":
+		{
+			"onclick": "alert('save')"
+		}
+	}
+]

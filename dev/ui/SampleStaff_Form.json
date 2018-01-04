@@ -329,21 +329,26 @@
 				"ac_remove": false
 			}
 		],
-		"onview":
+		"action_view":
 		{
 			"onclick": "alert('View for [[data3]]')",
 			"ac_disable": false
 		},
-		"onedit":
+		"action_edit":
 		{
 			"onclick": "alert('Edit for [[data3]]')",
 			"ac_dualmode": true
 		},
-		"ondelete":
+		"action_delete":
+		{
+			"onclick": "alert('Delete for [[data3]]')",
+			"ac_dualmode": true
+		},
+		"action_drag":
 		{
 			"ac_dualmode": true
 		},
-		"onadd":
+		"action_add":
 		{
 			"onclick": "alert('Your new form')",
 			"ac_dualmode": true

@@ -1,0 +1,51 @@
+[
+	
+	{
+		"element" : "title",
+		"labelbm" : "Senarai Bekerja Dari Rumah"
+	},
+	{
+		"element": "table",
+		"id": "latihan",
+		"source": "HR/SM_CarianBDR.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "Name",
+				"labelbm": "Nama Pegawai",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Department",
+				"labelbm": "Bahagian",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Phase",
+				"labelbm": "Fasa",
+				"value": "[[data4]]"
+			},
+			{
+				"labelbi": "Status",
+				"labelbm": "Status",
+				"value": "[[data5]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')",
+			"ac_disable": true
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')",
+			"ac_disable": false,
+			"onclick" : "rozaCallLandingFile('HR/Perjawatan/UI_SM_MohonBDR.js')"
+		},
+		"ondelete":
+		{
+			"ac_dualmode": true
+		}
+	}
+	
+]

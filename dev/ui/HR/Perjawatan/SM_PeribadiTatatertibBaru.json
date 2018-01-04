@@ -1,0 +1,43 @@
+[
+	{
+		"element" : "data",
+		"source" : "HR/SM_SenaraiTatatertib.sql"
+	},
+	{
+		"element" : "title",
+		"labelbm" : "Maklumat Kesalahan Tatatertib"
+	},
+	{
+		"element" : "text",
+		"id" : "data2",
+		"labelbi" : "Tarikh Pertuduhan",
+		"labelbm" : "Tarikh Pertuduhan"
+	},
+	{
+		"element" : "text",
+		"id" : "data3",
+		"labelbi" : "Jenis Kes",
+		"labelbm" : "Jenis Kes"
+	},
+	{
+		"element" : "textarea",
+		"id" : "data4",
+		"labelbi" : "Hukuman",
+		"labelbm" : "Hukuman"
+	},
+	{
+		"element" : "title",
+		"labelbm" : "Muatnaik Dokumen"
+	},
+	{
+		"element": "file",
+		"id": "file",
+		"labelbi": "Document",
+		"labelbm": "Dokumen"
+	},
+	{
+		"element" : "formbutton",
+		"onclick" : "rozaSubmitPanel()"
+	}
+	
+]

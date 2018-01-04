@@ -1,0 +1,62 @@
+[
+	{
+		"element" : "title",
+		"labelbi" : "Family Health Information",
+		"labelbm" : "Maklumat Kesihatan Keluarga"
+	},
+	{
+		"element" : "dropdown",
+		"id" : "ahliKeluarga",
+		"labelbi" : "Ahli Keluarga",
+		"labelbm" : "Ahli Keluarga",
+		"source" : "HR/LOV/LOV_KeluargaDummy.sql"
+	},
+	{
+		"element" : "text",
+		"id" : "janisPenyakit",
+		"labelbi" : "Jenis Penyakit",
+		"labelbm" : "Jenis Penyakit"
+	},
+	{
+		"element" : "text",
+		"id" : "tahun",
+		"labelbi" : "Year",
+		"labelbm" : "Tahun"
+	},
+	{
+		"element" : "text",
+		"id" : "jenisRawatan",
+		"labelbi" : "Jenis Rawatan",
+		"labelbm" : "Jenis Rawatan"
+	},
+	{
+		"element" : "datepicker",
+		"id" : "mulaRawatan",
+		"labelbi" : "Tarikh Mula Rawatan",
+		"labelbm" : "Tarikh Mula Rawatan"
+	},
+	{
+		"element" : "text",
+		"id" : "akhirRawatan",
+		"labelbi" : "Tarikh Akhir Rawatan",
+		"labelbm" : "Tarikh Akhir Rawatan"
+	},
+	{
+		"element" : "textarea",
+		"id" : "nota",
+		"labelbi" : "Notes",
+		"labelbm" : "Nota"
+	},
+	{
+		"element": "groupbutton",
+		"id": "groupbutton",
+		"list": [
+			{
+				"labelbi": "Save",
+				"labelbm": "Simpan",
+				"onclick": "rozaSubmitPanel()",
+				"ac_remove": false
+			}
+		]
+	}
+]

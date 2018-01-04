@@ -1,0 +1,55 @@
+[
+   {
+      "element": "title",
+      "labelbi": "Personal Task List",
+      "labelbm": "Penetapan Senarai Kekananan"
+   },
+   {
+      "element": "table",
+      "id": "latihan",
+      "source": "HR/SM_SenaraiKekananan.sql",
+      "column": [
+         {
+            "labelbi": "BSK No",
+            "labelbm": "No BSK",
+            "value": "[[no_bsk]]"
+         },
+		 {
+            "labelbi": "Name",
+            "labelbm": "Nama",
+            "value": "[[name]]"
+         },
+		 {
+            "labelbi": "IcNo",
+            "labelbm": "No K/P",
+            "value": "[[icno]]"
+         },
+		 {
+            "labelbi": "Date of Birth",
+            "labelbm": "Tarikh Lahir",
+            "value": "[[tlahirfmt]]"
+         },
+         {
+            "labelbi": "Date of Service",
+            "labelbm": "Tarikh Khidmat",
+            "value": "[[sdatefmt]]"
+         },
+		 {
+            "labelbi": "Eligibility",
+            "labelbm": "Kelayakan",
+            "value": "[[kelayakan]]"
+         }
+      ],
+    "onview": {
+      "onclick": "alert('View for [[no_bsk]]')",
+      "ac_disable": true
+    },
+    "onedit": {
+      "onclick": "alert('Edit for [[no_bsk]]')",
+      "ac_disable": false
+    },
+    "ondelete": {
+      "ac_disable": true
+    }
+   }
+]

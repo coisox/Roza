@@ -1,0 +1,28 @@
+[
+   {
+		"element" : "title",
+		"labelbi" : "Holidays Overseas",
+		"labelbm" : "Bercuti Ke Luar Negara",
+		"ac_hide" : true
+   },
+   {
+      "element": "tabs",
+      "list": [
+         {
+            "labelbi": "Application Form",
+            "labelbm": "Borang Permohonan",
+			"ui" : "HR/Perjawatan/SM_BKLN_Form.json"
+         },
+         {
+            "labelbi": "Information Details",
+            "labelbm": "Butiran Maklumat",
+			"ui" : "HR/Perjawatan/SM_BKLN_Staff.json"
+         },
+         {
+            "labelbi": "Office Use",
+            "labelbm": "Kegunaan Pejabat",
+			"ui" : "HR/Perjawatan/SM_BKLN_Office.json"
+         }
+      ]
+   }
+]

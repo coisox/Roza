@@ -11,8 +11,8 @@ body
 {
 	fill: #22B99A;
 }
-.main_container .scroll-view,
-.main_container .nav_title
+.scroll-view,
+.nav_title
 {
 	background: #2A3F54;
 }
