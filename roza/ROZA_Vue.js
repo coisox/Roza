@@ -286,8 +286,8 @@ function initVue() {
 						success: function(data) {
 							if(data.status=='ok') {
 								roza.rozaModal({
-									labelbm: 'Data telah dihantar',
-									labelbi: 'Data has been sent'
+									contentbm: 'Data telah dihantar',
+									contentbi: 'Data has been sent'
 								});
 							}
 							else roza.toast(data.status);
@@ -776,19 +776,20 @@ function initVue() {
 					localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
 					this.rozaUserPic = 'images/alien.png';
 					this.rozaModal({
-						labelbm:
+						contentbm:
 							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
 							'<p>rozaSubmitData() has been depreciated.</p>'+
 							'<p>Element table has new property; action_drag.</p>'+
 							'<p>New build in function introduced; rozaDragged(event).</p>'+
-							'<p>rozaModal() has been updated. It now support UI just like panel.</p>'
-						labelbi:
+							'<p>rozaModal() has been updated. It now support UI just like panel.</p>',
+						contentbi:
 							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
 							'<p>rozaSubmitData() has been depreciated.</p>'+
 							'<p>Element table has new property; action_drag.</p>'+
 							'<p>New build in function introduced; rozaDragged(event).</p>'+
-							'<p>rozaModal() has been updated. It now support UI just like panel.</p>'
-						title: currentVersion
+							'<p>rozaModal() has been updated. It now support UI just like panel.</p>',
+						titlebm: currentVersion,
+						titlebi: currentVersion
 					});
 				}
 			});
