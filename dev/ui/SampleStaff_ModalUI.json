@@ -8,7 +8,7 @@
 	{
 		"element": "html",
 		"fullwidth": true,
-		"value": "This is sample UI in modal. Just like creating UI for panel except that any element that produce another modal should be avoid by any means. For example, a button in modal that can produce another modal will break the system. But a button used to open PDF in new link is ok.<br><br>This new line is made of &#x3C;br&#x3E;. This also means, any HTML markup should be rendered without problem. <br><br>"
+		"value": "This is sample UI in modal. Just like creating UI for panel except that any element that produce another modal should be avoid by any means. For example, a button in modal that can produce another modal will break the system. But a button used to open PDF in new browser's tab is ok.<br><br>This new line is made of &#x3C;br&#x3E;. This also means, any HTML markup should be rendered without problem. <br><br>"
 	},
 	{
 		"element": "text",
@@ -23,5 +23,10 @@
 		"labelbm": "Nombor Siri 2",
 		"placeholderbi": "insert serial number",
 		"placeholderbm": "masukkan nombor siri"
+	},
+	{
+		"element": "html",
+		"fullwidth": true,
+		"value": "<br><br><font color='#E74C3C'>Press ESC to close this modal</font>"
 	}
 ]
