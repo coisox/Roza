@@ -120,22 +120,22 @@
 		"id": "groupbutton",
 		"list": [
 			{
-				"labelbi": "Button 1 no ac_dualmode",
-				"labelbm": "Butang 1 tiada ac_dualmode",
+				"labelbi": "No ac_dualmode",
+				"labelbm": "Tanpa ac_dualmode",
 				"onclick": "alert(1)",
 				"ac_remove": false
 			},
 			{
-				"labelbi": "Button 2 no ac_dualmode",
-				"labelbm": "Butang 2 tiada ac_dualmode",
+				"labelbi": "With ac_dualmode",
+				"labelbm": "Dgn ac_dualmode ",
 				"onclick": "alert(2)",
-				"ac_remove": false
+				"ac_remove": false,
+				"ac_dualmode": true
 			},
 			{
-				"labelbi": "Button 3",
-				"labelbm": "Butang 3",
-				"onclick": "alert(3)",
-				"ac_remove": false,
+				"labelbi": "Show Modal",
+				"labelbm": "Papar Modal",
+				"onclick": "rozaModal({ui:'SampleStaff_ModalUI.json'})",
 				"ac_dualmode": true
 			}
 		]
@@ -200,7 +200,7 @@
 			{
 				"labelbi": "Tab 2",
 				"labelbm": "Tab 2",
-				"ui": "SampleStaff_Form2.json"
+				"ui": "SampleStaff_TabLvl2.json"
 			},
 			{
 				"labelbi": "Tab 3",

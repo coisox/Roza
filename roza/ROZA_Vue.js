@@ -1,6 +1,6 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180103';
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaSubmitData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
+var currentVersion = 'v180104';
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
 if(!localStorage.getItem(prefix+'conf')) localStorage.setItem(prefix+'conf', '{"theme":"theme-night-sky"}');
@@ -57,27 +57,29 @@ function initVue() {
 			accordions: {},
 			tabLevel1: {},
 			tabLevel2: {},
+			vueTable: [],
 			panel: {
 				leftPanel: {
 					//initQueryBuilder: false,
 					filterString: '',
 					type: '',
-					prop: {},
+					prop: [],
 					show: true
 				},
 				rightPanel: {
 					filterString: '',
 					type: '',
-					prop: {},
+					prop: [],
 					show: true
 				},
 				fullPanel: {
 					filterString: '',
 					type: '',
-					prop: {},
+					prop: [],
 					show: false
 				},
 			},
+			modalProp: [],
 			dropzoneAction: 'main.html',
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
 			callbackQue: [],
@@ -210,7 +212,42 @@ function initVue() {
 				return match;
 			},
 			rozaModal: function(opt) {
-				if(opt) {
+				$('#modalGeneral').modal('hide');
+				
+				if(opt && opt.ui) {
+					roza.modalProp = [];
+					
+					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+						if(data.status=='ok') {
+							for(var x=0; x<data.prop.length; x++) {
+								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
+								
+								if(data.prop[x].element=='table') {
+									roza['vueTable'][data.prop[x].id] = [];
+									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
+									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
+									roza['vueTable'][data.prop[x].id]['option'] = {
+										columnsDisplay: {
+											actiondelete: 'micro',
+											actiondrag: 'micro',
+											ac_remove: 'micro'
+										},
+										columnsClasses: {
+											Action: 'actions_column',
+											Tindakan: 'actions_column'
+										}
+									};
+								}
+								
+								roza.modalProp = data.prop;
+								
+								$('#modalProp').modal('show');
+							}
+						}
+						else roza.toast(data.status);
+					});
+				}
+				else if(opt) {
 					$('#modalGeneral .modal-title').html('').html(opt['title'+this.rozaLanguage]);
 					$('#modalGeneral .modal-header').toggle(opt['title'+this.rozaLanguage]?true:false);
 					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
@@ -218,7 +255,6 @@ function initVue() {
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
 				}
-				else $('#modalGeneral').modal('hide');
 			},
 			rozaClearData: function() {
 				$('.x_content [data-default]').not('.ac_disable, .ac_hide').each(function(){
@@ -236,6 +272,7 @@ function initVue() {
 					$(this).html($(this).attr('data-default'));
 				});
 			},
+			/*
 			rozaSubmitData: function(opt) {
 				if(!opt.file) {
 					$.getJSON('roza/ROZA_LogError.php?msg=Property "file" not defined for rozaSubmitData()', function(data) {
@@ -265,6 +302,7 @@ function initVue() {
 					});
 				}
 			},
+			*/
 			rozaGetParam: function(param) {
 				if(param=='rozaUserId') return this.rozaUserId;
 				else if(param=='rozaUserName') return this.rozaUserName;
@@ -319,7 +357,6 @@ function initVue() {
 								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
 								
 								if(data.prop[x].element=='table') {
-									if(!roza['vueTable']) roza['vueTable'] = [];
 									roza['vueTable'][data.prop[x].id] = [];
 									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
@@ -435,7 +472,6 @@ function initVue() {
 							if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
 							
 							if(data.prop[x].element=='table') {
-								if(!roza['vueTable']) roza['vueTable'] = [];
 								roza['vueTable'][data.prop[x].id] = [];
 								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
@@ -446,6 +482,10 @@ function initVue() {
 										actiondelete: 'micro',
 										actiondrag: 'micro',
 										ac_remove: 'micro'
+									},
+									columnsClasses: {
+										Action: 'actions_column',
+										Tindakan: 'actions_column'
 									}
 								};
 								
@@ -479,7 +519,6 @@ function initVue() {
 							if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
 							
 							if(data.prop[x].element=='table') {
-								if(!roza['vueTable']) roza['vueTable'] = [];
 								roza['vueTable'][data.prop[x].id] = [];
 								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
@@ -490,6 +529,10 @@ function initVue() {
 										actiondelete: 'micro',
 										actiondrag: 'micro',
 										ac_remove: 'micro'
+									},
+									columnsClasses: {
+										Action: 'actions_column',
+										Tindakan: 'actions_column'
 									}
 								};
 								
@@ -572,7 +615,7 @@ function initVue() {
 			rozaModal = this.rozaModal;
 			rozaClearData = this.rozaClearData;
 			rozaResetData = this.rozaResetData;
-			rozaSubmitData = this.rozaSubmitData;
+			//rozaSubmitData = this.rozaSubmitData;
 			rozaHasRole = this.rozaHasRole;
 		},
 		updated: function() {
@@ -626,11 +669,9 @@ function initVue() {
 
 			$('.VueTables').each(function(){				
 				var id = $(this).attr('id');
+				$('#'+id+' .vueTableAdd').remove();
 				if(roza['vueTable'][id]['action_add'] && !roza['vueTable'][id]['action_add']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
 					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['action_add']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['action_add']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
-				}
-				else if(roza['vueTable'][id]['action_add'] && roza['vueTable'][id]['action_add']['ac_remove']) {
-					$('#'+id+' .vueTableAdd').remove();
 				}
 				
 				Sortable.create(
@@ -736,17 +777,17 @@ function initVue() {
 					this.rozaUserPic = 'images/alien.png';
 					this.rozaModal({
 						labelbm:
-							'<p>Element tabs is depreciated.</p>'+
-							'<p>New element accordion introduced to replace tabs.</p>'+
-							'<p>Fixed advance filter layout.</p>'+
-							'<p>Pretty scrollbar is now cross browser.</p>'+
-							'<p>Metro Menu will auto toggle (show/hide) upon mouse enter/leave.</p>',
+							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
+							'<p>rozaSubmitData() has been depreciated.</p>'+
+							'<p>Element table has new property; action_drag.</p>'+
+							'<p>New build in function introduced; rozaDragged(event).</p>'+
+							'<p>rozaModal() has been updated. It now support UI just like panel.</p>'
 						labelbi:
-							'<p>Element tabs is depreciated.</p>'+
-							'<p>New element accordion introduced to replace tabs.</p>'+
-							'<p>Fixed advance filter layout.</p>'+
-							'<p>Pretty scrollbar is now cross browser.</p>'+
-							'<p>Metro Menu will auto toggle (show/hide) upon mouse enter/leave.</p>',
+							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
+							'<p>rozaSubmitData() has been depreciated.</p>'+
+							'<p>Element table has new property; action_drag.</p>'+
+							'<p>New build in function introduced; rozaDragged(event).</p>'+
+							'<p>rozaModal() has been updated. It now support UI just like panel.</p>'
 						title: currentVersion
 					});
 				}

@@ -1,1 +1,0 @@
-SELECT * FROM sample_lov WHERE lov_category = 'cb_select';
