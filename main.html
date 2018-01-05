@@ -400,7 +400,7 @@
 																													<div v-else-if="!accessControl(sub2,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub2,'ac_hide')}">
 																														<label class="control-label col-xs-3"><span class="required" v-if="sub2.required">* </span>{{sub2['label'+rozaLanguage]}}</label>
 																														<div class="col-xs-9">
-																															<input class="form-control not-supported" value="Element type not supported" readonly>
+																															<input class="form-control not-supported" :value="'Element \''+sub2.element+'\' is not supported'" readonly>
 																														</div>
 																													</div>
 																												
@@ -490,7 +490,7 @@
 																					<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
 																						<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}</label>
 																						<div class="col-xs-9">
-																							<input class="form-control not-supported" value="Element type not supported" readonly>
+																							<input class="form-control not-supported" :value="'Element \''+sub.element+'\' is not supported'" readonly>
 																						</div>
 																					</div>
 																				
@@ -609,7 +609,7 @@
 																					<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
 																						<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}</label>
 																						<div class="col-xs-9">
-																							<input class="form-control not-supported" value="Element type not supported" readonly>
+																							<input class="form-control not-supported" :value="'Element \''+sub.element+'\' is not supported'" readonly>
 																						</div>
 																					</div>
 																				
@@ -699,7 +699,7 @@
 													<div v-else-if="!accessControl(item,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}</label>
 														<div class="col-xs-9">
-															<input class="form-control not-supported" value="Element type not supported" readonly>
+															<input class="form-control not-supported" :value="'Element \''+item.element+'\' is not supported'" readonly>
 														</div>
 													</div>
 												
@@ -1017,7 +1017,7 @@
 			</div>
 			
 			<!-- =========================================================================================================================================== Modal UI -->
-			<div id="modalProp" class="modal fade" tabindex="-1" role="dialog" backdrop="static">
+			<div id="modalProp" class="modal fade" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -1109,7 +1109,7 @@
 												<div v-else-if="!accessControl(item,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 													<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}</label>
 													<div class="col-xs-9">
-														<input class="form-control not-supported" value="Element type not supported" readonly>
+														<input class="form-control not-supported" :value="'Element \''+item.element+'\' is not supported'" readonly>
 													</div>
 												</div>
 											

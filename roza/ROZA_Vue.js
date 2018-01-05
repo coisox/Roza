@@ -260,10 +260,7 @@ function initVue() {
 					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
 					$('#modalGeneral .modal-body').html('').html(opt['content'+this.rozaLanguage]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
-					$('#modalGeneral').modal({
-						show: true,
-						backdrop: 'static'
-					});
+					$('#modalGeneral').modal('show');
 				}
 			},
 			rozaClearData: function() {
