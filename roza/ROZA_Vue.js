@@ -676,15 +676,18 @@ function initVue() {
 
 			$('.VueTables').each(function(){				
 				var id = $(this).attr('id');
+				
+				//add/remove add button
 				$('#'+id+' .vueTableAdd').remove();
 				if(roza['vueTable'][id]['action_add'] && !roza['vueTable'][id]['action_add']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
 					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['action_add']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['action_add']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
 				}
-				
+
+				//drag icon
 				Sortable.create(
 					$('#'+id+' tbody')[0],
 					{
-						handle: ".fa-bars",
+						handle: ".fa-arrows-v",
 						onUpdate: function(event) {
 							if(typeof rozaDragged == 'function') rozaDragged(event);
 						}

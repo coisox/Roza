@@ -325,12 +325,12 @@
 
 																														<template v-else-if="sub2.element=='table'">
 																															<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																															<v-client-table :id="sub2.id" :name="sub2.id" :columns="vueTable[sub2.id].column" :data="vueTable[sub2.id].list" :options="vueTable[sub2.id].option" :total="sub2.total">
+																															<v-client-table :id="sub2.id" :name="sub2.id" :columns="vueTable[sub2.id].column" :data="vueTable[sub2.id].list" :options="vueTable[sub2.id].option" :class="{smallrecord:sub2.smallrecord, nosort:sub2.nosort}">
 																																<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
 																																	<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
 																																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
 																																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-bars"></i></a>
+																																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																																</template>
 																															</v-client-table>
 																														</template>
@@ -415,12 +415,12 @@
 																						
 																						<template v-else-if="sub.element=='table'">
 																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :total="sub.total">
+																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
 																								<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
 																									<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
 																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
 																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-bars"></i></a>
+																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																								</template>
 																							</v-client-table>
 																						</template>
@@ -534,12 +534,12 @@
 				
 																						<template v-else-if="sub.element=='table'">
 																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :total="sub.total">
+																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
 																								<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
 																									<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
 																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
 																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-bars"></i></a>
+																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																								</template>
 																							</v-client-table>
 																						</template>
@@ -624,12 +624,12 @@
 														
 														<template v-else-if="item.element=='table'">
 															<!-- https://www.npmjs.com/package/vue-tables-2 -->
-															<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :total="item.total">
+															<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
 																<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
 																	<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
 																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
 																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-bars"></i></a>
+																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																</template>
 															</v-client-table>
 														</template>
@@ -1047,10 +1047,10 @@
 
 													<template v-else-if="item.element=='table'">
 														<!-- https://www.npmjs.com/package/vue-tables-2 -->
-														<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :total="item.total">
+														<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
 															<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
 																<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-bars"></i></a>
+																<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 															</template>
 														</v-client-table>
 													</template>

@@ -510,9 +510,6 @@ select.form-control.ac_disable {
 	border-color: transparent !important;
 	padding-left: 0;
 }
-.viewMode .vueTableDualMode {
-	display: none;
-}
 /*
 .radio label.ac_disable .iradio_flat-green.checked {
     opacity: 0;
@@ -595,6 +592,9 @@ ul.bar_tabs li:after {
 }
 
 /* ================================================================================== Vue Table */
+.viewMode .vueTableDualMode {
+	display: none;
+}
 [id^=VueTables__limit] {
 	margin-left: 5px;
 }
@@ -641,6 +641,15 @@ ul.bar_tabs li:after {
 .VueTables__filters-row input {
 	background: white url(../images/icon-filter.svg) no-repeat right 10px center;
 	background-size: 
+}
+.VueTables.smallrecord .VueTables__filters-row,
+.VueTables.smallrecord .VuePagination,
+.VueTables.nosort .VueTables__sort-icon
+{
+	display: none;
+}
+.nosort th.VueTables__sortable {
+    pointer-events: none;
 }
 /* ================================================================================== FAB */
 .fab {

@@ -75,7 +75,8 @@
 		
 		//========================================================================================= preprocessing table to vueTable compatible
 		if($prop[$i]['element']=='table') {
-			$prop[$i]['total'] = count($prop[$i]['list']);
+			if(count($prop[$i]['list'])<11) $prop[$i]['smallrecord'] = true;
+			if(isset($prop[$i]['sortable']) && $prop[$i]['sortable']==false) $prop[$i]['nosort'] = true;
 			$prop[$i]['list2'] = [];
 			$hasAction = false;
 			$actions = ['action_view', 'action_edit', 'action_delete', 'action_drag', 'action_add'];
