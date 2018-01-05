@@ -131,3 +131,13 @@ th.VueTables__sortable {
 th.VueTables__sortable:last-child {
     border-right: 1px solid #FF2F59 !important;
 }
+.metro-menu-closer,
+.metro-menu-closer:before
+{
+	background: rgba(0,0,0,0);
+}
+.metro-menu-opener.active + .metro-menu-closer,
+.metro-menu-opener.active + .metro-menu-closer:before
+{
+	background: rgba(0,0,0,.5);
+}

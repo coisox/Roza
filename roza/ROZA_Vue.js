@@ -1,5 +1,5 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180104';
+var currentVersion = 'v180104c';
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
@@ -241,7 +241,14 @@ function initVue() {
 								
 								roza.modalProp = data.prop;
 								
-								$('#modalProp').modal('show');
+								$('#modalProp .modal-title').html('').html(opt['title'+this.rozaLanguage]);
+								$('#modalProp .modal-header').toggle(opt['title'+this.rozaLanguage]?true:false);
+								$('#modalProp #btnCancel').toggle(opt.cancel?true:false);
+								$('#modalProp #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
+								$('#modalProp').modal({
+									show: true,
+									backdrop: 'static'
+								});
 							}
 						}
 						else roza.toast(data.status);
@@ -253,7 +260,10 @@ function initVue() {
 					$('#modalGeneral #btnCancel').toggle(opt.cancel?true:false);
 					$('#modalGeneral .modal-body').html('').html(opt['content'+this.rozaLanguage]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
-					$('#modalGeneral').modal('show');
+					$('#modalGeneral').modal({
+						show: true,
+						backdrop: 'static'
+					});
 				}
 			},
 			rozaClearData: function() {
@@ -771,25 +781,15 @@ function initVue() {
 				$('body').css('opacity',1);
 				
 				if(this.rozaVersion != currentVersion) {
-					this.rozaVersion = currentVersion;
-					localStorage.setItem(prefix+'rozaVersion', currentVersion);
-					localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
-					this.rozaUserPic = 'images/alien.png';
-					this.rozaModal({
-						contentbm:
-							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
-							'<p>rozaSubmitData() has been depreciated.</p>'+
-							'<p>Element table has new property; action_drag.</p>'+
-							'<p>New build in function introduced; rozaDragged(event).</p>'+
-							'<p>rozaModal() has been updated. It now support UI just like panel.</p>',
-						contentbi:
-							'<p>Due to internal conflict, in element table, properties onview, onedit, ondelete, ondrag, onadd has been rename to action_view, action_edit, action_delete, action_drag, action_add. Property onclick, onchange and onload which are defined in Element Event remain unchanged.</p>'+
-							'<p>rozaSubmitData() has been depreciated.</p>'+
-							'<p>Element table has new property; action_drag.</p>'+
-							'<p>New build in function introduced; rozaDragged(event).</p>'+
-							'<p>rozaModal() has been updated. It now support UI just like panel.</p>',
-						titlebm: currentVersion,
-						titlebi: currentVersion
+					$('#fetchWhatsNew').load('manual', function(){
+						roza.rozaVersion = currentVersion;
+						localStorage.setItem(prefix+'rozaVersion', currentVersion);
+						roza.rozaModal({
+							contentbm: $('#fetchWhatsNew #fetchWhatsNew').html().replace(/<a /gi, '<span '),
+							contentbm: $('#fetchWhatsNew #fetchWhatsNew').html().replace(/<a /gi, '<span ')
+						});
+						$('#modalGeneral h2').css('margin-top', '0');
+						$('#fetchWhatsNew').html('');
 					});
 				}
 			});
@@ -819,7 +819,10 @@ function advanceIsDatepicker(e) {
 
 /*
 function addFavourite_BAK() {
-	$('#modalFavourite').modal('show');
+	$('#modalFavourite').modal({
+		show: true,
+		backdrop: 'static'
+	});
 }
 
 rozaChangeFilter_BAK: $.debounce(function(e) {

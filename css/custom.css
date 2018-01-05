@@ -39,11 +39,9 @@ body {
 	height: 100%;
 	pointer-events: none;
 	transition: all .3s ease-in-out;
-	background: rgba(255,255,255,0);
 }
 .metro-menu-opener.active + .metro-menu-closer {
 	pointer-events: initial;
-	background: rgba(255,255,255,.8);
 }
 .metro-menu-closer:before {
 	position: fixed;

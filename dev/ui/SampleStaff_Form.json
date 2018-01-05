@@ -135,7 +135,7 @@
 			{
 				"labelbi": "Show Modal",
 				"labelbm": "Papar Modal",
-				"onclick": "rozaModal({ui:'SampleStaff_ModalUI.json'})",
+				"onclick": "rozaModal({ui:'SampleStaff_ModalUI.json', onclick: 'alert(\"form saved\")'})",
 				"ac_dualmode": true
 			}
 		]

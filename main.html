@@ -9,7 +9,7 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180104" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180104c" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<link href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180104" rel="stylesheet">
+		<link href="css/custom.css?v180104c" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
@@ -1017,9 +1017,13 @@
 			</div>
 			
 			<!-- =========================================================================================================================================== Modal UI -->
-			<div id="modalProp" class="modal fade" tabindex="-1" role="dialog">
+			<div id="modalProp" class="modal fade" tabindex="-1" role="dialog" backdrop="static">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"></h4>
+						</div>
 						<div class="modal-body">
 							<div class="x_panel">
 								<div data-simplebar class="x_content p-0">
@@ -1114,10 +1118,16 @@
 								</div>
 							</div>
 						</div>
+						<div class="modal-footer">
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
+						</div>
 					</div>
 				</div>
 			</div>
 			<!-- =========================================================================================================================================== Modal UI end -->
+			
+			<div id="fetchWhatsNew" style="display:none;"></div>
 			
 		</div>
 
@@ -1139,7 +1149,7 @@
 		<script src="lib/simplebar/simplebar.js"></script>
 		<script src="lib/sortable.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180104"></script>
+		<script src="roza/ROZA_Vue.js?v180104c"></script>
 		<!--
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>
 		<script src="lib/jsonQ.min.js"></script>
