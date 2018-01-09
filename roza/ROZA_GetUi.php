@@ -30,7 +30,9 @@
 			}
 			else {
 				$data = array_merge($data, rozaGetArray(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']));
-				unset($prop[$i]);
+				if(!rozaHasRole(['debug'])) {
+					unset($prop[$i]);
+				}
 			}
 		}
 		else break;
@@ -67,8 +69,10 @@
 			else {
 				$prop[$i]['list'] = rozaGetArray2D(file_get_contents('../dev/sql/'.$prop[$i]['source']), $prop[$i]['parameterize']);
 				if($prop[$i]['element']!='table') { //jika table, even bukan debug mode, kita nak retain source utk tujuan refresh bila data berubah.
-					unset($prop[$i]['source']);
-					unset($prop[$i]['parameterize']);
+					if(!rozaHasRole(['debug'])) {
+						unset($prop[$i]['source']);
+						unset($prop[$i]['parameterize']);
+					}
 				}
 			}
 		}

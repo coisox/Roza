@@ -9,7 +9,7 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180105" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180108b" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<link href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180105" rel="stylesheet">
+		<link href="css/custom.css?v180108b" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
@@ -233,7 +233,7 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div data-simplebar class="x_content p-0 standardlist">
+									<div data-simplebar-direction="vertical" class="x_content p-0 standardlist">
 										<ul class="list-group">
 											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
 												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
@@ -247,7 +247,7 @@
 								</div>
 								<!-- =========================================================================================================================================== panel for ui -->
 								<div class="x_panel" v-else-if="panel[p].type=='ui'">
-									<div data-simplebar class="x_content p-0">
+									<div data-simplebar-direction="vertical" class="x_content p-0">
 										<div data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px; height:100%;">
 											<template v-for="item in panel[p].prop" v-if="item.element!='data' && !(item.element=='file' && accessControl(item,'ac_dualmode') && viewMode)">
 											
@@ -1026,7 +1026,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="x_panel">
-								<div data-simplebar class="x_content p-0">
+								<div data-simplebar-direction="vertical" class="x_content p-0">
 									<div data-parsley-validate class="form-horizontal form-label-left">
 										<template v-for="item in modalProp" v-if="item.element!='data'">
 										
@@ -1146,10 +1146,14 @@
 		<script src="lib/vue-tables-2.min.js"></script>
 		<script src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+		
+		<script src="lib/simplebar/TweenMax.min.js"></script>
+		<script src="lib/simplebar/ScrollToPlugin.min.js"></script>
 		<script src="lib/simplebar/simplebar.js"></script>
+		
 		<script src="lib/sortable.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180105"></script>
+		<script src="roza/ROZA_Vue.js?v180108b"></script>
 		<!--
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>
 		<script src="lib/jsonQ.min.js"></script>

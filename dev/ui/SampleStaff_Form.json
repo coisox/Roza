@@ -2,9 +2,7 @@
 	{
 		"element": "data",
 		"source": "SampleStaff_Data.sql",
-		"parameterize": [
-			"{{staff_id}}"
-		]
+		"parameterize": ["{{staff_id}}"]
 	},
 	{
 		"element": "data",
@@ -24,14 +22,16 @@
 	},
 	{
 		"element": "text",
-		"id": "name",
+		"id": "name2",
+		"value": "[[name]] ({{roles}})",
 		"labelbi": "Element 'text'",
 		"labelbm": "Elemen 'text'",
 		"placeholderbi": "insert name",
 		"placeholderbm": "masukkan nama",
 		"maxlength": 20,
 		"required": true,
-		"ac_dualmode": true
+		"ac_dualmode": true,
+		"onload": "if('{{staff_id}}'=='undefined') rozaViewMode(false)"
 	},
 	{
 		"element": "textarea",
@@ -303,6 +303,7 @@
 		"element": "table",
 		"id": "table",
 		"source": "SampleStaff_Table.sql",
+		"parameterize": ["{{roles}}"],
 		"batchaction": [
 			{
 				"labelbi": "Delete",

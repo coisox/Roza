@@ -14,7 +14,7 @@ body
 .scroll-view,
 .nav_title
 {
-	background: white;
+	background: white;											/*Metro background white*/
 }
 .metro_container {
 	background: #E0E0E0;
@@ -35,7 +35,7 @@ body
 .metro_container.active,
 .info-number .bg-green
 {
-	background: #FF2F59  !important;
+	background: #FF2F59  !important;					/*Metro active menu primary*/
 	border: 1px solid #FF2F59  !important;
 }
 .metro_container.active i,
@@ -122,7 +122,6 @@ body
 .fab .padder:nth-child(4) a { background: #BF6DA1; }
 .fab .padder:nth-child(5) a { background: #F65B5B; }
 .fab .padder:nth-child(6) a { background: #FF9D5B; }
-
 th.VueTables__sortable {
     border-left: 1px solid #FF2F59 !important;
     border-top: 1px solid #FF2F59 !important;
@@ -140,4 +139,7 @@ th.VueTables__sortable:last-child {
 .metro-menu-opener.active + .metro-menu-closer:before
 {
 	background: rgba(0,0,0,.5);
+}
+a.panel-title, a.panel-title:focus {
+	background: #FF2F59;
 }

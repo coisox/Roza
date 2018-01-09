@@ -63,6 +63,11 @@
 	print_r($xxx);
 	
 	echo "<br>=======================================================<br>";
-	echo date_format(new DateTime(),"U");
+	//echo date_format(new DateTime(),"U");
+	
+	
+	$xxx = array('Hello','World!','Beautiful','Day!');
+	echo "<br>=======================================================<br>";
+	echo "'".implode("','",$xxx)."'";
 	
 ?>

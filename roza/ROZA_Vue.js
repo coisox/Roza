@@ -1,6 +1,6 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180105';
-var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
+var currentVersion = 'v180108b';
+var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaViewMode, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
 if(!localStorage.getItem(prefix+'conf')) localStorage.setItem(prefix+'conf', '{"theme":"theme-night-sky"}');
@@ -360,6 +360,8 @@ function initVue() {
 
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
+							roza.viewMode = true;
+							
 							for(var x=0; x<data.prop.length; x++) {
 								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
 								
@@ -440,6 +442,9 @@ function initVue() {
 					roza.taskbar = {};
 				}
 			},
+			rozaViewMode: function(b) {
+				roza.viewMode = b;
+			},
 			rozaDefaultAccordion: function(list) {
 				var hasDefault = false;
 				
@@ -508,10 +513,28 @@ function initVue() {
 						roza.accordions[list.id] = data.prop;
 						roza.accordions = JSON.parse(JSON.stringify(roza.accordions));
 						roza.$nextTick(function () {
-							$('.panel-collapse.collapse').collapse('hide');
-							$('.accordion-title').addClass('collapsed');
-							$('#'+list.id).prev().removeClass('collapsed');
-							$('#'+list.id).collapse('show');
+							//$('.panel-collapse.collapse').collapse('hide');
+							//$('.accordion-title').addClass('collapsed');
+							//$('#'+list.id).prev().removeClass('collapsed');
+							//$('#'+list.id).collapse('show');
+							
+							if(!$('#'+list.id).hasClass('in')) {
+								$('.panel-collapse.collapse').removeClass('in');
+								$('.accordion-title').addClass('collapsed');
+								
+								$('#'+list.id).collapse('show');
+								$('#'+list.id).prev().removeClass('collapsed');
+								
+								/*
+								$('#'+'acc3').parents('.x_content').scrollTo($('#'+'acc3'), {
+									axis: 'y',
+									offset: -40,
+									duration: 1000
+								});
+								
+								$("html, body").animate({ scrollTop: $('#'+list.id).offset().top }, 1000);
+								*/
+							}
 						});
 						
 						//roza['accordions'] = JSON.stringify(roza['accordions']);
@@ -616,6 +639,7 @@ function initVue() {
 			rozaCallLandingFile = this.rozaCallLandingFile;
 			rozaSetTaskbar = this.rozaSetTaskbar;
 			rozaSetPanel = this.rozaSetPanel;
+			rozaViewMode = this.rozaViewMode;
 			rozaBindData = this.rozaBindData;
 			rozaBindLov = this.rozaBindLov;
 			rozaGetParam = this.rozaGetParam;
@@ -666,9 +690,11 @@ function initVue() {
 			
 			while (this.callbackQue.length) {
 				var callback = this.callbackQue.shift();
-				if(typeof eval(callback.split('(')[0]) == 'function') eval(callback);
-				else {
-					$.getJSON('roza/ROZA_LogError.php?msg='+callback+' is not defined', function(data) {
+				try {
+					eval(callback);
+				}
+				catch(err) {
+					$.getJSON('roza/ROZA_LogError.php?msg='+err.message+': '+callback, function(data) {
 						roza.toast('System error occured and has been reported ('+data.log_id+')');
 					});
 				}

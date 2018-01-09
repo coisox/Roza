@@ -84,7 +84,7 @@ function rozaExecuteQuery($sql, $params) {
 	$types = '';
 	for($i=0; $i<count($params); $i++) {
 		$types .= 's';
-		$params[$i] = rozaReplaceParam($params[$i]);
+		//$params[$i] = rozaReplaceParam($params[$i]);
 	}
 	$stmt->bind_param($types, ...$params);
 	

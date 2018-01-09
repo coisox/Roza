@@ -1,14 +1,14 @@
 <NotepadPlus>
     <Session activeView="0">
-        <mainView activeIndex="7">
-            <File firstVisibleLine="1011" xOffset="0" scrollWidth="55445" startPos="94999" endPos="95047" selMode="0" lang="HTML" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\main.html" backupFilePath="" originalFileLastModifTimestamp="1514955876" />
-            <File firstVisibleLine="21" xOffset="0" scrollWidth="829" startPos="706" endPos="706" selMode="0" lang="CSS" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\css\custom.css" backupFilePath="" originalFileLastModifTimestamp="1514955843" />
-            <File firstVisibleLine="10" xOffset="0" scrollWidth="1172" startPos="2454" endPos="2454" selMode="0" lang="PHP" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_GetUi.php" backupFilePath="" originalFileLastModifTimestamp="1514279716" />
-            <File firstVisibleLine="710" xOffset="0" scrollWidth="2111" startPos="26819" endPos="26819" selMode="0" lang="Javascript" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_Vue.js" backupFilePath="" originalFileLastModifTimestamp="1514953841" />
-            <File firstVisibleLine="286" xOffset="0" scrollWidth="1681" startPos="6707" endPos="6712" selMode="0" lang="Normal Text" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\ui\SampleStaff_Form.json" backupFilePath="" originalFileLastModifTimestamp="1514944970" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="226199" startPos="0" endPos="0" selMode="0" lang="Javascript" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\html\B8\lib\jquery-ui.min.js" backupFilePath="" originalFileLastModifTimestamp="1513666241" />
-            <File firstVisibleLine="61" xOffset="0" scrollWidth="1087" startPos="2687" endPos="2691" selMode="0" lang="HTML" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\html\B8\B8_Tree.html" backupFilePath="" originalFileLastModifTimestamp="1513917038" />
-            <File firstVisibleLine="0" xOffset="0" scrollWidth="789" startPos="182" endPos="182" selMode="0" lang="HTML" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\drag.html" backupFilePath="" originalFileLastModifTimestamp="1514956549" />
+        <mainView activeIndex="3">
+            <File firstVisibleLine="1035" xOffset="633" scrollWidth="62048" startPos="98266" endPos="98277" selMode="0" lang="HTML" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\main.html" backupFilePath="" originalFileLastModifTimestamp="1515142262" />
+            <File firstVisibleLine="629" xOffset="0" scrollWidth="829" startPos="12491" endPos="12491" selMode="0" lang="CSS" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\css\custom.css" backupFilePath="" originalFileLastModifTimestamp="1515141897" />
+            <File firstVisibleLine="69" xOffset="0" scrollWidth="1819" startPos="3719" endPos="3725" selMode="0" lang="PHP" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_GetUi.php" backupFilePath="" originalFileLastModifTimestamp="1515141716" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="2611" startPos="1233" endPos="1233" selMode="0" lang="Javascript" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\roza\ROZA_Vue.js" backupFilePath="" originalFileLastModifTimestamp="1515142262" />
+            <File firstVisibleLine="290" xOffset="0" scrollWidth="1681" startPos="6739" endPos="6744" selMode="0" lang="Normal Text" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\ui\SampleStaff_Form.json" backupFilePath="" originalFileLastModifTimestamp="1515125512" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="781" startPos="347" endPos="490" selMode="0" lang="Javascript" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\landing\SampleStaff_Form.js" backupFilePath="" originalFileLastModifTimestamp="1515119205" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="1028" startPos="239" endPos="247" selMode="0" lang="Normal Text" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\ui\SampleStaff_Acc1.json" backupFilePath="" originalFileLastModifTimestamp="1515138982" />
+            <File firstVisibleLine="0" xOffset="0" scrollWidth="866" startPos="175" endPos="175" selMode="0" lang="Normal Text" encoding="-1" filename="D:\Cloud\Mega\Projects\Website\roza\dev\ui\SampleStaff_Acc2.json" backupFilePath="" originalFileLastModifTimestamp="1515138987" />
         </mainView>
         <subView activeIndex="0" />
     </Session>
