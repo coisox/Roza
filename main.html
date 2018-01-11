@@ -198,7 +198,7 @@
 						<!-- =========================================================================================================================================== taskbar -->
 						<div class="secondnav pull-right">
 							<span v-for="item in taskbar" v-if="!accessControl(item,'ac_remove')">
-								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"><i :class="item.icon"></i> {{item['label'+rozaLanguage]}}</button>
+								<button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" @click="onclick(item)"><i :class="item.icon"></i> {{item['label'+rozaLanguage]}}</button>
 								<ul v-if="item.list" class="dropdown-menu" role="menu">
 									<li v-for="sub in item.list" v-if="!accessControl(sub,'ac_remove')"><label @click="onclick(sub)">{{sub['label'+rozaLanguage]}}</label></li>
 								</ul>

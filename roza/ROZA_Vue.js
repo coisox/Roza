@@ -428,7 +428,7 @@ function initVue() {
 			},
 			rozaSetTaskbar: function(opt) {
 				if(opt) {
-					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui, function(data){
+					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
 							for(var x=0; x<data.prop.length; x++) {
 								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
