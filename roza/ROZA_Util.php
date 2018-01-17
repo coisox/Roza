@@ -48,7 +48,7 @@ function rozaReplaceParam($string) {
 function rozaReplaceField($string, $fields, $proceedIfNotSet) {
 	preg_match_all("/(\[\[)(.*)(\]\])/U", $string, $pat_array);
 	for($i=0; $i<count($pat_array[0]); $i++) {
-		if($proceedIfNotSet || $fields[$pat_array[2][$i]]) {
+		if($proceedIfNotSet || isset($fields[$pat_array[2][$i]])) {
 			$string = str_replace('[['.$pat_array[2][$i].']]', $fields[$pat_array[2][$i]], $string);
 		}
 	}
@@ -138,7 +138,7 @@ function rozaGetArray($sql, $param) {
 	return json_decode($return, true);
 }
 
-function rozaGetArray2D($sql, $param) {
+function rozaGetArray2D($sql, $param) { //for standardlist
 	$rs = rozaExecuteQuery($sql, $param);
 	$list = [];
 	while($row = $rs->fetch_assoc()) {

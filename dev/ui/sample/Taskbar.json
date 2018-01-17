@@ -8,7 +8,7 @@
 			{
 				"labelbi" : "Officer Registration",
 				"labelbm" : "Daftar Pegawai",
-				"onclick" : "rozaCallLandingFile('SampleStaff_Form.js')"
+				"onclick" : "rozaCallLandingFile('sample/BasicUI.js')"
 			},
 			{
 				"labelbi" : "Vendor Registration",
@@ -25,7 +25,7 @@
 			{
 				"labelbi" : "Officer",
 				"labelbm" : "Pegawai",
-				"onclick" : "rozaCallLandingFile('SampleStaff_Standardlist.js')"
+				"onclick" : "rozaCallLandingFile('sample/Standardlist.js')"
 			},
 			{
 				"labelbi" : "Vendor",

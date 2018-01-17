@@ -1,12 +1,8 @@
 [
 	{
 		"element": "data",
-		"source": "SampleStaff_Data.sql",
+		"source": "sample/Data.sql",
 		"parameterize": ["{{staff_id}}"]
-	},
-	{
-		"element": "data",
-		"source": "DATA_SampleToday.sql"
 	},
 	{
 		"element": "title",
@@ -47,7 +43,7 @@
 	{
 		"element": "dropdown",
 		"id": "state",
-		"source": "LOV_SampleState.sql",
+		"source": "sample/LOV_State.sql",
 		"labelbi": "Element 'dropdown'",
 		"labelbm": "Elemen 'dropdown'",
 		"onload": "onloadState()",
@@ -56,7 +52,7 @@
 	{
 		"element": "checkbox",
 		"id": "club",
-		"source": "LOV_SampleClub.sql",
+		"source": "sample/LOV_Club.sql",
 		"value": "CHESS",
 		"labelbi": "Element 'checkbox' horizontal",
 		"labelbm": "Elemen 'checkbox' horizontal",
@@ -66,7 +62,7 @@
 	{
 		"element": "checkbox",
 		"id": "club2",
-		"source": "LOV_SampleClub.sql",
+		"source": "sample/LOV_Club.sql",
 		"value": "CHESS",
 		"labelbi": "Element 'checkbox' vertical",
 		"labelbm": "Elemen 'checkbox' vertical",
@@ -76,7 +72,7 @@
 	{
 		"element": "radio",
 		"id": "gender",
-		"source": "LOV_SampleGender.sql",
+		"source": "sample/LOV_Gender.sql",
 		"labelbi": "Element 'radio' horizontal",
 		"labelbm": "Elemen 'radio' horizontal",
 		"style": "horizontal",
@@ -85,7 +81,7 @@
 	{
 		"element": "radio",
 		"id": "gender2",
-		"source": "LOV_SampleGender.sql",
+		"source": "sample/LOV_Gender.sql",
 		"value": "[[gender]]",
 		"labelbi": "Element 'radio' vertical",
 		"labelbm": "Elemen 'radio' vertical",
@@ -135,7 +131,7 @@
 			{
 				"labelbi": "Show Modal",
 				"labelbm": "Papar Modal",
-				"onclick": "rozaModal({ui:'SampleStaff_ModalUI.json', onclick: 'alert(\"Anything can happen\")'})",
+				"onclick": "rozaModal({ui:'sample/Modal.json', onclick: 'alert(\"Anything can happen\")'})",
 				"ac_dualmode": true
 			}
 		]
@@ -181,88 +177,12 @@
 		"id": "html",
 		"style": "block",
 		"fullwidth": true,
-		"value": "<iframe src='dev/html/SampleComplex.html?{{rozaTimestamp}}' height='416'></iframe>"
+		"value": "<iframe src='dev/html/sample/AverageTemperature.html?{{rozaTimestamp}}' height='416'></iframe>"
 	},
 	{
 		"element": "title",
 		"labelbi": "Element 'tabs'",
 		"labelbm": "Elemen 'tabs'"
-	},
-	{
-		"element": "tabs",
-		"list": [
-			{
-				"labelbi": "Tab 1",
-				"labelbm": "Tab 1",
-				"ui": "SampleStaff_Tab.json",
-				"ac_default": true
-			},
-			{
-				"labelbi": "Tab 2",
-				"labelbm": "Tab 2",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 3",
-				"labelbm": "Tab 3",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 4",
-				"labelbm": "Tab 4",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 5",
-				"labelbm": "Tab 5",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 6",
-				"labelbm": "Tab 6",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 7",
-				"labelbm": "Tab 7",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 8",
-				"labelbm": "Tab 8",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 9",
-				"labelbm": "Tab 9",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 10",
-				"labelbm": "Tab 10",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 11",
-				"labelbm": "Tab 11",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 12",
-				"labelbm": "Tab 12",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 13",
-				"labelbm": "Tab 13",
-				"ui": "SampleStaff_TabLvl2.json"
-			},
-			{
-				"labelbi": "Tab 14",
-				"labelbm": "Tab 14",
-				"ui": "SampleStaff_TabLvl2.json"
-			}
-		]
 	},
 	{
 		"element": "title",
@@ -277,20 +197,20 @@
 				"labelbi": "Accordion 1",
 				"labelbm": "Accordion 1",
 				"id": "acc1",
-				"ui": "SampleStaff_Acc1.json"
+				"ui": "sample/Accordion_1_Content.json"
 			},
 			{
 				"labelbi": "Accordion 2",
 				"labelbm": "Accordion 2",
 				"id": "acc2",
-				"ui": "SampleStaff_Acc2.json",
+				"ui": "sample/Accordion_2_Content.json",
 				"ac_default": true
 			},
 			{
 				"labelbi": "Accordion 3",
 				"labelbm": "Accordion 3",
 				"id": "acc3",
-				"ui": "SampleStaff_Acc3.json"
+				"ui": "sample/Accordion_3_Content.json"
 			}
 		]
 	},
@@ -302,7 +222,7 @@
 	{
 		"element": "table",
 		"id": "table",
-		"source": "SampleStaff_Table.sql",
+		"source": "sample/Table.sql",
 		"parameterize": ["{{roles}}"],
 		"batchaction": [
 			{

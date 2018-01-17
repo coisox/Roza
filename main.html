@@ -9,7 +9,7 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180108b" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180117" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 		<link href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180108b" rel="stylesheet">
+		<link href="css/custom.css?v180117" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
@@ -223,7 +223,7 @@
 												</ul>
 											</li>
 											<li class="dropdown">
-												<a class="dropdown-toggle" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-filter"></i></a>
+												<a class="dropdown-toggle" :class="{standardlist_hasFilter:panel[p].filterString!=''}" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-filter"></i></a>
 												<!--
 												<ul class="dropdown-menu" role="menu">
 													<li><input class="filterString" v-model="panel[p].filterString" :placeholder="rozaLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
@@ -236,11 +236,21 @@
 									<div data-simplebar-direction="vertical" class="x_content p-0 standardlist">
 										<ul class="list-group">
 											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
-												<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
-												<div class="pull-right">{{item.ROZA_TIME}}</div>
-												<div class="clearfix"></div>
-												<div class="pull-left">{{item.ROZA_DESC}}</div>
-												<div class="clearfix"></div>
+												<div class="standardlist_image">
+													<img :src="item.ROZA_IMAGE">
+												</div>
+												<div class="standardlist_text">
+													<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+													<div class="pull-right">{{item.ROZA_TIME}}</div>
+													<div class="clearfix"></div>
+													<div class="pull-left">{{item.ROZA_DESC}}</div>
+													<div class="clearfix"></div>
+												</div>
+												<template v-if="item.action">
+													<div class="standardlist_action" @click="onclick(item.action, $event)">
+														<i :class="item.action.icon"></i>
+													</div>
+												</template>
 											</li>
 										</ul>
 									</div>
@@ -1153,7 +1163,7 @@
 		
 		<script src="lib/sortable.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180108b"></script>
+		<script src="roza/ROZA_Vue.js?v180117"></script>
 		<!--
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>
 		<script src="lib/jsonQ.min.js"></script>

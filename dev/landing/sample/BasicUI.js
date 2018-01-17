@@ -3,7 +3,7 @@ roza.sessionParam['roles'] = "'"+rozaUserRole.join("','")+"'";
 
 rozaSetPanel({
 	panel: rozaGetParam('staff_id')?'rightPanel':'fullPanel',
-	ui: 'SampleStaff_Form.json'
+	ui: 'sample/BasicUI.json'
 });
 
 function onloadState() {

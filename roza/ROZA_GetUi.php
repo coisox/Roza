@@ -131,6 +131,7 @@
 			for($j=0; $j<count($prop[$i]['list']); $j++) {
 				if($prop[$i]['onclick']) $prop[$i]['list'][$j]['onclick'] = rozaReplaceField($prop[$i]['onclick'], $prop[$i]['list'][$j], false);
 				if($prop[$i]['onchange']) $prop[$i]['list'][$j]['onchange'] = rozaReplaceField($prop[$i]['onchange'], $prop[$i]['list'][$j], false);
+				if($prop[$i]['action']) $prop[$i]['list'][$j]['action'] = json_decode(rozaReplaceField(json_encode($prop[$i]['action']), $prop[$i]['list'][$j], false), true);
 			}
 			
 			unset($prop[$i]['onclick']);

@@ -1,0 +1,35 @@
+[
+	{
+		"element": "standardlist",
+		"labelbi": "Unprocessed Officer",
+		"labelbm": "Pegawai Belum Proses",
+		"source": "sample/StandardlistTwoWay_Left.sql",
+		"onclick": "rozaModal({ui:'sample/ModalTwoWay.json', onclick: 'transfer([[ROZA_ID]])'})",
+		"action":
+		{
+			"icon": "fa fa-long-arrow-right",
+			"onclick": "alert('alih ke sebelah')"
+		},
+		"filter": [
+			{
+				"element": "text",
+				"labelbi": "Position",
+				"labelbm": "Jawatan",
+				"parameter": "position"
+			},
+			{
+				"element": "dropdown",
+				"source": "sample/LOV_State.sql",
+				"labelbi": "State",
+				"labelbm": "Negeri",
+				"parameter": "state"
+			},
+			{
+				"element": "datepicker",
+				"labelbi": "Date Appoint",
+				"labelbm": "Tarikh Lantikan",
+				"parameter": "dateappoint"
+			}
+		]
+	}
+]

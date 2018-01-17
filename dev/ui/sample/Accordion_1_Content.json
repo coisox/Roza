@@ -9,7 +9,7 @@
 		"element": "table",
 		"sortable": false,
 		"id": "tableAcc1",
-		"source": "SampleStaff_Table.sql",
+		"source": "sample/Table.sql",
 		"column": [
 			{
 				"labelbi": "Date",

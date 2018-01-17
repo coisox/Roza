@@ -537,9 +537,41 @@ select.form-control.ac_disable {
 	height: calc(100vh - 171px);
 	overflow-x: hidden;
 }
+/*====================================================================standardlist start */
 .x_content.p-0.standardlist {
 	height: calc(100vh - 220px);
 }
+.standardlist li {
+	display: flex;
+}
+.standardlist_image {
+	width: 50px;
+    padding-right: 5px;
+}
+.standardlist_image img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+.standardlist_text {
+	width: 100%;
+}
+.standardlist_action {
+    width: 50px;
+    margin-left: 5px;
+}
+.standardlist_action i {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+	cursor: pointer;
+}
+.panel_toolbox>li>a.standardlist_hasFilter {
+	color: #E74C3C;
+}
+/*====================================================================standardlist end */
 .simplebar-track.horizontal {
 	display: none;
 }

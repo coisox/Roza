@@ -1,0 +1,15 @@
+[
+	{
+		"element": "title",
+		"labelbi": "ABC Process",
+		"labelbm": "Proses ABC"
+	},
+	{
+		"element": "radio",
+		"id": "status",
+		"source": "sample/LOV_Status.sql",
+		"labelbi": "Result",
+		"labelbm": "Keputusan",
+		"style": "horizontal"
+	}
+]

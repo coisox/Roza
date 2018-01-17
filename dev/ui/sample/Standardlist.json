@@ -1,0 +1,30 @@
+[
+	{
+		"element": "standardlist",
+		"labelbi": "List of Officer",
+		"labelbm": "Senarai Pegawai",
+		"onclick": "rozaCallLandingFile('sample/BasicUI.js?staff_id=[[ROZA_ID]]')",
+		"source": "sample/Standardlist.sql",
+		"filter": [
+			{
+				"element": "text",
+				"labelbi": "Position",
+				"labelbm": "Jawatan",
+				"parameter": "position"
+			},
+			{
+				"element": "dropdown",
+				"source": "sample/LOV_State.sql",
+				"labelbi": "State",
+				"labelbm": "Negeri",
+				"parameter": "state"
+			},
+			{
+				"element": "datepicker",
+				"labelbi": "Date Appoint",
+				"labelbm": "Tarikh Lantikan",
+				"parameter": "dateappoint"
+			}
+		]
+	}
+]

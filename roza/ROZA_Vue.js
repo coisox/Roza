@@ -1,5 +1,5 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180108b';
+var currentVersion = 'v180117';
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaViewMode, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
@@ -106,7 +106,8 @@ function initVue() {
 					this.breadcrumb = this.breadcrumbBuffer;
 				}
 			},
-			onclick: function(item) {
+			onclick: function(item, event) {
+				if(event) event.stopPropagation();
 				eval(item.onclick);
 			},
 			onchange: function(item) {
@@ -140,7 +141,8 @@ function initVue() {
 			},
 			filteredList: function(panel) {
 				return this.panel[panel].prop[0].list.filter(function(item) {
-					return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(roza.panel[panel].filterString.toLowerCase()) > -1
+					if(item.ROZA_TITLE) return (item.ROZA_TITLE + item.ROZA_TIME + item.ROZA_DESC).toLowerCase().indexOf(roza.panel[panel].filterString.toLowerCase()) > -1
+					else return false;
 				})
 			},
 			accessControl: function(item, ac) {
@@ -261,6 +263,9 @@ function initVue() {
 					$('#modalGeneral .modal-body').html('').html(opt['content'+this.rozaLanguage]);
 					$('#modalGeneral #btnOk').attr('onclick', opt.onclick?opt.onclick:'rozaModal()');
 					$('#modalGeneral').modal('show');
+				}
+				else {
+					$('#modalGeneral, #modalProp').modal('hide');
 				}
 			},
 			rozaClearData: function() {

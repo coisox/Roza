@@ -143,3 +143,11 @@ th.VueTables__sortable:last-child {
 a.panel-title, a.panel-title:focus {
 	background: #FF2F59;
 }
+.list-group-item .standardlist_action i {
+    background: #C5C7CB;
+    color: white;
+}
+.list-group-item.active .standardlist_action i {
+    background: white;
+    color: #FF2F59;
+}

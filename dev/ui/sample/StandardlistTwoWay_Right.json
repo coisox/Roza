@@ -1,10 +1,15 @@
 [
 	{
 		"element": "standardlist",
-		"labelbi": "List of Officer",
-		"labelbm": "Senarai Pegawai",
-		"onclick": "rozaCallLandingFile('SampleStaff_Form.js?staff_id=[[ROZA_ID]]')",
-		"source": "SampleStaff_Standardlist.sql",
+		"labelbi": "Processed Officer",
+		"labelbm": "Pegawai Dah Proses",
+		"source": "sample/StandardlistTwoWay_Right.sql",
+		"onclick": "rozaModal({ui:'sample/ModalTwoWay.json', onclick: 'transfer([[ROZA_ID]])'})",
+		"action":
+		{
+			"icon": "fa fa-long-arrow-left",
+			"onclick": "alert('alih ke sebelah')"
+		},
 		"filter": [
 			{
 				"element": "text",
@@ -14,7 +19,7 @@
 			},
 			{
 				"element": "dropdown",
-				"source": "LOV_SampleState.sql",
+				"source": "sample/LOV_State.sql",
 				"labelbi": "State",
 				"labelbm": "Negeri",
 				"parameter": "state"
