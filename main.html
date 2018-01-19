@@ -9,7 +9,7 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180117" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180119" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
@@ -18,9 +18,10 @@
 		<link href="lib/dropzone/dropzone.css" rel="stylesheet">
 		<link href="lib/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 		<link href="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet">
+		<link href="lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180117" rel="stylesheet">
+		<link href="css/custom.css?v180119" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
@@ -236,7 +237,7 @@
 									<div data-simplebar-direction="vertical" class="x_content p-0 standardlist">
 										<ul class="list-group">
 											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
-												<div class="standardlist_image">
+												<div class="standardlist_image" v-if="item.ROZA_IMAGE">
 													<img :src="item.ROZA_IMAGE">
 												</div>
 												<div class="standardlist_text">
@@ -268,15 +269,17 @@
 													</div>
 													
 													<!-- Element -->
-													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','accordion','radio','checkbox','table','datepicker'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
+													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','accordion','radio','checkbox','table','datepicker','timeline'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 														
-														<div v-if="item.element=='html' && item.fullwidth" v-html="item.value"></div>
+														<!-- =========================================================================================================================================== fullwidth element html -->
+														<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
 														
-														<div v-else-if="item.element=='groupbutton' && item.fullwidth" class="form-group" :id="item.id" :name="item.id">
+														<!-- =========================================================================================================================================== fullwidth element groupbutton -->
+														<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group" :id="item.id" :name="item.id">
 															<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 														</div>
 														
-														<!-- =========================================================================================================================================== element tabs -->
+														<!-- =========================================================================================================================================== fullwidth element tabs -->
 														<template v-else-if="item.element=='tabs'">
 															<div role="tabpanel" class="col-xs-12" data-example-id="togglable-tabs">
 																<ul class="nav nav-tabs bar_tabs level1" role="tablist" :id="item.id">
@@ -298,9 +301,9 @@
 																					<!-- Element -->
 																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','radio','checkbox','table','datepicker'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
 																						
-																						<div v-if="sub.element=='html' && sub.fullwidth" :class="sub.style" v-html="sub.value"></div>
+																						<div v-if="sub.element=='html' && sub.style=='fullwidth'" v-html="sub.value"></div>
 																						
-																						<div v-else-if="sub.element=='groupbutton' && sub.fullwidth" class="form-group" :id="sub.id" :name="sub.id">
+																						<div v-else-if="sub.element=='groupbutton' && sub.style=='fullwidth'" class="form-group" :id="sub.id" :name="sub.id">
 																							<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 																						</div>
 																						
@@ -327,9 +330,9 @@
 																													<!-- Element -->
 																													<div v-else-if="!accessControl(sub2,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','radio','checkbox','table','datepicker'].indexOf(sub2.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub2,'ac_hide')}">
 																														
-																														<div v-if="sub2.element=='html' && sub2.fullwidth" :class="sub2.element" v-html="sub2.value"></div>
+																														<div v-if="sub2.element=='html' && sub2.fullwidth" v-html="sub2.value"></div>
 																														
-																														<div v-else-if="sub2.element=='groupbutton' && sub2.fullwidth" class="form-group" :id="sub2.id" :name="sub2.id">
+																														<div v-else-if="sub2.element=='groupbutton' && sub2.style=='fullwidth'" class="form-group" :id="sub2.id" :name="sub2.id">
 																															<button v-for="btn in sub2.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 																														</div>
 
@@ -353,11 +356,11 @@
 																															</label>
 																															<div class="col-xs-9">
 																																<input v-if="['text','password'].indexOf(sub2.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" @click="onclick(sub2)" @change="onchange(sub2)" :type="sub2.element" :id="sub2.id" :name="sub2.id" :required="sub2.required" :placeholder="sub2['placeholder'+rozaLanguage]" :value="sub2.value" :data-default="sub2.value" :maxlength="sub2.maxlength">
-																																<select v-if="sub2.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" @click="onclick(sub2)" @change="onchange(sub2)" :id="sub2.id" :name="sub2.id" :data-default="sub2.value" :required="sub2.required">
+																																<select v-if="sub2.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode), searchable:sub2.style=='searchable'}" @click="onclick(sub2)" @change="onchange(sub2)" :id="sub2.id" :name="sub2.id" :data-default="sub2.value" :required="sub2.required">
 																																	<option v-for="opt in sub2.list" :value="opt.value" :selected="opt.value==sub2.value">{{opt['label'+rozaLanguage]}}</option>
 																																</select>
 																																<div contentEditable v-if="sub2.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" @click="onclick(sub2)" @change="onchange(sub2)" :id="sub2.id" :name="sub2.id" :required="sub2.required" :data-default="sub2.value" :placeholder="sub2['placeholder'+rozaLanguage]" :maxlength="sub2.maxlength" rows="4">{{sub2.value}}</div>
-																																<div v-if="sub2.element=='html'" :class="sub2.element" v-html="sub2.value"></div>
+																																<div v-if="sub2.element=='html'" class="inline-html" v-html="sub2.value"></div>
 																																<div v-if="sub2.element=='file'" class="dropzone"></div>
 																																<template v-if="sub2.element=='checkbox'">
 																																	<template v-if="!accessControl(sub2,'ac_disable') && !(accessControl(sub2,'ac_dualmode') && viewMode)">
@@ -443,11 +446,11 @@
 																							</label>
 																							<div class="col-xs-9">
 																								<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub['placeholder'+rozaLanguage]" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
-																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
+																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode), searchable:sub.style=='searchable'}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
 																									<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+rozaLanguage]}}</option>
 																								</select>
 																								<div contentEditable v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub['placeholder'+rozaLanguage]" :maxlength="sub.maxlength" rows="4">{{sub.value}}</div>
-																								<div v-if="sub.element=='html'" :class="sub.style" v-html="sub.value"></div>
+																								<div v-if="sub.element=='html'" class="inline-html" v-html="sub.value"></div>
 																								<div v-if="sub.element=='file'" class="dropzone"></div>
 																								<template v-if="sub.element=='checkbox'">
 																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
@@ -512,9 +515,9 @@
 																</div>
 															</div>
 														</template>
-														<!-- =========================================================================================================================================== element tabs end -->
+														<!-- =========================================================================================================================================== fullwidth element tabs end -->
 
-														<!-- =========================================================================================================================================== element accordion -->		
+														<!-- =========================================================================================================================================== fullwidth element accordion -->		
 														<template v-else-if="item.element=='accordion'">
 															<div class="panel-group" :id="item.id">
 																<div v-for="accordion, index in item.list" v-if="!accessControl(accordion,'ac_remove')" class="panel panel-default">
@@ -534,14 +537,17 @@
 																					</div>
 																					
 																					<!-- Element -->
-																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','radio','checkbox','table','datepicker'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
+																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','radio','checkbox','table','datepicker','timeline'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
 																						
-																						<div v-if="sub.element=='html' && sub.fullwidth" :class="sub.style" v-html="sub.value"></div>
+																						<!-- =========================================================================================================================================== fullwidth element html in accordion -->
+																						<div v-if="sub.element=='html' && sub.style=='fullwidth'" v-html="sub.value"></div>
 																						
-																						<div v-else-if="sub.element=='groupbutton' && sub.fullwidth" class="form-group" :id="sub.id" :name="sub.id">
+																						<!-- =========================================================================================================================================== fullwidth element groupbutton in accordion -->
+																						<div v-else-if="sub.element=='groupbutton' && sub.style=='fullwidth'" class="form-group" :id="sub.id" :name="sub.id">
 																							<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 																						</div>
-				
+																						
+																						<!-- =========================================================================================================================================== fullwidth element table in accordion -->
 																						<template v-else-if="sub.element=='table'">
 																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
 																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
@@ -553,6 +559,21 @@
 																								</template>
 																							</v-client-table>
 																						</template>
+																						
+																						<!-- =========================================================================================================================================== fullwidth element timeline in accordion -->
+																						<template v-else-if="sub.element=='timeline'">
+																							<div id="wizard" class="form_wizard wizard_horizontal">
+																								<ul class="wizard_steps">
+																									<li v-for="step, index in sub.list">
+																										<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
+																											<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
+																											<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
+																										</a>
+																									</li>
+																								</ul>
+																							</div>
+																						</template>
+																						<!-- =========================================================================================================================================== fullwidth element timeline in accordion  end -->
 														
 																						<template v-else>
 																							<label class="control-label col-xs-3">
@@ -562,11 +583,11 @@
 																							</label>
 																							<div class="col-xs-9">
 																								<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub['placeholder'+rozaLanguage]" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
-																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
+																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode), searchable:sub.style=='searchable'}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
 																									<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+rozaLanguage]}}</option>
 																								</select>
 																								<div contentEditable v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub['placeholder'+rozaLanguage]" :maxlength="sub.maxlength" rows="4">{{sub.value}}</div>
-																								<div v-if="sub.element=='html'" :class="sub.style" v-html="sub.value"></div>
+																								<div v-if="sub.element=='html'" class="inline-html" v-html="sub.value"></div>
 																								<div v-if="sub.element=='file'" class="dropzone"></div>
 																								<template v-if="sub.element=='checkbox'">
 																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
@@ -630,8 +651,9 @@
 																</div>
 															</div>
 														</template>
-														<!-- =========================================================================================================================================== element accordion end -->
+														<!-- =========================================================================================================================================== fullwidth element accordion end -->
 														
+														<!-- =========================================================================================================================================== fullwidth element table -->
 														<template v-else-if="item.element=='table'">
 															<!-- https://www.npmjs.com/package/vue-tables-2 -->
 															<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
@@ -643,7 +665,24 @@
 																</template>
 															</v-client-table>
 														</template>
+														<!-- =========================================================================================================================================== fullwidth element table end -->
 														
+														<!-- =========================================================================================================================================== fullwidth element timeline -->
+														<template v-else-if="item.element=='timeline'">
+															<div id="wizard" class="form_wizard wizard_horizontal">
+																<ul class="wizard_steps">
+																	<li v-for="step, index in item.list">
+																		<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
+																			<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
+																			<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
+																		</a>
+																	</li>
+																</ul>
+															</div>
+														</template>
+														<!-- =========================================================================================================================================== fullwidth element timeline end -->
+														
+														<!-- =========================================================================================================================================== non fullwidth elements -->
 														<template v-else>
 															<label class="control-label col-xs-3">
 																<template v-if="item.element!='groupbutton'">
@@ -652,11 +691,11 @@
 															</label>					
 															<div class="col-xs-9">
 																<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item['placeholder'+rozaLanguage]" :value="item.value" :data-default="item.value" :maxlength="item.maxlength">
-																<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
+																<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode), searchable:item.style=='searchable'}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
 																	<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+rozaLanguage]}}</option>
 																</select>
 																<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength" rows="4">{{item.value}}</div>
-																<div v-if="item.element=='html'" :class="item.element" v-html="item.value"></div>
+																<div v-if="item.element=='html'" class="inline-html" v-html="item.value"></div>
 																<div v-if="item.element=='file'" class="dropzone"></div>
 																<template v-if="item.element=='checkbox'">
 																	<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
@@ -691,10 +730,11 @@
 																</div>
 															</div>													
 														</template>
+														<!-- =========================================================================================================================================== non fullwidth elements end -->
 														
 													</div>
 													
-													<!-- FAB -->
+													<!-- =========================================================================================================================================== FAB -->
 													<div v-else-if="item.element=='fab'" class="fab">
 														<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
 														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(item.onsave)"><i class="fa fa-floppy-o"></i></a></div>
@@ -705,7 +745,7 @@
 														<div class="padder" v-if="item.onprint && !accessControl(item.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(item.onprint)"><i class="fa fa-print"></i></a></div>
 													</div>
 
-													<!-- Not Supported -->
+													<!-- =========================================================================================================================================== not supported -->
 													<div v-else-if="!accessControl(item,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}</label>
 														<div class="col-xs-9">
@@ -1049,9 +1089,9 @@
 												<!-- Element -->
 												<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','radio','checkbox','table','datepicker'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 													
-													<div v-if="item.element=='html' && item.fullwidth" v-html="item.value"></div>
+													<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
 													
-													<div v-else-if="item.element=='groupbutton' && item.fullwidth" class="form-group" :id="item.id" :name="item.id">
+													<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group" :id="item.id" :name="item.id">
 														<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 													</div>
 
@@ -1073,11 +1113,11 @@
 														</label>					
 														<div class="col-xs-9">
 															<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item['placeholder'+rozaLanguage]" :value="item.value" :data-default="item.value" :maxlength="item.maxlength">
-															<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
+															<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode), searchable:item.style=='searchable'}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
 																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+rozaLanguage]}}</option>
 															</select>
 															<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength" rows="4">{{item.value}}</div>
-															<div v-if="item.element=='html'" :class="item.element" v-html="item.value"></div>
+															<div v-if="item.element=='html'" class="inline-html" v-html="item.value"></div>
 															<div v-if="item.element=='file'" class="dropzone"></div>
 															<template v-if="item.element=='checkbox'">
 																<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
@@ -1156,6 +1196,7 @@
 		<script src="lib/vue-tables-2.min.js"></script>
 		<script src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+		<script src="lib/bootstrap-select/bootstrap-select.min.js"></script>
 		
 		<script src="lib/simplebar/TweenMax.min.js"></script>
 		<script src="lib/simplebar/ScrollToPlugin.min.js"></script>
@@ -1163,7 +1204,7 @@
 		
 		<script src="lib/sortable.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180117"></script>
+		<script src="roza/ROZA_Vue.js?v180119"></script>
 		<!--
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>
 		<script src="lib/jsonQ.min.js"></script>

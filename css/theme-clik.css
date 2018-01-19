@@ -2,9 +2,12 @@
 .top_search .input-group-btn button,
 .nav.navbar-nav>li>a,
 .breadcrumb a,
-body
+body,
+.form-control,
+.bootstrap-select .filter-option,
+.bootstrap-select .dropdown-toggle
 {
-	color: #717171 !important;
+	color: #717171 !important;							/*main text color*/
 }
 .logo-small path,
 .logo_normal path
@@ -76,6 +79,9 @@ body
 }
 .form-control:focus, .single-line:focus {
     border-color: #FF2F59;
+}
+.bootstrap-select .dropdown-toggle:focus {
+	border: 1px solid #FF2F59 !important;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
 .vueTableAdd

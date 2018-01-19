@@ -3,50 +3,6 @@
 		"element": "html",
 		"style": "block",
 		"fullwidth": true,
-		"value": "<p>This is content 1.</p><p>This content is created using the same UI approach. The table below cannot be sorted.</p>"
-	},
-	{
-		"element": "table",
-		"sortable": false,
-		"id": "tableAcc1",
-		"source": "sample/Table.sql",
-		"column": [
-			{
-				"labelbi": "Date",
-				"labelbm": "Tarikh",
-				"value": "[[data2]]",
-				"ac_remove": false
-			},
-			{
-				"labelbi": "Description",
-				"labelbm": "Keterangan",
-				"value": "[[data3]]",
-				"ac_remove": false
-			}
-		],
-		"action_view":
-		{
-			"onclick": "alert('View for [[data3]]')",
-			"ac_disable": false
-		},
-		"action_edit":
-		{
-			"onclick": "alert('Edit for [[data3]]')",
-			"ac_dualmode": true
-		},
-		"action_delete":
-		{
-			"onclick": "alert('Delete for [[data3]]')",
-			"ac_dualmode": true
-		},
-		"action_drag":
-		{
-			"ac_dualmode": true
-		},
-		"action_add":
-		{
-			"onclick": "alert('Your new form')",
-			"ac_dualmode": true
-		}
+		"value": "<p>This is content 1.</p><p>This content is created using the same UI approach.</p>"
 	}
 ]

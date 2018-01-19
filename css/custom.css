@@ -288,6 +288,9 @@ label {
 	display: table;
 	width: calc(100% + 10px);
 }
+.equalPanel {
+	width: 50% !important;
+}
 #leftPanel, #rightPanel, #fullPanel {
 	display: table-cell;
 	width: 400px;
@@ -369,6 +372,9 @@ body.nav-md .logo_small {
 }
 .dropdown-menu {
 	background: #EEEEEE;
+}
+.bootstrap-select .dropdown-menu {
+	background: white;
 }
 .dropdown-menu li {
 	white-space: nowrap;
@@ -469,6 +475,9 @@ iframe {
     right: calc(100% + 5px);
     transform: translateY(-50%) rotate(45deg);
 }
+.inline-html {
+	padding: 8px 0;
+}
 .mail_list {
 	border-bottom: 0;
 	margin-bottom: 0;
@@ -494,6 +503,14 @@ iframe {
 #globalSearch + .input-group-btn .btn-default {
 	border-color: #EDEDED;
 	background-color: white;
+}
+.btn.dropdown-toggle {
+	border-radius: 0;
+	background: transparent !important;
+	border: 1px solid #ccc !important;
+}
+.bootstrap-select .dropdown-toggle:focus {
+	outline: initial !important;
 }
 select.form-control {
 	-webkit-appearance: none;
@@ -540,6 +557,7 @@ select.form-control.ac_disable {
 /*====================================================================standardlist start */
 .x_content.p-0.standardlist {
 	height: calc(100vh - 220px);
+	margin-top: 0;
 }
 .standardlist li {
 	display: flex;
@@ -774,3 +792,20 @@ a.panel-title.collapsed, a.panel-title.collapsed:focus { /*not active*/
 .panel-group .panel {
     overflow: hidden;
 }
+/* ================================================================================== ACCORDION END */
+
+/* ================================================================================== TIMELINE START */
+.wizard_horizontal ul.wizard_steps {
+	display: flex;
+	padding: 0;
+}
+.wizard_horizontal ul.wizard_steps li {
+	flex: 1;
+}
+.wizard_horizontal ul.wizard_steps li a:before {
+	top: 18px;
+}
+.wizard_horizontal ul.wizard_steps li a .step_no {
+	cursor: pointer;
+}
+/* ================================================================================== TIMELINE END */

@@ -46,8 +46,8 @@
 	//========================================================================================= looping for generated list
 	for($i=0; $i<count($prop); $i++) {
 		
-		//========================================================================================= build list for standardlist, dropdown, radio, checkbox, table
-		if(in_array($prop[$i]['element'], ['standardlist', 'dropdown', 'radio', 'checkbox', 'table'])) {
+		//========================================================================================= build list for standardlist, dropdown, radio, checkbox, table, timeline
+		if(in_array($prop[$i]['element'], ['standardlist', 'dropdown', 'radio', 'checkbox', 'table', 'timeline'])) {
 			if(!$prop[$i]['source']) {
 				$error = 'Property "source" not defined for element data';
 				$stmt = $conn->prepare("INSERT INTO roza_log (log_message) VALUES (?)");
@@ -126,16 +126,23 @@
 			unset($prop[$i]['list2']);
 		}
 		
-		//========================================================================================= attach onclick/onchange event for each standardlist items
+		//========================================================================================= attach onclick event for each standardlist items
 		if($prop[$i]['element']=='standardlist') {
 			for($j=0; $j<count($prop[$i]['list']); $j++) {
 				if($prop[$i]['onclick']) $prop[$i]['list'][$j]['onclick'] = rozaReplaceField($prop[$i]['onclick'], $prop[$i]['list'][$j], false);
-				if($prop[$i]['onchange']) $prop[$i]['list'][$j]['onchange'] = rozaReplaceField($prop[$i]['onchange'], $prop[$i]['list'][$j], false);
 				if($prop[$i]['action']) $prop[$i]['list'][$j]['action'] = json_decode(rozaReplaceField(json_encode($prop[$i]['action']), $prop[$i]['list'][$j], false), true);
 			}
 			
 			unset($prop[$i]['onclick']);
-			unset($prop[$i]['onchange']);
+		}
+		
+		//========================================================================================= attach info for each timeline items
+		if($prop[$i]['element']=='timeline') {
+			for($j=0; $j<count($prop[$i]['list']); $j++) {
+				if($prop[$i]['info']) $prop[$i]['list'][$j]['info'] = json_decode(rozaReplaceField(json_encode($prop[$i]['info']), $prop[$i]['list'][$j], false), true);
+			}
+			
+			unset($prop[$i]['info']);
 		}
 		
 		//========================================================================================= bind value (1st level data)

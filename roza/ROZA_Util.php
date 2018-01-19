@@ -138,7 +138,7 @@ function rozaGetArray($sql, $param) {
 	return json_decode($return, true);
 }
 
-function rozaGetArray2D($sql, $param) { //for standardlist
+function rozaGetArray2D($sql, $param) { //for standardlist, table, timeline, etc
 	$rs = rozaExecuteQuery($sql, $param);
 	$list = [];
 	while($row = $rs->fetch_assoc()) {

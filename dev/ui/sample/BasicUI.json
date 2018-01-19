@@ -7,23 +7,28 @@
 	{
 		"element": "title",
 		"labelbi": "Element 'title'",
-		"labelbm": "Elemen 'title'",
+		"labelbm": "Element 'title'",
 		"style": "freeze"
 	},
 	{
 		"element": "html",
-		"style": "block",
-		"fullwidth": true,
+		"style": "fullwidth",
 		"value": "<div style='background:#E74C3C; padding:10px; color:white; border-radius:4px;'><b>Note:</b> In view mode, all input with \"ac_dualmode\" property will look like label. You can switch to edit mode through FAB button.</div>"
+	},
+	{
+		"element": "html",
+		"labelbi": "Element 'html'",
+		"labelbm": "Element 'html'",
+		"value": "<a href=\"http://www.google.com\">This is link.</a> <font color=tomato>This is font.</font> This is plain text."
 	},
 	{
 		"element": "text",
 		"id": "name2",
-		"value": "[[name]] ({{roles}})",
+		"value": "[[name]] (Roles: {{roles}})",
 		"labelbi": "Element 'text'",
-		"labelbm": "Elemen 'text'",
+		"labelbm": "Element 'text'",
 		"placeholderbi": "insert name",
-		"placeholderbm": "masukkan nama",
+		"placeholderbm": "insert name",
 		"maxlength": 20,
 		"required": true,
 		"ac_dualmode": true,
@@ -33,9 +38,9 @@
 		"element": "textarea",
 		"id": "comment",
 		"labelbi": "Element 'textarea'",
-		"labelbm": "Elemen 'textarea'",
+		"labelbm": "Element 'textarea'",
 		"placeholderbi": "insert comment",
-		"placeholderbm": "masukkan komen",
+		"placeholderbm": "insert comment",
 		"maxlength": 255,
 		"required": true,
 		"ac_dualmode": true
@@ -45,8 +50,17 @@
 		"id": "state",
 		"source": "sample/LOV_State.sql",
 		"labelbi": "Element 'dropdown'",
-		"labelbm": "Elemen 'dropdown'",
+		"labelbm": "Element 'dropdown'",
 		"onload": "onloadState()",
+		"ac_dualmode": true
+	},
+	{
+		"element": "dropdown",
+		"id": "state2",
+		"style": "searchable",
+		"source": "sample/LOV_State.sql",
+		"labelbi": "Element 'dropdown' with search",
+		"labelbm": "Element 'dropdown' with search",
 		"ac_dualmode": true
 	},
 	{
@@ -55,7 +69,7 @@
 		"source": "sample/LOV_Club.sql",
 		"value": "CHESS",
 		"labelbi": "Element 'checkbox' horizontal",
-		"labelbm": "Elemen 'checkbox' horizontal",
+		"labelbm": "Element 'checkbox' horizontal",
 		"style": "horizontal",
 		"ac_dualmode": true
 	},
@@ -65,7 +79,7 @@
 		"source": "sample/LOV_Club.sql",
 		"value": "CHESS",
 		"labelbi": "Element 'checkbox' vertical",
-		"labelbm": "Elemen 'checkbox' vertical",
+		"labelbm": "Element 'checkbox' vertical",
 		"style": "vertical",
 		"ac_dualmode": true
 	},
@@ -74,7 +88,7 @@
 		"id": "gender",
 		"source": "sample/LOV_Gender.sql",
 		"labelbi": "Element 'radio' horizontal",
-		"labelbm": "Elemen 'radio' horizontal",
+		"labelbm": "Element 'radio' horizontal",
 		"style": "horizontal",
 		"ac_dualmode": true
 	},
@@ -84,7 +98,7 @@
 		"source": "sample/LOV_Gender.sql",
 		"value": "[[gender]]",
 		"labelbi": "Element 'radio' vertical",
-		"labelbm": "Elemen 'radio' vertical",
+		"labelbm": "Element 'radio' vertical",
 		"style": "vertical",
 		"ac_dualmode": true
 	},
@@ -92,7 +106,7 @@
 		"element": "datepicker",
 		"id": "datepicker",
 		"labelbi": "Element 'datepicker' single",
-		"labelbm": "Elemen 'datepicker' single",
+		"labelbm": "Element 'datepicker' single",
 		"style": "single",
 		"ac_dualmode": true
 	},
@@ -100,7 +114,7 @@
 		"element": "datepicker",
 		"id": "datepicker",
 		"labelbi": "Element 'datepicker' range",
-		"labelbm": "Elemen 'datepicker' range",
+		"labelbm": "Element 'datepicker' range",
 		"style": "range",
 		"ac_dualmode": true
 	},
@@ -108,7 +122,7 @@
 		"element": "file",
 		"id": "file",
 		"labelbi": "Element 'file'",
-		"labelbm": "Elemen 'file'",
+		"labelbm": "Element 'file'",
 		"ac_dualmode": true
 	},
 	{
@@ -117,20 +131,20 @@
 		"list": [
 			{
 				"labelbi": "No ac_dualmode",
-				"labelbm": "Tanpa ac_dualmode",
+				"labelbm": "No ac_dualmode",
 				"onclick": "alert(1)",
 				"ac_remove": false
 			},
 			{
 				"labelbi": "With ac_dualmode",
-				"labelbm": "Dgn ac_dualmode ",
+				"labelbm": "With ac_dualmode ",
 				"onclick": "alert(2)",
 				"ac_remove": false,
 				"ac_dualmode": true
 			},
 			{
 				"labelbi": "Show Modal",
-				"labelbm": "Papar Modal",
+				"labelbm": "Show Modal",
 				"onclick": "rozaModal({ui:'sample/Modal.json', onclick: 'alert(\"Anything can happen\")'})",
 				"ac_dualmode": true
 			}
@@ -138,29 +152,29 @@
 	},
 	{
 		"element": "title",
-		"labelbi": "To put 'groupbutton' below tabs or table, set fullwidth:true",
-		"labelbm": "Untuk menggunakan 'groupbutton' di bawah tabs atau table, setkan fullwidth:true"
+		"labelbi": "To put 'groupbutton' below tabs or table, set style:fullwidth",
+		"labelbm": "To put 'groupbutton' below tabs or table, set style:fullwidth"
 	},
 	{
 		"element": "groupbutton",
 		"id": "groupbutton",
-		"fullwidth": true,
+		"style": "fullwidth",
 		"list": [
 			{
 				"labelbi": "Button 1 no ac_dualmode",
-				"labelbm": "Butang 1 tiada ac_dualmode",
+				"labelbm": "Button 1 no ac_dualmode",
 				"onclick": "alert(1)",
 				"ac_remove": false
 			},
 			{
 				"labelbi": "Button 2 no ac_dualmode",
-				"labelbm": "Butang 2 tiada ac_dualmode",
+				"labelbm": "Button 2 no ac_dualmode",
 				"onclick": "alert(2)",
 				"ac_remove": false
 			},
 			{
 				"labelbi": "Button 3",
-				"labelbm": "Butang 3",
+				"labelbm": "Button 3",
 				"onclick": "alert(3)",
 				"ac_remove": false,
 				"ac_dualmode": true
@@ -170,24 +184,48 @@
 	{
 		"element": "title",
 		"labelbi": "Element 'html'",
-		"labelbm": "Elemen 'html'"
+		"labelbm": "Element 'html'"
 	},
 	{
 		"element": "html",
 		"id": "html",
-		"style": "block",
-		"fullwidth": true,
+		"style": "fullwidth",
 		"value": "<iframe src='dev/html/sample/AverageTemperature.html?{{rozaTimestamp}}' height='416'></iframe>"
 	},
 	{
 		"element": "title",
-		"labelbi": "Element 'tabs'",
-		"labelbm": "Elemen 'tabs'"
+		"labelbi": "Element 'tabs' and second level 'tabs'",
+		"labelbm": "Element 'tabs' and second level 'tabs'"
+	},
+	{
+		"element": "tabs",
+		"id": "tabs",
+		"list": [
+			{
+				"labelbi": "Tab 1",
+				"labelbm": "Tab 1",
+				"id": "tab1",
+				"ui": "sample/Tab_1_Content.json",
+				"ac_default": true
+			},
+			{
+				"labelbi": "Tab 2",
+				"labelbm": "Tab 2",
+				"id": "tab2",
+				"ui": "sample/Accordion_2_Content.json"
+			},
+			{
+				"labelbi": "Tab 3",
+				"labelbm": "Tab 3",
+				"id": "tab3",
+				"ui": "sample/Accordion_3_Content.json"
+			}
+		]
 	},
 	{
 		"element": "title",
 		"labelbi": "Element 'accordion'",
-		"labelbm": "Elemen 'accordion'"
+		"labelbm": "Element 'accordion'"
 	},
 	{
 		"element": "accordion",
@@ -217,7 +255,7 @@
 	{
 		"element": "title",
 		"labelbi": "Element 'table'",
-		"labelbm": "Elemen 'table'"
+		"labelbm": "Element 'table'"
 	},
 	{
 		"element": "table",
@@ -227,7 +265,7 @@
 		"batchaction": [
 			{
 				"labelbi": "Delete",
-				"labelbm": "Hapus",
+				"labelbm": "Delete",
 				"onclick": "batchDelete()"
 			},
 			{
@@ -239,13 +277,13 @@
 		"column": [
 			{
 				"labelbi": "Date",
-				"labelbm": "Tarikh",
+				"labelbm": "Date",
 				"value": "[[data2]]",
 				"ac_remove": false
 			},
 			{
 				"labelbi": "Description",
-				"labelbm": "Keterangan",
+				"labelbm": "Description",
 				"value": "[[data3]]",
 				"ac_remove": false
 			}
@@ -274,6 +312,32 @@
 			"onclick": "alert('Your new form')",
 			"ac_dualmode": true
 		}
+	},
+	{
+		"element": "title",
+		"labelbi": "Element 'timeline'",
+		"labelbm": "Element 'timeline'"
+	},
+	{
+		"element": "timeline",
+		"source": "sample/Timeline.sql",
+		"info": [
+			{
+				"labelbi": "Applicant Name",
+				"labelbm": "Applicant Name",
+				"value": "[[data1]]"
+			},
+			{
+				"labelbi": "Date of Process",
+				"labelbm": "Date of Process",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Comment",
+				"labelbm": "Comment",
+				"value": "[[data3]]"
+			}
+		]
 	},
 	{
 		"element": "fab",

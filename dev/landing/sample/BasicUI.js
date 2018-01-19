@@ -1,5 +1,5 @@
 //By default, any parameter pass during call landing file will be forwarded to backend as well. In case you want to pre-process, do this
-roza.sessionParam['roles'] = "'"+rozaUserRole.join("','")+"'";
+roza.sessionParam['roles'] = rozaUserRole.join(", ");
 
 rozaSetPanel({
 	panel: rozaGetParam('staff_id')?'rightPanel':'fullPanel',

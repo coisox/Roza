@@ -1,0 +1,27 @@
+[
+	{
+		"element": "tabs",
+		"id": "tabs2",
+		"list": [
+			{
+				"labelbi": "Second Level 1",
+				"labelbm": "Second Level 1",
+				"id": "sl1",
+				"ui": "sample/Accordion_1_Content.json"
+			},
+			{
+				"labelbi": "Second Level 2",
+				"labelbm": "Second Level 2",
+				"id": "sl2",
+				"ui": "sample/Accordion_2_Content.json",
+				"ac_default": true
+			},
+			{
+				"labelbi": "Second Level 3",
+				"labelbm": "Second Level 3",
+				"id": "sl3",
+				"ui": "sample/Accordion_3_Content.json"
+			}
+		]
+	}
+]
