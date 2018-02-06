@@ -1,3 +1,16 @@
+Configurable to add widget
+Calendar
+My Pen Drive (Drawer)
+
+
+
+
+simpletable
+documents
+file
+documents
+checkall
+
 rozaClearData and rozaResetData not fully working on datepicker
 
 check ROZA_GetUI.php --> slow or network?
@@ -14,3 +27,4 @@ Log timelapse every query
 audit trail after success query non select
 
 custom attribute for element (data-xxx)
+

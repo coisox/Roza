@@ -23,8 +23,7 @@
 	},
 	{
 		"element": "text",
-		"id": "name2",
-		"value": "[[name]] (Roles: {{roles}})",
+		"id": "name",
 		"labelbi": "Element 'text'",
 		"labelbm": "Element 'text'",
 		"placeholderbi": "insert name",
@@ -33,6 +32,20 @@
 		"required": true,
 		"ac_dualmode": true,
 		"onload": "if('{{staff_id}}'=='undefined') rozaViewMode(false)"
+	},
+	{
+		"element": "text",
+		"value": "I got this roles from parameter: {{roles}}",
+		"labelbi": "Element 'text'",
+		"labelbm": "Element 'text'",
+		"ac_disable": true
+	},
+	{
+		"element": "text",
+		"value": "I got this position from parameter: {{position}}",
+		"labelbi": "Element 'text'",
+		"labelbm": "Element 'text'",
+		"ac_disable": true
 	},
 	{
 		"element": "textarea",
@@ -262,18 +275,6 @@
 		"id": "table",
 		"source": "sample/Table.sql",
 		"parameterize": ["{{roles}}"],
-		"batchaction": [
-			{
-				"labelbi": "Delete",
-				"labelbm": "Delete",
-				"onclick": "batchDelete()"
-			},
-			{
-				"labelbi": "Email",
-				"labelbm": "Email",
-				"onclick": "batchEmail()"
-			}
-		],
 		"column": [
 			{
 				"labelbi": "Date",
@@ -288,6 +289,22 @@
 				"ac_remove": false
 			}
 		],
+		"action_check":
+		{
+			"value": "[[data1]]",
+			"bulk": [
+				{
+					"labelbi": "Delete",
+					"labelbm": "Delete",
+					"onclick": "alert('Delete completed')"
+				},
+				{
+					"labelbi": "Email",
+					"labelbm": "Email",
+					"onclick": "alert('Email completed')"
+				}
+			]
+		},
 		"action_view":
 		{
 			"onclick": "alert('View for [[data3]]')",
@@ -348,6 +365,10 @@
 		"onsave":
 		{
 			"onclick": "alert('save')"
+		},
+		"onsend":
+		{
+			"onclick": "alert('send')"
 		}
 	}
 ]

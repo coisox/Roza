@@ -371,7 +371,16 @@ body.nav-md .logo_small {
 	margin-right: 5px;
 }
 .dropdown-menu {
-	background: #EEEEEE;
+	border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    font-size: inherit;
+	padding: 5px 0;
+}
+.dropdown-menu a {
+	padding: 5px 20px;
+}
+.panel_toolbox > li > a{
+	background: initial !important;
 }
 .bootstrap-select .dropdown-menu {
 	background: white;
@@ -630,6 +639,9 @@ ul.bar_tabs li:after {
     height: 1px;
     background: #DDDDDD;
 }
+th .icheckbox_flat-green, th .iradio_flat-green {
+	background: url(theme-all.png) no-repeat;
+}
 /* ================================================================================== Scrollbar */
 .x_content.p-0::-webkit-scrollbar {
     width: 0px;
@@ -648,26 +660,43 @@ ul.bar_tabs li:after {
 [id^=VueTables__limit] {
 	margin-left: 5px;
 }
-.VueTables th.actions_column {
+.VueTables th.action_column,
+.VueTables th.checkall_column
+ {
 	width: 1px;
 	pointer-events: none;
 	text-align: center;
 }
-.VueTables td.actions_column {
+.VueTables th.checkall_column .checkbox
+ {
+	pointer-events: initial;
+}
+.VueTables td.action_column,
+.VueTables td.checkall_column
+ {
 	text-align: center;
 	white-space: nowrap;
 }
-.VueTables .actions_column .VueTables__sort-icon {
-	display: none;
-}
-.VueTables .actions_column a {
+.VueTables .action_column a {
 	position: relative;
 	margin: 0 5px;
 }
-.VueTables .actions_column .VueTables__Tindakan-filter-wrapper {
+.VueTables .action_column .VueTables__Action-filter-wrapper,
+.VueTables .action_column .VueTables__sort-icon,
+.VueTables .checkall_column .VueTables__CheckAll-filter-wrapper,
+.VueTables .checkall_column .VueTables__sort-icon,
+.VueTables .bulk_column .VueTables__sort-icon
+ {
 	display: none;
 }
-.VueTables .actions_icon.ac_disable {
+.VueTables .bulk_column .dropdown-toggle {
+	color: white;
+}
+.VueTables .bulk_column .dropdown-menu {
+	top: calc(100% + 9px);
+    min-width: 100%;
+}
+.VueTables .action_icon.ac_disable {
 	pointer-events: none;
 	opacity: 0.3;
 }
@@ -700,6 +729,10 @@ ul.bar_tabs li:after {
 }
 .nosort th.VueTables__sortable {
     pointer-events: none;
+}
+.checkall_column .checkbox {
+	min-height: initial;
+	padding-top: initial;
 }
 /* ================================================================================== FAB */
 .fab {

@@ -1,5 +1,5 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180119';
+var currentVersion = 'v180206';
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaViewMode, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole, rozaEqualPanel;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
@@ -234,14 +234,26 @@ function initVue() {
 									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
 									roza['vueTable'][data.prop[x].id]['option'] = {
-										columnsDisplay: {
-											actiondelete: 'micro',
-											actiondrag: 'micro',
-											ac_remove: 'micro'
-										},
 										columnsClasses: {
-											Action: 'actions_column',
-											Tindakan: 'actions_column'
+											Action: 'action_column',
+											CheckAll: 'checkall_column'
+										},
+										headings: {
+											CheckAll: function (h) {
+												return h('input', {
+													attrs: {
+														type: 'checkbox',
+														id: 'selectAllCheckbox'
+													},
+													on: {
+														click: (e) => {
+															this.selectAll(e.srcElement.checked)
+														}
+													},
+													ref: 'selectAllCheckbox'
+												})
+											},
+											Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
 										}
 									};
 								}
@@ -381,16 +393,18 @@ function initVue() {
 									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
 									roza['vueTable'][data.prop[x].id]['option'] = {
-										columnsDisplay: {
-											actionview: 'micro',
-											actionedit: 'micro',
-											actiondelete: 'micro',
-											actiondrag: 'micro',
-											ac_remove: 'micro'
-										},
 										columnsClasses: {
-											Action: 'actions_column',
-											Tindakan: 'actions_column'
+											Action: 'action_column',
+											CheckAll: 'checkall_column'
+										},
+										headings: {
+											CheckAll: function (h) {
+												return h('div', {attrs: {class: 'checkbox'}}, [
+														h('input', {attrs: {class: 'flat checkall', type: 'checkbox'}})
+													]
+												)
+											},
+											Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
 										}
 									};
 									
@@ -499,16 +513,26 @@ function initVue() {
 								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
 								roza['vueTable'][data.prop[x].id]['option'] = {
-									columnsDisplay: {
-										actionview: 'micro',
-										actionedit: 'micro',
-										actiondelete: 'micro',
-										actiondrag: 'micro',
-										ac_remove: 'micro'
-									},
 									columnsClasses: {
-										Action: 'actions_column',
-										Tindakan: 'actions_column'
+										Action: 'action_column',
+										CheckAll: 'checkall_column'
+									},
+									headings: {
+										CheckAll: function (h) {
+											return h('input', {
+												attrs: {
+													type: 'checkbox',
+													id: 'selectAllCheckbox'
+												},
+												on: {
+													click: (e) => {
+														this.selectAll(e.srcElement.checked)
+													}
+												},
+												ref: 'selectAllCheckbox'
+											})
+										},
+										Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
 									}
 								};
 								
@@ -564,16 +588,26 @@ function initVue() {
 								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
 								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
 								roza['vueTable'][data.prop[x].id]['option'] = {
-									columnsDisplay: {
-										actionview: 'micro',
-										actionedit: 'micro',
-										actiondelete: 'micro',
-										actiondrag: 'micro',
-										ac_remove: 'micro'
-									},
 									columnsClasses: {
-										Action: 'actions_column',
-										Tindakan: 'actions_column'
+										Action: 'action_column',
+										CheckAll: 'checkall_column'
+									},
+									headings: {
+										CheckAll: function (h) {
+											return h('input', {
+												attrs: {
+													type: 'checkbox',
+													id: 'selectAllCheckbox'
+												},
+												on: {
+													click: (e) => {
+														this.selectAll(e.srcElement.checked)
+													}
+												},
+												ref: 'selectAllCheckbox'
+											})
+										},
+										Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
 									}
 								};
 								
@@ -599,7 +633,7 @@ function initVue() {
 			timelineDetail: function(step) {
 				if(!step.ROZA_TIME || !step.info) return false;
 				
-				var content = '<div class="x_panel" style="margin-bottom:0"><div data-simplebar-direction="vertical" class="x_content p-0"><div data-parsley-validate="" class="form-horizontal form-label-left">';
+				var content = '<div class="x_panel" style="margin-bottom:0"><div class="x_content p-0"><div data-parsley-validate="" class="form-horizontal form-label-left">';
 				for(x=0; x<step.info.length; x++) content += '<div class="form-group"><label class="control-label col-xs-3">'+step.info[x]['label'+this.rozaLanguage]+'</label><div class="col-xs-9"><div contentEditable class="form-control ac_disable">'+step.info[x]['value']+'</div></div></div>';
 				content += '</div></div></div>';
 
@@ -643,16 +677,13 @@ function initVue() {
 			},
 			rozaEqualPanel: function() {
 				$('#leftPanel').addClass('equalPanel');
-			}
-		},
-		events_BAK: {
-			'vuetable:action': function(action, data) {
-				if(action=='view-item') {
-					alert('view clicked');
-				}
 			},
-			'vuetable:load-error': function(response) {
-				//console.log('Load Error: ', response);
+			updateBulkCount: function(e) {
+				var bulkCount = e.parents('table').find('tbody [type=checkbox]:checked').length;
+				e.parents('table').find('th.VueTables__sortable:not(.checkall_column)').addClass('ac_hide');
+				e.parents('table').find('th.VueTables__sortable.bulk_column').removeClass('ac_hide');
+				if(!bulkCount) e.parents('table').find('th.VueTables__sortable:not(.checkall_column)').toggleClass('ac_hide');
+				e.parents('table').find('#bulkCount').text(bulkCount);
 			}
 		},
 		created: function() {
@@ -679,11 +710,57 @@ function initVue() {
 			rozaEqualPanel = this.rozaEqualPanel;
 		},
 		updated: function() {
+			//======================================================================================================== iCheck start
 			$('input.flat').iCheck({
 				checkboxClass: 'icheckbox_flat-green',
 				radioClass: 'iradio_flat-green'
 			});
+
+			$('.checkall').on('ifClicked', function(event){
+				var _this = this;
+				setTimeout(function(){
+					$(_this).parents('table').find('tbody [type=checkbox]').iCheck(event.currentTarget.checked?'check':'uncheck');
+					roza.updateBulkCount($(_this));
+				}, 1);
+			});
 			
+			$('tbody [type=checkbox]').on('ifClicked', function(event){
+				var _this = this;
+				setTimeout(function(){
+					$(_this).parents('table').find('thead .checkall').iCheck($(_this).parents('table').find('tbody [type=checkbox]:checked').length == $(_this).parents('table').find('tbody [type=checkbox]').length?'check':'uncheck');
+					roza.updateBulkCount($(_this));
+				}, 1);
+			});
+			
+			$('.checkall').each(function(){
+				$(this).parents('table').find('thead .checkall').iCheck($(this).parents('table').find('tbody [type=checkbox]:checked').length == $(this).parents('table').find('tbody [type=checkbox]').length?'check':'uncheck');
+			});
+			
+			$('th.VueTables__sortable.checkall_column:not(.initialized)').each(function(){
+				var li = '';
+				var bulk = roza.panel[$(this).parents('.VueTables').attr('data-panel')].prop[$(this).parents('.VueTables').attr('data-index')].action_check.bulk;
+				for(var x=0; x<bulk.length; x++) li += '<li><a onclick="'+bulk[x].onclick+'">'+bulk[x]['label'+roza.rozaLanguage]+'</a></li>';
+				
+				$(this).after(
+					'<th colspan="100" class="VueTables__sortable ac_hide bulk_column">'+
+						'<span class="VueTables__heading dropdown">'+
+							'<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
+								(roza.rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions')+' (<span id="bulkCount"></span> '+ (roza.rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected')+ ') '+
+								'<span class=" fa fa-angle-down"></span>'+
+							'</a>'+
+							'<ul class="dropdown-menu">'+li+'</ul>'+
+						'</span>'+
+					'</th>'
+				);
+			});
+			
+			$('th.VueTables__sortable.checkall_column').addClass('initialized');
+			
+			if(roza.viewMode) $('.checkall_column').addClass('ac_hide');
+			else $('.checkall_column').removeClass('ac_hide');
+			//======================================================================================================== iCheck end
+			
+			//======================================================================================================== datepicker start
 			$('.date [data-style="single"]').daterangepicker({
 				singleDatePicker: true,
 				locale: {
@@ -700,6 +777,7 @@ function initVue() {
 			}, function(start, end, label) {
 				//console.log(start.toISOString(), end.toISOString(), label);
 			});
+			//======================================================================================================== datepicker end
 
 			$('.dropzone').each(function(){
 				if($(this).find('.dz-default').size()==0) {
@@ -756,7 +834,6 @@ function initVue() {
 				});
 			});
 			$('select.ac_disable').selectpicker('destroy');
-			
 			
 			/*
 			if(this.panel.leftPanel.initQueryBuilder) {
@@ -850,6 +927,7 @@ function initVue() {
 						$('#fetchWhatsNew').html('');
 					});
 				}
+
 			});
 		}
 	});
@@ -876,6 +954,22 @@ function advanceIsDatepicker(e) {
 }
 
 /*
+
+function debounce(func, wait, immediate) {
+	var __timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			__timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !__timeout;
+		clearTimeout(__timeout);
+		__timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
 function addFavourite_BAK() {
 	$('#modalFavourite').modal({
 		show: true,

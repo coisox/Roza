@@ -82,8 +82,8 @@
 			if(count($prop[$i]['list'])<11) $prop[$i]['smallrecord'] = true;
 			if(isset($prop[$i]['sortable']) && $prop[$i]['sortable']==false) $prop[$i]['nosort'] = true;
 			$prop[$i]['list2'] = [];
-			$hasAction = false;
-			$actions = ['action_view', 'action_edit', 'action_delete', 'action_drag', 'action_add'];
+			$actions = ['action_view', 'action_edit', 'action_delete', 'action_drag', 'action_add', 'action_check'];
+			$actionsSub = ['onclick', 'value', 'ac_dualmode', 'ac_disable', 'ac_hide', 'ac_remove'];
 
 			for($j=0; $j<count($prop[$i]['column']); $j++) {
 				
@@ -101,17 +101,11 @@
 						$prop[$i]['list2'][$k][$colname] = rozaReplaceField($prop[$i]['column'][$j]['value'], $prop[$i]['list'][$k], false);
 						
 						for($l=0; $l<count($actions); $l++) {
-							if($prop[$i][$actions[$l]]['onclick']) {
-								$hasAction = true;
-								$prop[$i]['list2'][$k][$actions[$l]]['onclick'] = rozaReplaceField($prop[$i][$actions[$l]]['onclick'], $prop[$i]['list'][$k], false);
+							for($m=0; $m<count($actionsSub); $m++) {
+								if($prop[$i][$actions[$l]][$actionsSub[$m]]) {
+									$prop[$i]['list2'][$k][$actions[$l]][$actionsSub[$m]] = rozaReplaceField($prop[$i][$actions[$l]][$actionsSub[$m]], $prop[$i]['list'][$k], false);
+								}
 							}
-							if($prop[$i][$actions[$l]]['ac_dualmode']) {
-								$hasAction = true;
-								$prop[$i]['list2'][$k][$actions[$l]]['ac_dualmode'] = rozaReplaceField($prop[$i][$actions[$l]]['ac_dualmode'], $prop[$i]['list'][$k], false);
-							}
-							if($prop[$i][$actions[$l]]['ac_disable']) $prop[$i]['list2'][$k][$actions[$l]]['ac_disable'] = rozaReplaceField($prop[$i][$actions[$l]]['ac_disable'], $prop[$i]['list'][$k], false);
-							if($prop[$i][$actions[$l]]['ac_hide']) $prop[$i]['list2'][$k][$actions[$l]]['ac_hide'] = rozaReplaceField($prop[$i][$actions[$l]]['ac_hide'], $prop[$i]['list'][$k], false);
-							if($prop[$i][$actions[$l]]['ac_remove']) $prop[$i]['list2'][$k][$actions[$l]]['ac_remove'] = rozaReplaceField($prop[$i][$actions[$l]]['ac_remove'], $prop[$i]['list'][$k], false);
 						}
 					}
 					
@@ -121,7 +115,12 @@
 
 			}
 			
-			if($hasAction) $prop[$i]['column'][] = rozaGetParam('rozaLanguage')=='bm'?'Tindakan':'Action';
+			if($prop[$i]['action_view'] || $prop[$i]['action_edit'] || $prop[$i]['action_delete'] || $prop[$i]['action_drag']) {
+				$prop[$i]['column'][] = "Action";
+			}
+			if($prop[$i]['action_check']) {
+				array_unshift($prop[$i]['column'], "CheckAll");
+			}
 			$prop[$i]['list'] = $prop[$i]['list2'];
 			unset($prop[$i]['list2']);
 		}

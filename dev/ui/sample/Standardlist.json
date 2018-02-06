@@ -3,7 +3,7 @@
 		"element": "standardlist",
 		"labelbi": "List of Officer",
 		"labelbm": "Senarai Pegawai",
-		"onclick": "rozaCallLandingFile('sample/BasicUI.js?staff_id=[[ROZA_ID]]')",
+		"onclick": "rozaCallLandingFile('sample/BasicUI.js?staff_id=[[ROZA_ID]]&position=[[position]]')",
 		"source": "sample/Standardlist.sql",
 		"filter": [
 			{

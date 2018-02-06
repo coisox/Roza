@@ -9,9 +9,9 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180119" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180206" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		<link href="lib/iCheck/skins/flat/green.css" rel="stylesheet">
+		<link href="lib/iCheck/iCheck.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
 		<link href="lib/switchery/switchery.min.css" rel="stylesheet">
 		<link href="lib/jquery-ui/jquery-ui.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 		<link href="lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180119" rel="stylesheet">
+		<link href="css/custom.css?v180206" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
@@ -234,7 +234,7 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div data-simplebar-direction="vertical" class="x_content p-0 standardlist">
+									<div data-simplebar class="x_content p-0 standardlist">
 										<ul class="list-group">
 											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
 												<div class="standardlist_image" v-if="item.ROZA_IMAGE">
@@ -255,12 +255,24 @@
 											</li>
 										</ul>
 									</div>
+									
+									<!-- FAB for standardlist -->
+									<div v-if="panel[p].prop[1] && panel[p].prop[1].element=='fab'" class="fab">
+										<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
+										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(panel[p].prop[1].onsend)"><i class="fa fa-paper-plane"></i></a></div>
+										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsave && !accessControl(panel[p].prop[1].onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(panel[p].prop[1].onsave)"><i class="fa fa-floppy-o"></i></a></div>
+										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+										<div class="padder" v-if="viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+										<div class="padder" v-if="panel[p].prop[1].onprint && !accessControl(panel[p].prop[1].onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(panel[p].prop[1].onprint)"><i class="fa fa-print"></i></a></div>
+									</div>
 								</div>
 								<!-- =========================================================================================================================================== panel for ui -->
 								<div class="x_panel" v-else-if="panel[p].type=='ui'">
-									<div data-simplebar-direction="vertical" class="x_content p-0">
+									<div data-simplebar class="x_content p-0">
 										<div data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px; height:100%;">
-											<template v-for="item in panel[p].prop" v-if="item.element!='data' && !(item.element=='file' && accessControl(item,'ac_dualmode') && viewMode)">
+											<template v-for="item,index in panel[p].prop" v-if="item.element!='data' && !(item.element=='file' && accessControl(item,'ac_dualmode') && viewMode)">
 											
 													<!-- Title -->
 													<div v-if="!accessControl(item,'ac_remove') && item.element=='title'" class="x_title" :class="{ac_hide:accessControl(item,'ac_hide')}">
@@ -269,7 +281,7 @@
 													</div>
 													
 													<!-- Element -->
-													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','accordion','radio','checkbox','table','datepicker','timeline'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
+													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','accordion','radio','checkbox','table','datepicker','timeline'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
 														
 														<!-- =========================================================================================================================================== fullwidth element html -->
 														<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
@@ -278,244 +290,6 @@
 														<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group" :id="item.id" :name="item.id">
 															<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 														</div>
-														
-														<!-- =========================================================================================================================================== fullwidth element tabs -->
-														<template v-else-if="item.element=='tabs'">
-															<div role="tabpanel" class="col-xs-12" data-example-id="togglable-tabs">
-																<ul class="nav nav-tabs bar_tabs level1" role="tablist" :id="item.id">
-																	<li v-for="sub in item.list" v-if="!accessControl(sub,'ac_remove')" role="presentation" @click="rozaSetTab(sub, 1)" :class="{active:accessControl(sub,'ac_default')}" :id="sub.id"><a href="#tab_content" role="tab" data-toggle="tab">{{sub['label'+rozaLanguage]}}</a></li>
-																</ul>
-																<div class="tab-content">
-																	<div role="tabpanel" class="tab-pane active" id="tab_content">
-																		
-																		<!-- =========================================================================================================================================== ui in tabs -->
-																		<div data-parsley-validate class="form-horizontal form-label-left formTab">
-																			<template v-for="sub in tabLevel1" v-if="sub.element!='data' && !(sub.element=='file' && accessControl(sub,'ac_dualmode') && viewMode)">
-
-																					<!-- Title -->
-																					<div v-if="!accessControl(sub,'ac_remove') && sub.element=='title'" class="x_title" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						<h2 :id="sub.id" :name="sub.id">{{sub['label'+rozaLanguage]}}</h2>
-																						<div class="clearfix"></div>
-																					</div>
-																					
-																					<!-- Element -->
-																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','radio','checkbox','table','datepicker'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						
-																						<div v-if="sub.element=='html' && sub.style=='fullwidth'" v-html="sub.value"></div>
-																						
-																						<div v-else-if="sub.element=='groupbutton' && sub.style=='fullwidth'" class="form-group" :id="sub.id" :name="sub.id">
-																							<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																						</div>
-																						
-																						<!-- =================================================================================================================================== element tabs in tabs -->
-																						<template v-else-if="sub.element=='tabs'">
-																							<div class="col-xs-2">
-																								<ul class="nav nav-tabs tabs-left level2" :id="sub.id" v-if="!accessControl(sub,'ac_remove')">
-																									<li v-for="sub2 in sub.list" v-if="!accessControl(sub2,'ac_remove')" @click="rozaSetTab(sub2, 2)" :class="{active:accessControl(sub2,'ac_default')}" :id="sub2.id"><a href="#tab_content2" data-toggle="tab">{{sub2['label'+rozaLanguage]}}</a></li>
-																								</ul>
-																							</div>
-																							<div class="col-xs-9">
-																								<div class="tab-content">
-																									<div class="tab-pane active" id="tab_content2">
-																										<!-- =========================================================================================================================================== ui in tabs in tabs -->
-																										<div data-parsley-validate class="form-horizontal form-label-left formTab">
-																											<template v-for="sub2 in tabLevel2" v-if="sub2.element!='data' && !(sub2.element=='file' && accessControl(sub2,'ac_dualmode') && viewMode)">
-
-																													<!-- Title -->
-																													<div v-if="!accessControl(sub2,'ac_remove') && sub2.element=='title'" class="x_title" :class="{ac_hide:accessControl(sub2,'ac_hide')}">
-																														<h2 :id="sub2.id" :name="sub2.id">{{sub2['label'+rozaLanguage]}}</h2>
-																														<div class="clearfix"></div>
-																													</div>
-																													
-																													<!-- Element -->
-																													<div v-else-if="!accessControl(sub2,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','tabs','radio','checkbox','table','datepicker'].indexOf(sub2.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub2,'ac_hide')}">
-																														
-																														<div v-if="sub2.element=='html' && sub2.fullwidth" v-html="sub2.value"></div>
-																														
-																														<div v-else-if="sub2.element=='groupbutton' && sub2.style=='fullwidth'" class="form-group" :id="sub2.id" :name="sub2.id">
-																															<button v-for="btn in sub2.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																														</div>
-
-																														<template v-else-if="sub2.element=='table'">
-																															<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																															<v-client-table :id="sub2.id" :name="sub2.id" :columns="vueTable[sub2.id].column" :data="vueTable[sub2.id].list" :options="vueTable[sub2.id].option" :class="{smallrecord:sub2.smallrecord, nosort:sub2.nosort}">
-																																<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																																	<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-																																</template>
-																															</v-client-table>
-																														</template>
-
-																														<template v-else>
-																															<label class="control-label col-xs-3">
-																																<template v-if="sub2.element!='groupbutton'">
-																																	<span class="required" v-if="sub2.required">* </span>{{sub2['label'+rozaLanguage]}}
-																																</template>
-																															</label>
-																															<div class="col-xs-9">
-																																<input v-if="['text','password'].indexOf(sub2.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" @click="onclick(sub2)" @change="onchange(sub2)" :type="sub2.element" :id="sub2.id" :name="sub2.id" :required="sub2.required" :placeholder="sub2['placeholder'+rozaLanguage]" :value="sub2.value" :data-default="sub2.value" :maxlength="sub2.maxlength">
-																																<select v-if="sub2.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode), searchable:sub2.style=='searchable'}" @click="onclick(sub2)" @change="onchange(sub2)" :id="sub2.id" :name="sub2.id" :data-default="sub2.value" :required="sub2.required">
-																																	<option v-for="opt in sub2.list" :value="opt.value" :selected="opt.value==sub2.value">{{opt['label'+rozaLanguage]}}</option>
-																																</select>
-																																<div contentEditable v-if="sub2.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" @click="onclick(sub2)" @change="onchange(sub2)" :id="sub2.id" :name="sub2.id" :required="sub2.required" :data-default="sub2.value" :placeholder="sub2['placeholder'+rozaLanguage]" :maxlength="sub2.maxlength" rows="4">{{sub2.value}}</div>
-																																<div v-if="sub2.element=='html'" class="inline-html" v-html="sub2.value"></div>
-																																<div v-if="sub2.element=='file'" class="dropzone"></div>
-																																<template v-if="sub2.element=='checkbox'">
-																																	<template v-if="!accessControl(sub2,'ac_disable') && !(accessControl(sub2,'ac_dualmode') && viewMode)">
-																																		<div class="checkbox" :class="sub2.style">
-																																			<label v-for="opt in sub2.list"><input type="checkbox" @click="onclick(sub2)" :id="sub2.id" :name="sub2.id" class="flat" :checked="opt.value==sub2.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																																		</div>
-																																	</template>
-																																	<template v-else>
-																																		<template v-for="opt in sub2.list" v-if="opt.value==sub2.value">
-																																			<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																																		</template>
-																																	</template>
-																																</template>
-																																<template v-if="sub2.element=='radio'">
-																																		<template v-if="!accessControl(sub2,'ac_disable') && !(accessControl(sub2,'ac_dualmode') && viewMode)">
-																																			<div class="radio" :class="sub2.style">
-																																				<label v-for="opt in sub2.list"><input type="radio" @click="onclick(sub2)" :id="sub2.id" :name="sub2.id" class="flat" :checked="opt.value==sub2.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																																			</div>
-																																		</template>
-																																		<template v-else>
-																																			<template v-for="opt in sub2.list" v-if="opt.value==sub2.value">
-																																				<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																																			</template>
-																																		</template>
-																																</template>
-																																<div v-if="sub2.element=='datepicker'" class='input-group date'>
-																																	<input type='text' class="form-control" :class="{ac_disable:accessControl(sub2,'ac_disable') || (accessControl(sub2,'ac_dualmode') && viewMode)}" :id="sub2.id" :name="sub2.id" :data-style="sub2.style" :value="sub2.value" @change="onchange(sub2)">
-																																	<span v-if="!accessControl(sub2,'ac_disable')  && !(accessControl(sub2,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
-																																</div>
-																																<div v-if="sub2.element=='groupbutton'" class="form-group" :id="sub2.id" :name="sub2.id">
-																																	<button v-for="btn in sub2.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																																</div>
-																															</div>													
-																														</template>
-																														
-																													</div>
-																													
-																													<!-- FAB -->
-																													<div v-else-if="sub2.element=='fab'" class="fab">
-																														<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-																														<div class="padder" v-if="!viewMode && sub2.onsave && !accessControl(sub2.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub2.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-																														<div class="padder" v-if="!viewMode && sub2.onsave && !accessControl(sub2.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-																														<div class="padder" v-if="!viewMode && sub2.onsave && !accessControl(sub2.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-																														<div class="padder" v-if="!viewMode && sub2.onsave && !accessControl(sub2.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-																														<div class="padder" v-if="viewMode && sub2.onsave && !accessControl(sub2.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
-																														<div class="padder" v-if="sub2.onprint && !accessControl(sub2.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(sub2.onprint)"><i class="fa fa-print"></i></a></div>
-																													</div>
-																													
-																													<!-- Not Supported -->
-																													<div v-else-if="!accessControl(sub2,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub2,'ac_hide')}">
-																														<label class="control-label col-xs-3"><span class="required" v-if="sub2.required">* </span>{{sub2['label'+rozaLanguage]}}</label>
-																														<div class="col-xs-9">
-																															<input class="form-control not-supported" :value="'Element \''+sub2.element+'\' is not supported'" readonly>
-																														</div>
-																													</div>
-																												
-																											</template>
-																										</div>
-																										<!-- =========================================================================================================================================== ui in tabs in tabs end -->
-																									</div>
-																								</div>
-																							</div>
-																						</template>
-																						<!-- =================================================================================================================================== element tabs in tabs end -->
-																						
-																						<template v-else-if="sub.element=='table'">
-																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
-																								<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																									<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-																								</template>
-																							</v-client-table>
-																						</template>
-														
-																						<template v-else>
-																							<label class="control-label col-xs-3">
-																								<template v-if="sub.element!='groupbutton'">
-																									<span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}
-																								</template>
-																							</label>
-																							<div class="col-xs-9">
-																								<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub['placeholder'+rozaLanguage]" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
-																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode), searchable:sub.style=='searchable'}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
-																									<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+rozaLanguage]}}</option>
-																								</select>
-																								<div contentEditable v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub['placeholder'+rozaLanguage]" :maxlength="sub.maxlength" rows="4">{{sub.value}}</div>
-																								<div v-if="sub.element=='html'" class="inline-html" v-html="sub.value"></div>
-																								<div v-if="sub.element=='file'" class="dropzone"></div>
-																								<template v-if="sub.element=='checkbox'">
-																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
-																										<div class="checkbox" :class="sub.style">
-																											<label v-for="opt in sub.list"><input type="checkbox" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																										</div>
-																									</template>
-																									<template v-else>
-																										<template v-for="opt in sub.list" v-if="opt.value==sub.value">
-																											<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																										</template>
-																									</template>
-																								</template>
-																								<template v-if="sub.element=='radio'">
-																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
-																										<div class="radio" :class="sub.style">
-																											<label v-for="opt in sub.list"><input type="radio" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																										</div>
-																									</template>
-																									<template v-else>
-																										<template v-for="opt in sub.list" v-if="opt.value==sub.value">
-																											<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																										</template>
-																									</template>
-																								</template>
-																								<div v-if="sub.element=='datepicker'" class='input-group date'>
-																									<input type='text' class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" :id="sub.id" :name="sub.id" :data-style="sub.style" :value="sub.value" @change="onchange(sub)">
-																									<span v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
-																								</div>
-																								<div v-if="sub.element=='groupbutton'" class="form-group" :id="sub.id" :name="sub.id">
-																									<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																								</div>
-																							</div>													
-																						</template>
-																						
-																					</div>
-																					
-																					<!-- FAB -->
-																					<div v-else-if="sub.element=='fab'" class="fab">
-																						<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-																						<div class="padder" v-if="viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
-																						<div class="padder" v-if="sub.onprint && !accessControl(sub.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(sub.onprint)"><i class="fa fa-print"></i></a></div>
-																					</div>
-																					
-																					<!-- Not Supported -->
-																					<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}</label>
-																						<div class="col-xs-9">
-																							<input class="form-control not-supported" :value="'Element \''+sub.element+'\' is not supported'" readonly>
-																						</div>
-																					</div>
-																				
-																			</template>
-																		</div>
-																		<!-- =========================================================================================================================================== ui in tabs end -->
-																		
-																	</div>
-																</div>
-															</div>
-														</template>
-														<!-- =========================================================================================================================================== fullwidth element tabs end -->
 
 														<!-- =========================================================================================================================================== fullwidth element accordion -->		
 														<template v-else-if="item.element=='accordion'">
@@ -551,11 +325,16 @@
 																						<template v-else-if="sub.element=='table'">
 																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
 																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
+																								<template slot="CheckAll" scope="props">
+																									<div class="checkbox">
+																										<input type="checkbox" class="flat" :value="props.row.action_check.value">
+																									</div>
+																								</template>
 																								<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																									<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																									<a v-if="props.row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
+																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
+																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
+																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																								</template>
 																							</v-client-table>
 																						</template>
@@ -628,11 +407,12 @@
 																					<!-- FAB -->
 																					<div v-else-if="sub.element=='fab'" class="fab">
 																						<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-																						<div class="padder" v-if="viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub.onsend)"><i class="fa fa-paper-plane"></i></a></div>
+																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(sub.onsave)"><i class="fa fa-floppy-o"></i></a></div>
+																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+																						<div class="padder" v-if="viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
 																						<div class="padder" v-if="sub.onprint && !accessControl(sub.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(sub.onprint)"><i class="fa fa-print"></i></a></div>
 																					</div>
 																					
@@ -656,12 +436,17 @@
 														<!-- =========================================================================================================================================== fullwidth element table -->
 														<template v-else-if="item.element=='table'">
 															<!-- https://www.npmjs.com/package/vue-tables-2 -->
-															<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
-																<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																	<a v-if="props.row.action_view" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+															<v-client-table :data-index="index" :data-panel="p" :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
+																<template slot="CheckAll" scope="props">
+																	<div class="checkbox">
+																		<input type="checkbox" class="flat" :value="props.row.action_check.value">
+																	</div>
+																</template>
+																<template slot="Action" scope="props">
+																	<a v-if="props.row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
+																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
+																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
+																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 																</template>
 															</v-client-table>
 														</template>
@@ -737,11 +522,12 @@
 													<!-- =========================================================================================================================================== FAB -->
 													<div v-else-if="item.element=='fab'" class="fab">
 														<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(item.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-														<div class="padder" v-if="viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(item.onsend)"><i class="fa fa-paper-plane"></i></a></div>
+														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(item.onsave)"><i class="fa fa-floppy-o"></i></a></div>
+														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+														<div class="padder" v-if="viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
 														<div class="padder" v-if="item.onprint && !accessControl(item.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(item.onprint)"><i class="fa fa-print"></i></a></div>
 													</div>
 
@@ -1076,7 +862,7 @@
 						</div>
 						<div class="modal-body">
 							<div class="x_panel">
-								<div data-simplebar-direction="vertical" class="x_content p-0">
+								<div data-simplebar class="x_content p-0">
 									<div data-parsley-validate class="form-horizontal form-label-left">
 										<template v-for="item in modalProp" v-if="item.element!='data'">
 										
@@ -1098,9 +884,14 @@
 													<template v-else-if="item.element=='table'">
 														<!-- https://www.npmjs.com/package/vue-tables-2 -->
 														<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
+															<template slot="CheckAll" scope="props">
+																<div class="checkbox">
+																	<input type="checkbox" class="flat" :value="props.row.action_check.value">
+																</div>
+															</template>
 															<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																<a v-if="props.row.action_delete" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																<a v-if="props.row.action_drag" class="roza-tooltip-bottom actions_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
+																<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
 															</template>
 														</v-client-table>
 													</template>
@@ -1197,19 +988,15 @@
 		<script src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 		<script src="lib/bootstrap-select/bootstrap-select.min.js"></script>
-		
-		<script src="lib/simplebar/TweenMax.min.js"></script>
-		<script src="lib/simplebar/ScrollToPlugin.min.js"></script>
 		<script src="lib/simplebar/simplebar.js"></script>
-		
 		<script src="lib/sortable.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180119"></script>
+		<script src="roza/ROZA_Vue.js?v180206"></script>
 		<!--
+		<script src="lib/jquery.debounce-1.0.5.js"></script>
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>
 		<script src="lib/jsonQ.min.js"></script>
 		<script src="lib/popper.min.js"></script>
-		<script src="lib/jquery.debounce-1.0.5.js"></script>
 		<script src="lib/nprogress/nprogress.js"></script>
 		-->
 	</body>
