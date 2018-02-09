@@ -5,7 +5,9 @@
 body,
 .form-control,
 .bootstrap-select .filter-option,
-.bootstrap-select .dropdown-toggle
+.bootstrap-select .dropdown-toggle,
+.dataTables_paginate a:not(.current),
+.dataTable tr.filtering
 {
 	color: #717171 !important;							/*main text color*/
 }
@@ -63,11 +65,11 @@ body,
 }
 .btn-success, .btn-success:focus, .btn-success:active:focus {
     background: #FF2F59;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid transparent;
 }
 .btn-success:hover {
     background: #E52A4F;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid transparent;
 }
 .btn-primary, .btn-primary:focus, .btn-primary:active:focus {
     background-color: #673A59;
@@ -84,13 +86,14 @@ body,
 	border: 1px solid #FF2F59 !important;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
-.vueTableAdd
+.dataTables_paginate .paginate_button.current,
+.dataTable thead tr
 {
-    border: 1px solid #FF2F59;
-	background: #FF2F59;
-	color: white;
+    border: 1px solid #FF2F59 !important;
+	background: #FF2F59 !important;
+	color: white !important;
 }
-.table-responsive thead {
+thead {
     background: #FF2F59;
     color: white;
 }
@@ -98,8 +101,12 @@ body,
     background-color: #FF2F59;
     border-color: #FF2F59;
 }
-.icheckbox_flat-green, .iradio_flat-green {
+.icheckbox_flat-green {
 	background: url(theme-clik.png) no-repeat;
+}
+.iradio_flat-green {
+	background: url(theme-clik.png) no-repeat;
+	background-position: -88px 0;
 }
 .daterangepicker .calendar-table thead tr:first-child {
 	background: #FF2F59;
@@ -128,14 +135,6 @@ body,
 .fab .padder:nth-child(4) a { background: #BF6DA1; }
 .fab .padder:nth-child(5) a { background: #F65B5B; }
 .fab .padder:nth-child(6) a { background: #FF9D5B; }
-th.VueTables__sortable {
-    border-left: 1px solid #FF2F59 !important;
-    border-top: 1px solid #FF2F59 !important;
-    border-bottom: 1px solid #FF2F59 !important;
-}
-th.VueTables__sortable:last-child {
-    border-right: 1px solid #FF2F59 !important;
-}
 .metro-menu-closer,
 .metro-menu-closer:before
 {

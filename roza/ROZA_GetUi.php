@@ -5,7 +5,7 @@
 	
 	//========================================================================================= get json as string then replace param
 	$prop = rozaReplaceParam(file_get_contents('../dev/ui/'.$_GET['ROZA_UI']));
-	$prop = json_decode(preg_replace('!/\*.*?\*/!s', '', $prop), true);
+	$prop = json_decode(preg_replace('!/\*.*?\*/!s', '', $prop), true); //support comment section
 
 	//========================================================================================= prepare 1st level data
 	for($i=0; $i<count($prop); $i++) {
@@ -115,12 +115,6 @@
 
 			}
 			
-			if($prop[$i]['action_view'] || $prop[$i]['action_edit'] || $prop[$i]['action_delete'] || $prop[$i]['action_drag']) {
-				$prop[$i]['column'][] = "Action";
-			}
-			if($prop[$i]['action_check']) {
-				array_unshift($prop[$i]['column'], "CheckAll");
-			}
 			$prop[$i]['list'] = $prop[$i]['list2'];
 			unset($prop[$i]['list2']);
 		}

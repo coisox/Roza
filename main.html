@@ -24,6 +24,7 @@
 		<link href="css/custom.css?v180206" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
+		<link href="lib/datatables-1.10.16/datatables.min.css" rel="stylesheet">
 		<link href="lib/querybuilder/css/query-builder.default.min.css" rel="stylesheet">
 		<link href="lib/nprogress/nprogress.css" rel="stylesheet">
 		-->
@@ -433,24 +434,47 @@
 														</template>
 														<!-- =========================================================================================================================================== fullwidth element accordion end -->
 														
-														<!-- =========================================================================================================================================== fullwidth element table -->
-														<template v-else-if="item.element=='table'">
-															<!-- https://www.npmjs.com/package/vue-tables-2 -->
-															<v-client-table :data-index="index" :data-panel="p" :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
-																<template slot="CheckAll" scope="props">
-																	<div class="checkbox">
-																		<input type="checkbox" class="flat" :value="props.row.action_check.value">
-																	</div>
-																</template>
-																<template slot="Action" scope="props">
-																	<a v-if="props.row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																	<a v-if="props.row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																	<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																	<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-																</template>
-															</v-client-table>
-														</template>
-														<!-- =========================================================================================================================================== fullwidth element table end -->
+														<!-- =========================================================================================================================================== fullwidth element datatables -->
+														<div v-else-if="item.element=='table'" class="dataTables_Container" :class="item.style">
+															<button v-if="item.action_add && !(accessControl(item.action_add,'ac_dualmode') && viewMode)" type="button" class="btn btn-success dataTables_add" onclick="alert('Your new form')"><i class="fa fa-plus"></i> {{rozaLanguage=='bm'?'Tambah':'Add'}}</button>
+															<table :id="item.id" class="table table-striped jambo_table">
+																<thead>
+																	<tr v-if="item.style.split(' ').indexOf('searchcolumn')>-1" class="filtering">
+																		<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" width="1"></th>
+																		<th v-for="col in item.column"><input type="text" class="searchcolumn form-control"></th>
+																		<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1"></th>
+																	</tr>
+																	<tr class="headings">
+																		<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" class="checkall_column nosort" width="1">
+																			<input type="checkbox"class="flat checkall">
+																			<span class="dropdown bulk_toggle transparent">
+																				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+																					{{rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions'}} (<span id="bulkCount"></span> {{rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected'}}) <span class=" fa fa-angle-down"></span>
+																				</a>
+																				<ul class="dropdown-menu">
+																					<li><a onclick="">xxx</a></li>
+																				</ul>
+																			</span>
+																		</th>
+																		<th v-for="col in item.column" class="bulk_toggle">{{col}}</th>
+																		<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1" class="bulk_toggle action_column nosort">{{rozaLanguage=='bm'?'Tindakan':'Action'}}</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr v-for="row in item.list">
+																		<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																		<td v-for="col in item.column">{{row[col]}}</td>
+																		<td v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" class="action_column">
+																			<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
+																			<a v-if="row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_edit,'ac_disable') || (accessControl(row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(row.action_edit)"><i class="fa fa-pencil"></i></a>
+																			<a v-if="row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_delete,'ac_disable') || (accessControl(row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(row.action_delete)"><i class="fa fa-trash"></i></a>
+																			<a v-if="row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_drag,'ac_disable') || (accessControl(row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<!-- =========================================================================================================================================== fullwidth element datatables end -->
 														
 														<!-- =========================================================================================================================================== fullwidth element timeline -->
 														<template v-else-if="item.element=='timeline'">
@@ -984,12 +1008,12 @@
 		<script src="lib/devbridge-autocomplete/jquery.autocomplete.js"></script>
 		<script src="lib/jquery-ui/jquery-ui.min.js"></script>
 		<script src="lib/dropzone/dropzone.js"></script>
-		<script src="lib/vue-tables-2.min.js"></script>
 		<script src="lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<script src="lib/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 		<script src="lib/bootstrap-select/bootstrap-select.min.js"></script>
 		<script src="lib/simplebar/simplebar.js"></script>
 		<script src="lib/sortable.js"></script>
+		<script src="lib/datatables-1.10.16/datatables.min.js"></script>
 		
 		<script src="roza/ROZA_Vue.js?v180206"></script>
 		<!--

@@ -5,7 +5,9 @@
 body,
 .form-control,
 .bootstrap-select .filter-option,
-.bootstrap-select .dropdown-toggle
+.bootstrap-select .dropdown-toggle,
+.dataTables_paginate a:not(.current),
+.dataTable tr.filtering
 {
 	color: #5A738E !important;							/*main text color*/
 }
@@ -63,15 +65,15 @@ body,
 }
 .btn-success, .btn-success:focus, .btn-success:active:focus {
     background: #26B99A;
-    border: 1px solid rgba(0,0,0,.2);
+    zzzborder: 1px solid rgba(0,0,0,.2);
 }
 .btn-success:hover {
     background: #229D83;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid transparent;
 }
 .btn-primary, .btn-primary:focus, .btn-primary:active:focus {
 	background-color: #337ab7;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid transparent;
 }
 .btn-primary:hover {
 	background-color: #2B679B;
@@ -84,13 +86,14 @@ body,
 	border: 1px solid #1ABB9C !important;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
-.vueTableAdd
+.dataTables_paginate .paginate_button.current,
+.dataTable thead tr
 {
-    border: 1px solid #2A3F54;
-	background: #2A3F54;
-	color: white;
+    border: 1px solid #2A3F54 !important;
+	background: #2A3F54 !important;
+	color: white !important;
 }
-.table-responsive thead {
+thead {
     background: #2A3F54;
     color: white;
 }
@@ -98,8 +101,12 @@ body,
     background-color: #2A3F54;
     border-color: #2A3F54;
 }
-.icheckbox_flat-green, .iradio_flat-green {
+.icheckbox_flat-green {
 	background: url(theme-night-sky.png) no-repeat;
+}
+.iradio_flat-green {
+	background: url(theme-night-sky.png) no-repeat;
+	background-position: -88px 0;
 }
 .daterangepicker .calendar-table thead tr:first-child {
 	background: #26B99A;
@@ -128,14 +135,6 @@ body,
 .fab .padder:nth-child(4) a { background: #8BC24A; }
 .fab .padder:nth-child(5) a { background: #4BAF4F; }
 .fab .padder:nth-child(6) a { background: #019587; }
-th.VueTables__sortable {
-    border-left: 1px solid #337AB7 !important;
-    border-top: 1px solid #337AB7 !important;
-    border-bottom: 1px solid #337AB7 !important;
-}
-th.VueTables__sortable:last-child {
-    border-right: 1px solid #337AB7 !important;
-}
 .metro-menu-closer,
 .metro-menu-closer:before
 {

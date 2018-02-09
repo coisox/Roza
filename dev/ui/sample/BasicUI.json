@@ -6,6 +6,73 @@
 	},
 	{
 		"element": "title",
+		"labelbi": "Element 'table'",
+		"labelbm": "Element 'table'"
+	},
+	{
+		"element": "table",
+		"id": "table",
+		"style": "searchglobal", /*searchcolumn, searchglobal, simple, nosort*/
+		"source": "sample/Table.sql",
+		"parameterize": ["{{staff_id}}"],
+		"column": [
+			{
+				"labelbi": "Date",
+				"labelbm": "Date",
+				"value": "[[data2]]",
+				"ac_remove": false
+			},
+			{
+				"labelbi": "Description",
+				"labelbm": "Description",
+				"value": "[[data3]]",
+				"ac_remove": false
+			}
+		],
+		"action_check":
+		{
+			"value": "[[data1]]",
+			"bulk": [
+				{
+					"labelbi": "Delete",
+					"labelbm": "Delete",
+					"onclick": "alert('Delete completed')"
+				},
+				{
+					"labelbi": "Email",
+					"labelbm": "Email",
+					"onclick": "alert('Email completed')"
+				}
+			],
+			"ac_dualmode": true
+		},
+		"action_view":
+		{
+			"onclick": "alert('View for [[data3]]')",
+			"ac_disable": false
+		},
+		"action_edit":
+		{
+			"onclick": "alert('Edit for [[data3]]')",
+			"ac_dualmode": true
+		},
+		"action_delete":
+		{
+			"onclick": "alert('Delete for [[data3]]')",
+			"ac_dualmode": true
+		},
+		"action_drag":
+		{
+			"ac_dualmode": true
+		},
+		"action_add":
+		{
+			"onclick": "alert('Your new form')",
+			"ac_dualmode": true
+		}
+	},
+	{
+		"element": "title",
 		"labelbi": "Element 'title'",
 		"labelbm": "Element 'title'",
 		"style": "freeze"
@@ -125,7 +192,7 @@
 	},
 	{
 		"element": "datepicker",
-		"id": "datepicker",
+		"id": "daterangepicker",
 		"labelbi": "Element 'datepicker' range",
 		"labelbm": "Element 'datepicker' range",
 		"style": "range",
@@ -264,71 +331,6 @@
 				"ui": "sample/Accordion_3_Content.json"
 			}
 		]
-	},
-	{
-		"element": "title",
-		"labelbi": "Element 'table'",
-		"labelbm": "Element 'table'"
-	},
-	{
-		"element": "table",
-		"id": "table",
-		"source": "sample/Table.sql",
-		"parameterize": ["{{roles}}"],
-		"column": [
-			{
-				"labelbi": "Date",
-				"labelbm": "Date",
-				"value": "[[data2]]",
-				"ac_remove": false
-			},
-			{
-				"labelbi": "Description",
-				"labelbm": "Description",
-				"value": "[[data3]]",
-				"ac_remove": false
-			}
-		],
-		"action_check":
-		{
-			"value": "[[data1]]",
-			"bulk": [
-				{
-					"labelbi": "Delete",
-					"labelbm": "Delete",
-					"onclick": "alert('Delete completed')"
-				},
-				{
-					"labelbi": "Email",
-					"labelbm": "Email",
-					"onclick": "alert('Email completed')"
-				}
-			]
-		},
-		"action_view":
-		{
-			"onclick": "alert('View for [[data3]]')",
-			"ac_disable": false
-		},
-		"action_edit":
-		{
-			"onclick": "alert('Edit for [[data3]]')",
-			"ac_dualmode": true
-		},
-		"action_delete":
-		{
-			"onclick": "alert('Delete for [[data3]]')",
-			"ac_dualmode": true
-		},
-		"action_drag":
-		{
-			"ac_dualmode": true
-		},
-		"action_add":
-		{
-			"onclick": "alert('Your new form')",
-			"ac_dualmode": true
-		}
 	},
 	{
 		"element": "title",

@@ -126,6 +126,22 @@ textarea {
 .sidebar-footer {
 	text-align: center;
 }
+.dropdown-menu > li > label, .dropdown-menu > li > a {
+	width: 100%;
+}
+.form-control, .btn, .dropdown-menu > li > label, .dropdown-menu > li > a {
+	padding: 6px 10px;
+}
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th,
+.list-group-item
+{
+	padding: 8px 10px;
+}
 [contenteditable].form-control {
 	height: initial;
 }
@@ -187,6 +203,7 @@ label.control-label {
 .form-control, button {
 	-webkit-box-shadow: none !important;
 	box-shadow: none !important;
+	border-radius: 4px !important;
 }
 select option {
 	padding: 0 !important;
@@ -266,12 +283,12 @@ tab {
 	background-color: #337AB7;
     border-color: #337AB7;
 }
+[type=checkbox] {
+	position: absolute;
+    opacity: 0;
+}
 .checkbox label, .radio label {
 	padding-left: 0;
-}
-.dropdown-menu>li label {
-	width: 100%;
-	padding: 5px 10px;
 }
 .dropdown-menu>li label:hover {
 	background: #F5F5F5;
@@ -376,9 +393,6 @@ body.nav-md .logo_small {
     font-size: inherit;
 	padding: 5px 0;
 }
-.dropdown-menu a {
-	padding: 5px 20px;
-}
 .panel_toolbox > li > a{
 	background: initial !important;
 }
@@ -390,12 +404,6 @@ body.nav-md .logo_small {
     max-width: calc(100vw - 40px);
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.zzzfilterString {
-	width: 100%;
-    padding: 5px;
-    background: transparent;
-    border: 0;
 }
 .modal .x_panel {
 	border: 0;
@@ -437,6 +445,9 @@ iframe {
 }
 .modal-footer {
     padding: 10px 15px 5px 15px;
+}
+.form-group {
+	position: relative;
 }
 .form-group .btn {
     margin-bottom: initial;
@@ -547,6 +558,10 @@ select.form-control.ac_disable {
 	display: none;
 }
 */
+.transparent {
+	opacity: 0;
+	pointer-events: none;
+}
 .ac_hide {
 	display: none;
 }
@@ -560,9 +575,16 @@ select.form-control.ac_disable {
 	padding-right: 0;
 }
 .x_content.p-0 {
-	height: calc(100vh - 171px);
+	height: calc(100vh - 176px);
 	overflow-x: hidden;
 }
+.x_title {
+	font-weight: bold;
+}
+.x_title:not(:first-child) {
+	margin-top: 50px;
+}
+
 /*====================================================================standardlist start */
 .x_content.p-0.standardlist {
 	height: calc(100vh - 220px);
@@ -653,87 +675,125 @@ th .icheckbox_flat-green, th .iradio_flat-green {
     background-color: #1ABB9C;
 }
 
-/* ================================================================================== Vue Table */
-.viewMode .vueTableDualMode {
-	display: none;
+/* ================================================================================== Datatables */
+.dataTables_add,
+.dataTables_filter,
+.dataTables_length
+{
+	margin-bottom: 5px;
 }
-[id^=VueTables__limit] {
-	margin-left: 5px;
+.dataTables_add {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
 }
-.VueTables th.action_column,
-.VueTables th.checkall_column
- {
-	width: 1px;
-	pointer-events: none;
-	text-align: center;
-}
-.VueTables th.checkall_column .checkbox
- {
-	pointer-events: initial;
-}
-.VueTables td.action_column,
-.VueTables td.checkall_column
- {
-	text-align: center;
-	white-space: nowrap;
-}
-.VueTables .action_column a {
+.dataTable {
+	width: 100% !important;
 	position: relative;
-	margin: 0 5px;
 }
-.VueTables .action_column .VueTables__Action-filter-wrapper,
-.VueTables .action_column .VueTables__sort-icon,
-.VueTables .checkall_column .VueTables__CheckAll-filter-wrapper,
-.VueTables .checkall_column .VueTables__sort-icon,
-.VueTables .bulk_column .VueTables__sort-icon
- {
+.dataTable thead tr th {
+	border-bottom: 0;
+}
+.dataTable tr.filtering {
+	border: 1px solid #E0E0E0 !important;
+    background: #E0E0E0 !important;
+}
+.dataTable tr.filtering input {
+	font-weight: normal;
+    background: white url(../images/icon-filter.svg) no-repeat right 10px center;
+}
+.dataTable > thead > tr.filtering > th {
+    padding: 4px 4px 4px 10px;
+}
+.dataTables_Container.searchcolumn .dataTables_filter {
 	display: none;
 }
-.VueTables .bulk_column .dropdown-toggle {
+.dataTables_length {
+    width: initial;
+    float: right;
+	margin-left: 10px;
+}
+.dataTables_length .btn-group.bootstrap-select {
+    width: initial !important;
+}
+.dataTables_filter {
+	width: initial;
+}
+.dataTables_filter input {
+	border: 1px solid #ccc !important;
+    padding: 6px;
+}
+.dataTables_paginate .paginate_button {
+    padding: 8px 10px !important;
+    background: transparent !important;
+    border: 1px solid #ddd;
+	margin-left: -1px;
+	cursor: pointer;
+	position: relative;
+}
+.dataTables_paginate .paginate_button:hover {
+	background: #eee !important;
+}
+.dataTables_paginate .paginate_button.current {
+	z-index: 3;
+}
+.dataTables_paginate .paginate_button.previous {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+.dataTables_paginate .paginate_button.next {
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+.checkall_column .dropdown {
+	position: absolute;
+    top: 0;
+    padding: 8px;
+    left: 36px;
+    border: 1px solid transparent;
+}
+.checkall_column .dropdown-toggle {
 	color: white;
 }
-.VueTables .bulk_column .dropdown-menu {
+.checkall_column .dropdown-menu {
 	top: calc(100% + 9px);
     min-width: 100%;
 }
-.VueTables .action_icon.ac_disable {
+.dataTable thead .sorting,
+.dataTable thead .sorting_asc,
+.dataTable thead .sorting_desc
+{
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position: center right;
+}
+.dataTable thead .sorting {
+	background-image: url(../lib/datatables-1.10.16/sort_both.png);
+}
+.dataTable thead .sorting_asc {
+	background-image: url(../lib/datatables-1.10.16/sort_asc.png);
+}
+.dataTable thead .sorting_desc {
+	background-image: url(../lib/datatables-1.10.16/sort_desc.png);
+}
+.dataTable .action_icon {
+	position: relative;
+	margin: 0 5px;
+}
+.dataTable .checkall_column,
+.dataTable .action_column
+{
+	width: 1px;
+    text-align: center;
+	white-space: nowrap;
+}
+.dataTable .action_icon.ac_disable {
 	pointer-events: none;
 	opacity: 0.3;
 }
-.VueTables .form-control {
-	border-radius: 4px;
-	font-weight: normal;
-}
-.VueTables__filters-row {
-	background: #E0E0E0;
-}
-.VueTables .vueTableAddContainer {
-	margin-bottom: 10px;
-}
-.VueTables.vueTableAdd {
-	float: right;
-	margin-right: 0;
-}
-.VueTables .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
-	border-bottom-width: 0;
-}
-.VueTables__filters-row input {
-	background: white url(../images/icon-filter.svg) no-repeat right 10px center;
-	background-size: 
-}
-.VueTables.smallrecord .VueTables__filters-row,
-.VueTables.smallrecord .VuePagination,
-.VueTables.nosort .VueTables__sort-icon
-{
-	display: none;
-}
-.nosort th.VueTables__sortable {
-    pointer-events: none;
-}
-.checkall_column .checkbox {
-	min-height: initial;
-	padding-top: initial;
-}
+/* ================================================================================== Datatables end */
+
 /* ================================================================================== FAB */
 .fab {
 	position: fixed;

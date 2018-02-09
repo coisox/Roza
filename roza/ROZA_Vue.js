@@ -21,18 +21,6 @@ $(document).ready(function(){
 	initVue();
 });
 
-Vue.use(VueTables.ClientTable, {
-	compileTemplates: true,
-	filterByColumn: true,
-	texts: {
-		filter: '',
-		filterBy: '',
-		filterPlaceholder: rozaLanguage=='bm'?'Carian...':'Search...',
-		limit: rozaLanguage=='bm'?'Rekod: ':'Records: ',
-		count: rozaLanguage=='bm'?"Menunjukkan {from} hingga {to} daripada {count} rekod|{count} rekod|Satu rekod":"Showing {from} to {to} of {count} records|{count} records|One record"
-	}
-});
-
 function initVue() {
 	roza = new Vue({
 		el: '#roza',
@@ -88,7 +76,8 @@ function initVue() {
 			dropzoneAction: 'main.html',
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
 			callbackQue: [],
-			viewMode: true
+			viewMode: true,
+			dataTable: { leftPanel: [], rightPanel: [], fullPanel: [] }
 		},
 		methods: {
 			metroClick: function(item, level, index) {
@@ -680,10 +669,32 @@ function initVue() {
 			},
 			updateBulkCount: function(e) {
 				var bulkCount = e.parents('table').find('tbody [type=checkbox]:checked').length;
-				e.parents('table').find('th.VueTables__sortable:not(.checkall_column)').addClass('ac_hide');
-				e.parents('table').find('th.VueTables__sortable.bulk_column').removeClass('ac_hide');
-				if(!bulkCount) e.parents('table').find('th.VueTables__sortable:not(.checkall_column)').toggleClass('ac_hide');
+				if(!bulkCount) {
+					e.parents('table').find('span.bulk_toggle').addClass('transparent');
+					e.parents('table').find('th.bulk_toggle').removeClass('transparent');
+				}
+				else {
+					e.parents('table').find('span.bulk_toggle').removeClass('transparent');
+					e.parents('table').find('th.bulk_toggle').addClass('transparent');
+				}
 				e.parents('table').find('#bulkCount').text(bulkCount);
+			},
+			checkboxEvent: function(table) {
+				$('table .checkall').on('ifClicked', function(event){
+					var _this = this;
+					setTimeout(function(){
+						$(_this).parents('table').find('tbody [type=checkbox]').iCheck(event.currentTarget.checked?'check':'uncheck');
+						roza.updateBulkCount($(_this));
+					}, 1);
+				});
+				
+				$('tbody [type=checkbox]').on('ifClicked', function(event){
+					var _this = this;
+					setTimeout(function(){
+						$(_this).parents('table').find('thead .checkall').iCheck($(_this).parents('table').find('tbody [type=checkbox]:checked').length == $(_this).parents('table').find('tbody [type=checkbox]').length?'check':'uncheck');
+						roza.updateBulkCount($(_this));
+					}, 1);
+				});
 			}
 		},
 		created: function() {
@@ -715,50 +726,48 @@ function initVue() {
 				checkboxClass: 'icheckbox_flat-green',
 				radioClass: 'iradio_flat-green'
 			});
-
-			$('.checkall').on('ifClicked', function(event){
-				var _this = this;
-				setTimeout(function(){
-					$(_this).parents('table').find('tbody [type=checkbox]').iCheck(event.currentTarget.checked?'check':'uncheck');
-					roza.updateBulkCount($(_this));
-				}, 1);
-			});
-			
-			$('tbody [type=checkbox]').on('ifClicked', function(event){
-				var _this = this;
-				setTimeout(function(){
-					$(_this).parents('table').find('thead .checkall').iCheck($(_this).parents('table').find('tbody [type=checkbox]:checked').length == $(_this).parents('table').find('tbody [type=checkbox]').length?'check':'uncheck');
-					roza.updateBulkCount($(_this));
-				}, 1);
-			});
-			
-			$('.checkall').each(function(){
-				$(this).parents('table').find('thead .checkall').iCheck($(this).parents('table').find('tbody [type=checkbox]:checked').length == $(this).parents('table').find('tbody [type=checkbox]').length?'check':'uncheck');
-			});
-			
-			$('th.VueTables__sortable.checkall_column:not(.initialized)').each(function(){
-				var li = '';
-				var bulk = roza.panel[$(this).parents('.VueTables').attr('data-panel')].prop[$(this).parents('.VueTables').attr('data-index')].action_check.bulk;
-				for(var x=0; x<bulk.length; x++) li += '<li><a onclick="'+bulk[x].onclick+'">'+bulk[x]['label'+roza.rozaLanguage]+'</a></li>';
-				
-				$(this).after(
-					'<th colspan="100" class="VueTables__sortable ac_hide bulk_column">'+
-						'<span class="VueTables__heading dropdown">'+
-							'<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'+
-								(roza.rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions')+' (<span id="bulkCount"></span> '+ (roza.rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected')+ ') '+
-								'<span class=" fa fa-angle-down"></span>'+
-							'</a>'+
-							'<ul class="dropdown-menu">'+li+'</ul>'+
-						'</span>'+
-					'</th>'
-				);
-			});
-			
-			$('th.VueTables__sortable.checkall_column').addClass('initialized');
-			
-			if(roza.viewMode) $('.checkall_column').addClass('ac_hide');
-			else $('.checkall_column').removeClass('ac_hide');
 			//======================================================================================================== iCheck end
+			
+			//======================================================================================================== DataTables start
+			console.log('update. found new table: '+$('.table:not(.dataTable)').length);
+			$('.table:not(.dataTable)').each(function(){
+				
+				sambung sini. roza.dataTable.leftPanel
+				
+				roza.dataTable[$(this).attr('id')] = $(this).DataTable({
+					'language': {
+						lengthMenu: roza.rozaLanguage=='bm'?'Papar _MENU_':'Display _MENU_',
+						zeroRecords: roza.rozaLanguage=='bm'?'Tiada rekod':'No records',
+						info: roza.rozaLanguage=='bm'?'Paparan _START_ hingga _END_ daripada _MAX_ rekod':'Show _START_ to _END_ of _MAX_ records',
+						infoEmpty: '',
+						infoFiltered: '',
+						search: roza.rozaLanguage=='bm'?'Carian ':'Search ',
+						paginate: {
+							next: '&#9655;',
+							previous: '&#9665;'
+						}
+					},
+					'order': [],
+					'columnDefs': [{'targets': 'nosort', 'orderable': false}]
+				}).on('draw', function(e) {
+					roza.checkboxEvent();
+					$(e.currentTarget).find('[type=checkbox]').iCheck('uncheck');
+					roza.updateBulkCount($(e.currentTarget).find('.checkall'));
+				});
+				
+				//initComplete
+				
+				xxx = roza.dataTable[$(this).attr('id')];
+				
+				$('.dataTable .searchcolumn').on('input', function() {
+					console.log('table id: '+$(this).parents('table').attr('id'));
+					console.log('col index: '+$(this).parent().index());
+					roza.dataTable[$(this).parents('table').attr('id')].column($(this).parent().index()).search($(this).val()).draw();
+				});
+			});
+
+			roza.checkboxEvent();
+			//======================================================================================================== DataTables end
 			
 			//======================================================================================================== datepicker start
 			$('.date [data-style="single"]').daterangepicker({
@@ -795,6 +804,7 @@ function initVue() {
 				}
 			});
 			
+			//======================================================================================================== element callback start
 			while (this.callbackQue.length) {
 				var callback = this.callbackQue.shift();
 				try {
@@ -806,54 +816,16 @@ function initVue() {
 					});
 				}
 			}
-
-			$('.VueTables').each(function(){
-				var id = $(this).attr('id');
-				
-				//add/remove add button
-				$('#'+id+' .vueTableAdd').remove();
-				if(roza['vueTable'][id]['action_add'] && !roza['vueTable'][id]['action_add']['ac_remove'] && !$('#'+id+' .vueTableAdd').size()) {
-					$('#'+id+' .vueTableAddContainer').html('<button type="button" class="btn btn-success vueTableAdd '+roza['vueTable'][id]['action_add']['vueTableDualMode']+'" onclick="'+roza['vueTable'][id]['action_add']['onclick']+'"><i class="fa fa-plus"></i> '+(roza.rozaLanguage=='bm'?'Tambah':'Add')+'</button>');
-				}
-
-				//drag icon
-				Sortable.create(
-					$('#'+id+' tbody')[0],
-					{
-						handle: ".fa-arrows-v",
-						onUpdate: function(event) {
-							if(typeof rozaDragged == 'function') rozaDragged(event);
-						}
-					}
-				);
-			});
+			//======================================================================================================== element callback end
 			
+			//======================================================================================================== live search in dropdown start
 			$('select:not(.ac_disable)').each(function(){
 				$(this).selectpicker({
 					liveSearch: $(this).hasClass('searchable')
 				});
 			});
 			$('select.ac_disable').selectpicker('destroy');
-			
-			/*
-			if(this.panel.leftPanel.initQueryBuilder) {
-				this.panel.leftPanel.initQueryBuilder = false;
-				$('#leftPanelQueryBuilder').queryBuilder({
-					filters: [
-						{
-							id: 'c1',
-							label: 'Column 1',
-							type: 'string'
-						},
-						{
-							id: 'c2',
-							label: 'Column 2',
-							type: 'string'
-						}
-					]
-				})
-			}
-			*/
+			//======================================================================================================== live search in dropdow<end></end>nd
 		},
 		mounted: function() {
 			this.$nextTick(function () {
