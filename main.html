@@ -87,7 +87,7 @@
 									<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 								</li>
 								<li>
-									<a href="javascript:;">{{rozaLanguage=='bm'?'Utama':'Main'}}</a>
+									<a href="javascript:;" @click="showDashboard()">{{rozaLanguage=='bm'?'Utama':'Main'}}</a>
 								</li>
 								<li>
 									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{rozaLanguage=='bm'?'Baru':'New'}}</a>
@@ -225,6 +225,9 @@
 									<div class="x_panel">
 										<div class="x_title">
 											<h2>{{rozaLanguage=='bm'?'Tugasan':'Task'}}</h2>
+											<!--
+											<comStandardlistTools :list="dashboard.listTask"></comStandardlistTools>
+											-->
 											<div class="clearfix"></div>
 										</div>
 										<div class="x_content">
@@ -423,7 +426,7 @@
 																									</thead>
 																									<tbody>
 																										<tr v-for="row in sub.list">
-																											<td v-show="sub.action_check && !(accessControl(sub.action_check,'ac_dualmode') && viewMode) && sub.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																											<td v-show="sub.action_check && !(accessControl(sub.action_check,'ac_dualmode') && viewMode) && sub.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check?row.action_check.value:-1"></td>
 																											<td v-for="col in sub.column">{{row[col]}}</td>
 																											<td v-if="sub.style.split(' ').indexOf('basic')<0 && (sub.action_view || sub.action_edit || sub.action_delete || sub.action_drag)" class="action_column">
 																												<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
@@ -565,7 +568,7 @@
 																	</thead>
 																	<tbody>
 																		<tr v-for="row in item.list">
-																			<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																			<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check?row.action_check.value:-1"></td>
 																			<td v-for="col in item.column">{{row[col]}}</td>
 																			<td v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" class="action_column">
 																				<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
@@ -1061,7 +1064,7 @@
 															</thead>
 															<tbody>
 																<tr v-for="row in item.list">
-																	<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																	<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check?row.action_check.value:-1"></td>
 																	<td v-for="col in item.column">{{row[col]}}</td>
 																	<td v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" class="action_column">
 																		<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>

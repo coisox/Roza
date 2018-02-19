@@ -6,6 +6,9 @@ html, body {
 body {
 	overflow: hidden;
 }
+.row {
+	width: initial !important;
+}
 #menu_toggle i {
     font-size: 26px;
     float: left;
@@ -312,7 +315,7 @@ label {
 }
 .panelWrapper {
 	display: table;
-	width: calc(100% + 10px);
+	width: calc(100% + 10px) !important;
 }
 .equalPanel {
 	width: 50% !important;
@@ -327,7 +330,7 @@ label {
 	padding-right: 10px;
 }
 #rightPanel {
-	padding-right: 10px;
+	zzzpadding-right: 10px;
     padding-left: 10px;
 	width: auto;
 	border-left: 1px solid #E6E9ED;
@@ -580,10 +583,10 @@ select.form-control.ac_disable {
 .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
 	z-index: initial;
 }
-[class^=col-]:first-child {
+[class^=col-]:nth-child(1) {
 	padding-left: 0;
 }
-[class^=col-]:last-child {
+[class^=col-]:nth-child(2) {
 	padding-right: 0;
 }
 .x_panel {

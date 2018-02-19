@@ -19,44 +19,45 @@ var rozaLanguage = localStorage.getItem(prefix+'rozaLanguage');
 
 $(document).ready(function(){
 	initVue();
-	initDashboard();
 });
 
-function initDashboard() {
+var morris = [];
+function initMorris() {
 	var backgroundColor = ['#F44236','#FFE93B','#8BC24A'];
 	
-	Morris.Donut({
-		element: 'doughnut1',
-		data:[
+	for(var i=1; i<4; i++) {
+		var data;
+		
+		if(i==1) data = [
 			{ label:'Tamat Tempoh', value:10 },
 			{ label:'Semasa', value:20 },
 			{ label:'Selesai', value:50 }
-		],
-		colors: backgroundColor,
-		resize: true
-	});
-	
-	Morris.Donut({
-		element: 'doughnut2',
-		data:[
+		];
+		
+		else if(i==2) data = [
 			{ label:'Tamat Tempoh', value:5 },
 			{ label:'Semasa', value:50 },
 			{ label:'Selesai', value:5 }
-		],
-		colors: backgroundColor,
-		resize: true
-	});
-	
-	Morris.Donut({
-		element: 'doughnut3',
-		data:[
+		];
+		
+		else if(i==3) data = [
 			{ label:'Tamat Tempoh', value:0 },
 			{ label:'Semasa', value:10 },
 			{ label:'Selesai', value:100 }
-		],
-		colors: backgroundColor,
-		resize: true
-	});
+		];
+		
+		if($('#doughnut'+i).find('svg').length==0) {
+			morris['doughnut'+i] = Morris.Donut({
+				element: 'doughnut'+i,
+				data: data,
+				colors: backgroundColor,
+				resize: true
+			});
+		}
+		else {
+			morris['doughnut'+i].setData(data);
+		}
+	}
 }
 
 function initDashboard_ChartJS() {
@@ -150,7 +151,7 @@ function initVue() {
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
 			callbackQue: [],
 			viewMode: true,
-			page: 'dashboard'
+			page: 'module'
 		},
 		methods: {
 			metroClick: function(item, level, index) {
@@ -818,6 +819,12 @@ function initVue() {
 					range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
 					range.select();//Select the range (make it the visible selection
 				}
+			},
+			showDashboard: function() {
+				this.page = 'dashboard';
+				setTimeout(function(){
+					initMorris();
+				}, 50);
 			}
 		},
 		created: function() {
