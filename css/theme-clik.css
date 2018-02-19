@@ -87,15 +87,11 @@ body,
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
 .dataTables_paginate .paginate_button.current,
-.dataTable thead tr
+.dataTables_Container:not(.basic) .dataTable thead tr
 {
     border: 1px solid #FF2F59 !important;
 	background: #FF2F59 !important;
 	color: white !important;
-}
-thead {
-    background: #FF2F59;
-    color: white;
 }
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     background-color: #FF2F59;
@@ -134,6 +130,7 @@ thead {
 .fab .padder:nth-child(3) a { background: #C895CE; }
 .fab .padder:nth-child(4) a { background: #BF6DA1; }
 .fab .padder:nth-child(5) a { background: #F65B5B; }
+.fab .padder:nth-child(6) a { background: #F88062; }
 .fab .padder:nth-child(6) a { background: #FF9D5B; }
 .metro-menu-closer,
 .metro-menu-closer:before

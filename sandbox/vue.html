@@ -1,35 +1,19 @@
-<div id="people">
-  <v-client-table :data="tableData" :columns="columns" :options="options"></v-client-table>
+<div id="vue">
+	Hasilnya : <span id="target">{{xxx}}</span>
 </div>
 
+Asal : <input type="text" id="asal" v-model="xxx">
 
-<script src="https://unpkg.com/vue"></script>
+
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>
-<script src='vue-tables-2.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js'></script>
 
 <script>
-	Vue.use(VueTables.ClientTable, {
-  compileTemplates: true,
-  filterByColumn: true,
-  texts: {
-    filter: "Search:"
-  }
-});
-
-new Vue({
-    el: "#people",
+var vue = new Vue({
+    el: "#vue",
     data: {
-        columns: ['id', 'name', 'age'],
-        tableData: [
-            { id: 1, name: "John", age: "20" },
-            { id: 2, name: "Jane", age: "24" },
-            { id: 3, name: "Susan", age: "16" },
-            { id: 4, name: "Chris", age: "55" },
-            { id: 5, name: "Dan", age: "40" }
-        ],
-        options: {
-            // see the options API
-        }
-    }
+		"xxx": "aizalff"
+	}
 });
 </script>
+

@@ -87,15 +87,11 @@ body,
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
 .dataTables_paginate .paginate_button.current,
-.dataTable thead tr
+.dataTables_Container:not(.basic) .dataTable thead tr
 {
     border: 1px solid #2A3F54 !important;
 	background: #2A3F54 !important;
 	color: white !important;
-}
-thead {
-    background: #2A3F54;
-    color: white;
 }
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     background-color: #2A3F54;
@@ -135,6 +131,7 @@ thead {
 .fab .padder:nth-child(4) a { background: #8BC24A; }
 .fab .padder:nth-child(5) a { background: #4BAF4F; }
 .fab .padder:nth-child(6) a { background: #019587; }
+.fab .padder:nth-child(7) a { background: #01BBD4; }
 .metro-menu-closer,
 .metro-menu-closer:before
 {

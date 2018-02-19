@@ -1,5 +1,5 @@
 var prefix = 'ILIMS_';
-var currentVersion = 'v180206';
+var currentVersion = 'v180219';
 var rozaCallLandingFile, rozaSetTaskbar, rozaSetPanel, rozaViewMode, rozaBindData, rozaBindLov, rozaGetParam, rozaModal, rozaClearData, rozaResetData, rozaHasRole, rozaVersion, rozaUserId, rozaUserName, rozaUserRole, rozaEqualPanel;
 
 if(!localStorage.getItem(prefix+'rozaUserPic')) localStorage.setItem(prefix+'rozaUserPic', 'images/alien.png');
@@ -19,7 +19,79 @@ var rozaLanguage = localStorage.getItem(prefix+'rozaLanguage');
 
 $(document).ready(function(){
 	initVue();
+	initDashboard();
 });
+
+function initDashboard() {
+	var backgroundColor = ['#F44236','#FFE93B','#8BC24A'];
+	
+	Morris.Donut({
+		element: 'doughnut1',
+		data:[
+			{ label:'Tamat Tempoh', value:10 },
+			{ label:'Semasa', value:20 },
+			{ label:'Selesai', value:50 }
+		],
+		colors: backgroundColor,
+		resize: true
+	});
+	
+	Morris.Donut({
+		element: 'doughnut2',
+		data:[
+			{ label:'Tamat Tempoh', value:5 },
+			{ label:'Semasa', value:50 },
+			{ label:'Selesai', value:5 }
+		],
+		colors: backgroundColor,
+		resize: true
+	});
+	
+	Morris.Donut({
+		element: 'doughnut3',
+		data:[
+			{ label:'Tamat Tempoh', value:0 },
+			{ label:'Semasa', value:10 },
+			{ label:'Selesai', value:100 }
+		],
+		colors: backgroundColor,
+		resize: true
+	});
+}
+
+function initDashboard_ChartJS() {
+	Chart.defaults.global.defaultFontSize = 14;
+	var options =  { legend: { position: 'right' } };
+	var labels = ['Tamat Tempoh','Semasa','Selesai'];
+	var backgroundColor = ['#F44236','#FFE93B','#8BC24A'];
+	
+	var doughnut1 = new Chart($('#doughnut1'), {
+		type: 'doughnut',
+		data: {
+			labels: labels,
+			datasets: [{data: [5,10,30], backgroundColor: backgroundColor}]
+		},
+		options: options
+	});
+	
+	var doughnut2 = new Chart($('#doughnut2'), {
+		type: 'doughnut',
+		data: {
+			labels: labels,
+			datasets: [{data: [2,20,30], backgroundColor: backgroundColor}]
+		},
+		options: options
+	});
+	
+	var doughnut3 = new Chart($('#doughnut3'), {
+		type: 'doughnut',
+		data: {
+			labels: labels,
+			datasets: [{data: [0,10,10], backgroundColor: backgroundColor}]
+		},
+		options: options
+	});
+}
 
 function initVue() {
 	roza = new Vue({
@@ -48,6 +120,7 @@ function initVue() {
 			},
 			taskbar: {},
 			accordions: {},
+			accordionsPrev: '',
 			tabLevel1: {},
 			tabLevel2: {},
 			vueTable: [],
@@ -77,7 +150,7 @@ function initVue() {
 			favourites: JSON.parse(localStorage.getItem(prefix+'Favourites')),
 			callbackQue: [],
 			viewMode: true,
-			dataTable: { leftPanel: [], rightPanel: [], fullPanel: [] }
+			page: 'dashboard'
 		},
 		methods: {
 			metroClick: function(item, level, index) {
@@ -354,21 +427,30 @@ function initVue() {
 				});
 			},
 			rozaSetPanel: function(opt) {
+				this.page = 'module';
 				$('#leftPanel').removeClass('equalPanel');
 				this.rozaModal();
 				
 				if(opt) {
+					
+					//reset all panel
 					this.panel.leftPanel.show = !(opt.panel=='fullPanel');
 					this.panel.rightPanel.show = !(opt.panel=='fullPanel');
 					this.panel.fullPanel.show = (opt.panel=='fullPanel');
 					
+					//reset targeted panel querybuilder
 					if($('#'+opt.panel+'QueryBuilder.query-builder').size()) $('#'+opt.panel+'QueryBuilder').queryBuilder('reset');
 
+					//reset targeted panel prop
 					if(opt.panel!='rightPanel') {
 						roza.panel.rightPanel.prop = {};
 						roza.panel.rightPanel.type = '';
 						//roza.taskbar = {}; Hari tu Masri mcm perlukan nie
 					}
+					
+					//reset targeted panel datatables
+					$('#'+opt.panel+' .dataTable [type=checkbox]').iCheck('uncheck');
+					roza.updateBulkCount($('#'+opt.panel+' .dataTable .checkall'));
 
 					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+opt.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
 						if(data.status=='ok') {
@@ -492,79 +574,86 @@ function initVue() {
 				}
 			},
 			rozaSetAccordion: function(list) {
-				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
-					if(data.status=='ok') {
-						for(var x=0; x<data.prop.length; x++) {
-							if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
-							
-							if(data.prop[x].element=='table') {
-								roza['vueTable'][data.prop[x].id] = [];
-								roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
-								roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
-								roza['vueTable'][data.prop[x].id]['option'] = {
-									columnsClasses: {
-										Action: 'action_column',
-										CheckAll: 'checkall_column'
-									},
-									headings: {
-										CheckAll: function (h) {
-											return h('input', {
-												attrs: {
-													type: 'checkbox',
-													id: 'selectAllCheckbox'
-												},
-												on: {
-													click: (e) => {
-														this.selectAll(e.srcElement.checked)
-													}
-												},
-												ref: 'selectAllCheckbox'
-											})
-										},
-										Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
-									}
-								};
+				if(this.accordionsPrev==list.id) {
+					$('#'+list.id).collapse('toggle');
+				}
+				else {
+					this.accordionsPrev = list.id;
+					
+					$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
+						if(data.status=='ok') {
+							for(var x=0; x<data.prop.length; x++) {
+								if(data.prop[x].onload) roza.callbackQue.push(data.prop[x].onload);
 								
-								if(data.prop[x].action_add) {
-									roza['vueTable'][data.prop[x].id]['action_add'] = [];
-									roza['vueTable'][data.prop[x].id]['action_add']['onclick'] = data.prop[x].action_add.onclick;
-									roza['vueTable'][data.prop[x].id]['action_add']['ac_remove'] = roza.accessControl(data.prop[x].action_add, 'ac_remove');
-									roza['vueTable'][data.prop[x].id]['action_add']['vueTableDualMode'] = roza.accessControl(data.prop[x].action_add, 'ac_dualmode')?'vueTableDualMode':'';
+								if(data.prop[x].element=='table') {
+									roza['vueTable'][data.prop[x].id] = [];
+									roza['vueTable'][data.prop[x].id]['column'] = data.prop[x].column;
+									roza['vueTable'][data.prop[x].id]['list'] = data.prop[x].list;
+									roza['vueTable'][data.prop[x].id]['option'] = {
+										columnsClasses: {
+											Action: 'action_column',
+											CheckAll: 'checkall_column'
+										},
+										headings: {
+											CheckAll: function (h) {
+												return h('input', {
+													attrs: {
+														type: 'checkbox',
+														id: 'selectAllCheckbox'
+													},
+													on: {
+														click: (e) => {
+															this.selectAll(e.srcElement.checked)
+														}
+													},
+													ref: 'selectAllCheckbox'
+												})
+											},
+											Action: roza.rozaLanguage=='bm'?'Tindakan':'Action'
+										}
+									};
+									
+									if(data.prop[x].action_add) {
+										roza['vueTable'][data.prop[x].id]['action_add'] = [];
+										roza['vueTable'][data.prop[x].id]['action_add']['onclick'] = data.prop[x].action_add.onclick;
+										roza['vueTable'][data.prop[x].id]['action_add']['ac_remove'] = roza.accessControl(data.prop[x].action_add, 'ac_remove');
+										roza['vueTable'][data.prop[x].id]['action_add']['vueTableDualMode'] = roza.accessControl(data.prop[x].action_add, 'ac_dualmode')?'vueTableDualMode':'';
+									}
 								}
 							}
+								
+							roza.accordions[list.id] = data.prop;
+							roza.accordions = JSON.parse(JSON.stringify(roza.accordions));
+							roza.$nextTick(function () {
+								//$('.panel-collapse.collapse').collapse('hide');
+								//$('.accordion-title').addClass('collapsed');
+								//$('#'+list.id).prev().removeClass('collapsed');
+								//$('#'+list.id).collapse('show');
+								
+								if(!$('#'+list.id).hasClass('in')) {
+									$('.panel-collapse.collapse').removeClass('in');
+									$('.accordion-title').addClass('collapsed');
+									
+									$('#'+list.id).collapse('show');
+									$('#'+list.id).prev().removeClass('collapsed');
+									
+									/*
+									$('#'+'acc3').parents('.x_content').scrollTo($('#'+'acc3'), {
+										axis: 'y',
+										offset: -40,
+										duration: 1000
+									});
+									
+									$("html, body").animate({ scrollTop: $('#'+list.id).offset().top }, 1000);
+									*/
+								}
+							});
+							
+							//roza['accordions'] = JSON.stringify(roza['accordions']);
 						}
-							
-						roza.accordions[list.id] = data.prop;
-						roza.accordions = JSON.parse(JSON.stringify(roza.accordions));
-						roza.$nextTick(function () {
-							//$('.panel-collapse.collapse').collapse('hide');
-							//$('.accordion-title').addClass('collapsed');
-							//$('#'+list.id).prev().removeClass('collapsed');
-							//$('#'+list.id).collapse('show');
-							
-							if(!$('#'+list.id).hasClass('in')) {
-								$('.panel-collapse.collapse').removeClass('in');
-								$('.accordion-title').addClass('collapsed');
-								
-								$('#'+list.id).collapse('show');
-								$('#'+list.id).prev().removeClass('collapsed');
-								
-								/*
-								$('#'+'acc3').parents('.x_content').scrollTo($('#'+'acc3'), {
-									axis: 'y',
-									offset: -40,
-									duration: 1000
-								});
-								
-								$("html, body").animate({ scrollTop: $('#'+list.id).offset().top }, 1000);
-								*/
-							}
-						});
-						
-						//roza['accordions'] = JSON.stringify(roza['accordions']);
-					}
-					else roza.toast(data.status);
-				});
+						else roza.toast(data.status);
+					});
+				}
 			},
 			rozaSetTab: function(list, level) {
 				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI='+list.ui+(JSON.stringify(this.sessionParam)=='{}'?'':'&'+$.param(this.sessionParam)), function(data){
@@ -633,6 +722,19 @@ function initVue() {
 					contentbi: content
 				});
 			},
+			exportModal: function(onexport) {
+				var content = '<div class="export-container"><div class="export-box" onclick="'+onexport.pdf+'"><div class="export-circle" style="background:#D42839"><i class="fa fa-file-pdf-o"></i></div>PDF</div>';
+				if(onexport.word) content += '<div class="export-box" onclick="'+onexport.word+'"><div class="export-circle" style="background:#295391"><i class="fa fa-file-word-o"></i></div>Word</div>';
+				if(onexport.excel) content += '<div class="export-box" onclick="'+onexport.excel+'"><div class="export-circle" style="background:#1F6B41"><i class="fa fa-file-excel-o"></i></div>Excel</div>';
+				content += '</div>';
+				
+				this.rozaModal({
+					titlebm: 'Pilih Jenis Eksport',
+					titlebi: 'Choose Export Type',
+					contentbm: content,
+					contentbi: content
+				});
+			},
 			setBreadcrumbBuffer: function(level, module) {
 				var b = this.breadcrumbBuffer.split('<br>');
 				b.splice(level-1);
@@ -695,6 +797,27 @@ function initVue() {
 						roza.updateBulkCount($(_this));
 					}, 1);
 				});
+			},
+			maxlength: function(item) {
+				$('#'+item.id).text($('#'+item.id).text().substring(0, item.maxlength));
+
+				var range, selection;
+				if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+				{
+					range = document.createRange();//Create a range (a range is a like the selection but invisible)
+					range.selectNodeContents($('#'+item.id)[0]);//Select the entire contents of the element with the range
+					range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+					selection = window.getSelection();//get the selection object (allows you to change selection)
+					selection.removeAllRanges();//remove any selections already made
+					selection.addRange(range);//make the range you have just created the visible selection
+				}
+				else if(document.selection)//IE 8 and lower
+				{ 
+					range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+					range.moveToElementText($('#'+item.id)[0]);//Select the entire contents of the element with the range
+					range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+					range.select();//Select the range (make it the visible selection
+				}
 			}
 		},
 		created: function() {
@@ -732,9 +855,7 @@ function initVue() {
 			console.log('update. found new table: '+$('.table:not(.dataTable)').length);
 			$('.table:not(.dataTable)').each(function(){
 				
-				sambung sini. roza.dataTable.leftPanel
-				
-				roza.dataTable[$(this).attr('id')] = $(this).DataTable({
+				$(this).DataTable({
 					'language': {
 						lengthMenu: roza.rozaLanguage=='bm'?'Papar _MENU_':'Display _MENU_',
 						zeroRecords: roza.rozaLanguage=='bm'?'Tiada rekod':'No records',
@@ -753,12 +874,8 @@ function initVue() {
 					roza.checkboxEvent();
 					$(e.currentTarget).find('[type=checkbox]').iCheck('uncheck');
 					roza.updateBulkCount($(e.currentTarget).find('.checkall'));
-				});
-				
-				//initComplete
-				
-				xxx = roza.dataTable[$(this).attr('id')];
-				
+				})
+
 				$('.dataTable .searchcolumn').on('input', function() {
 					console.log('table id: '+$(this).parents('table').attr('id'));
 					console.log('col index: '+$(this).parent().index());

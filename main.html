@@ -9,7 +9,7 @@
 		<title>AGC ILIMS</title>
 
 		<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/bootstrap/css/custom.min.css?v180206" rel="stylesheet">
+		<link href="lib/bootstrap/css/custom.min.css?v180219" rel="stylesheet">
 		<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 		<link href="lib/iCheck/iCheck.css" rel="stylesheet">
 		<link href="lib/select2/css/select2.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
 		<link href="lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
 		<link href="lib/simplebar/simplebar.css" rel="stylesheet">
 		<link href="css/animate.css" rel="stylesheet">
-		<link href="css/custom.css?v180206" rel="stylesheet">
+		<link href="css/custom.css?v180219" rel="stylesheet">
 		<link href="" rel="stylesheet" id="theme">
 		<!--
 		<link href="lib/datatables-1.10.16/datatables.min.css" rel="stylesheet">
@@ -82,10 +82,23 @@
 				<div class="top_nav">
 					<div class="nav_menu" style="padding: 0 20px;">
 						<nav>
-							<div class="float-left">
-								<div class="nav toggle">
+							<ul class="nav navbar-nav navbar-left">
+								<li>
 									<a id="menu_toggle"><i class="fa fa-bars"></i></a>
-								</div>
+								</li>
+								<li>
+									<a href="javascript:;">{{rozaLanguage=='bm'?'Utama':'Main'}}</a>
+								</li>
+								<li>
+									<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{rozaLanguage=='bm'?'Baru':'New'}}</a>
+									<ul class="dropdown-menu dropdown-menu-left">
+										<li><a>{{rozaLanguage=='bm'?'Projek':'Project'}}</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="javascript:;">{{rozaLanguage=='bm'?'Carian':'Search'}}</a>
+								</li>
+								<!--
 								<div class="col-sm-4 col-xs-5 form-group top_search">
 									<div class="input-group">
 										<input type="text" v-model="globalSearchKeyword" @keyup="globalSearch" class="form-control" placeholder="Carian...">
@@ -94,12 +107,8 @@
 										</span>
 									</div>
 								</div>
-								<!--
-								<div class="nav navbar-nav navbar-left">
-									<li><a><i class="fa fa-filter"></i></a></li>
-								</div>
 								-->
-							</div>
+							</ul>
 							
 							<ul class="nav navbar-nav navbar-right">
 								<li>
@@ -209,603 +218,706 @@
 						
 						<div class="clearfix"></div>
 
-						<div class="row panelWrapper">
-							<div v-for="p in ['leftPanel', 'rightPanel', 'fullPanel']" :id="p" v-show="panel[p].show">
-
-								<!-- =========================================================================================================================================== panel for standardlist -->
-								<div class="x_panel" v-if="panel[p].type=='standardlist'">
-									<div class="x_title">
-										<h2>{{panel[p].prop[0]['label'+rozaLanguage]}}</h2>
-										<ul class="nav navbar-right panel_toolbox">
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
-												<ul class="dropdown-menu" role="menu">
-													<li><label @click="sortList(p, 'ROZA_EPOCH')">{{rozaLanguage=='bm'?'Masa':'Time'}} &nbsp; <i class="fa" :class="{'fa-sort-amount-asc':standardlist.sortBy=='ROZA_EPOCH_DESC', 'fa-sort-amount-desc':standardlist.sortBy=='ROZA_EPOCH_ASC'}"></i></label></li>
-													<li><label @click="sortList(p, 'ROZA_TITLE')">{{rozaLanguage=='bm'?'Tajuk':'Title'}} &nbsp; <i class="fa" :class="{'fa-sort-amount-asc':standardlist.sortBy=='ROZA_TITLE_DESC', 'fa-sort-amount-desc':standardlist.sortBy=='ROZA_TITLE_ASC'}"></i></label></li>
-												</ul>
-											</li>
-											<li class="dropdown">
-												<a class="dropdown-toggle" :class="{standardlist_hasFilter:panel[p].filterString!=''}" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-filter"></i></a>
-												<!--
-												<ul class="dropdown-menu" role="menu">
-													<li><input class="filterString" v-model="panel[p].filterString" :placeholder="rozaLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
-												</ul>
-												-->
-											</li>
-										</ul>
-										<div class="clearfix"></div>
-									</div>
-									<div data-simplebar class="x_content p-0 standardlist">
-										<ul class="list-group">
-											<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
-												<div class="standardlist_image" v-if="item.ROZA_IMAGE">
-													<img :src="item.ROZA_IMAGE">
-												</div>
-												<div class="standardlist_text">
-													<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
-													<div class="pull-right">{{item.ROZA_TIME}}</div>
-													<div class="clearfix"></div>
-													<div class="pull-left">{{item.ROZA_DESC}}</div>
-													<div class="clearfix"></div>
-												</div>
-												<template v-if="item.action">
-													<div class="standardlist_action" @click="onclick(item.action, $event)">
-														<i :class="item.action.icon"></i>
-													</div>
-												</template>
-											</li>
-										</ul>
-									</div>
-									
-									<!-- FAB for standardlist -->
-									<div v-if="panel[p].prop[1] && panel[p].prop[1].element=='fab'" class="fab">
-										<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(panel[p].prop[1].onsend)"><i class="fa fa-paper-plane"></i></a></div>
-										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsave && !accessControl(panel[p].prop[1].onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(panel[p].prop[1].onsave)"><i class="fa fa-floppy-o"></i></a></div>
-										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-										<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-										<div class="padder" v-if="viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
-										<div class="padder" v-if="panel[p].prop[1].onprint && !accessControl(panel[p].prop[1].onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(panel[p].prop[1].onprint)"><i class="fa fa-print"></i></a></div>
+						<!-- =========================================================================================================================================== dashboard start -->
+						<div data-simplebar class="dashboard" v-if="page=='dashboard'">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="x_panel">
+										<div class="x_title">
+											<h2>{{rozaLanguage=='bm'?'Tugasan':'Task'}}</h2>
+											<div class="clearfix"></div>
+										</div>
+										<div class="x_content">
+											
+										</div>
 									</div>
 								</div>
-								<!-- =========================================================================================================================================== panel for ui -->
-								<div class="x_panel" v-else-if="panel[p].type=='ui'">
-									<div data-simplebar class="x_content p-0">
-										<div data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px; height:100%;">
-											<template v-for="item,index in panel[p].prop" v-if="item.element!='data' && !(item.element=='file' && accessControl(item,'ac_dualmode') && viewMode)">
+								<div class="col-md-6">
+									<div class="x_panel">
+										<div class="x_title">
+											<h2>{{rozaLanguage=='bm'?'Statistik':'Statistic'}}</h2>
+											<div class="clearfix"></div>
+										</div>
+										<div class="x_content">
+											<div class="doughnut_container">
+												<h5>Perundangan (LG)</h5>
+												<div id="doughnut1" style="width:100%; height:200px;"></div>
+											</div>
+											<div class="doughnut_container">
+												<h5>Litigasi (LT)</h5>
+												<div id="doughnut2" style="width:100%; height:200px;"></div>
+											</div>
+											<div class="doughnut_container">
+												<h5>Penasihat (AD)</h5>
+												<div id="doughnut3" style="width:100%; height:200px;"></div>
+											</div>
+											<!--
+											<canvas id="doughnut1" height="100"></canvas>
+											<canvas id="doughnut2" height="100"></canvas>
+											<canvas id="doughnut3" height="100"></canvas>
+											-->
+										</div>
+									</div>
+									<div class="x_panel">
+										<div class="x_title">
+											<h2>{{rozaLanguage=='bm'?'Kalendar':'Calendar'}}</h2>
+											<div class="clearfix"></div>
+										</div>
+										<div class="x_content">
 											
-													<!-- Title -->
-													<div v-if="!accessControl(item,'ac_remove') && item.element=='title'" class="x_title" :class="{ac_hide:accessControl(item,'ac_hide')}">
-														<h2 :id="item.id" :name="item.id">{{item['label'+rozaLanguage]}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- =========================================================================================================================================== dashboard end -->
+						
+						<template v-else-if="page=='module'">
+							<div class="row panelWrapper">
+								<div v-for="p in ['leftPanel', 'rightPanel', 'fullPanel']" :id="p" v-show="panel[p].show">
+
+									<!-- =========================================================================================================================================== panel for standardlist -->
+									<div class="x_panel" v-if="panel[p].type=='standardlist'">
+										<div class="x_title">
+											<h2>{{panel[p].prop[0]['label'+rozaLanguage]}}</h2>
+											<ul class="nav navbar-right panel_toolbox">
+												<li class="dropdown">
+													<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>
+													<ul class="dropdown-menu" role="menu">
+														<li v-if="filteredList(p).length>0 && filteredList(p)[0].ROZA_TIME"><label @click="sortList(p, 'ROZA_EPOCH')">{{rozaLanguage=='bm'?'Masa':'Time'}} &nbsp; <i class="fa" :class="{'fa-sort-amount-asc':standardlist.sortBy=='ROZA_EPOCH_DESC', 'fa-sort-amount-desc':standardlist.sortBy=='ROZA_EPOCH_ASC'}"></i></label></li>
+														<li v-if="filteredList(p).length>0 && filteredList(p)[0].ROZA_STATUS"><label @click="sortList(p, 'ROZA_STATUS')">Status &nbsp; <i class="fa" :class="{'fa-sort-amount-asc':standardlist.sortBy=='ROZA_STATUS_DESC', 'fa-sort-amount-desc':standardlist.sortBy=='ROZA_STATUS_ASC'}"></i></label></li>
+														<li><label @click="sortList(p, 'ROZA_TITLE')">{{rozaLanguage=='bm'?'Tajuk':'Title'}} &nbsp; <i class="fa" :class="{'fa-sort-amount-asc':standardlist.sortBy=='ROZA_TITLE_DESC', 'fa-sort-amount-desc':standardlist.sortBy=='ROZA_TITLE_ASC'}"></i></label></li>
+													</ul>
+												</li>
+												<li class="dropdown">
+													<a class="dropdown-toggle" :class="{standardlist_hasFilter:panel[p].filterString!=''}" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-filter"></i></a>
+													<!--
+													<ul class="dropdown-menu" role="menu">
+														<li><input class="filterString" v-model="panel[p].filterString" :placeholder="rozaLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'"></li>
+													</ul>
+													-->
+												</li>
+											</ul>
+											<div class="clearfix"></div>
+										</div>
+										<div data-simplebar class="x_content p-0 standardlist">
+											<ul class="list-group">
+												<li v-for="item in filteredList(p)" :class="{unread:item.ROZA_UNREAD==1, active:standardlist.activeItem==item.ROZA_ID, extrapad:item.ROZA_STATUS}" @click="standardlist.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+													<div :class="'standardlist-status '+item.ROZA_STATUS"></div>
+													<div class="standardlist_image" v-if="item.ROZA_IMAGE">
+														<img :src="item.ROZA_IMAGE">
+													</div>
+													<div class="standardlist_text">
+														<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+														<div class="pull-right">{{item.ROZA_TIME}}</div>
+														<div class="clearfix"></div>
+														<div class="pull-left">{{item.ROZA_DESC}}</div>
 														<div class="clearfix"></div>
 													</div>
-													
-													<!-- Element -->
-													<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','accordion','radio','checkbox','table','datepicker','timeline'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
-														
-														<!-- =========================================================================================================================================== fullwidth element html -->
-														<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
-														
-														<!-- =========================================================================================================================================== fullwidth element groupbutton -->
-														<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group" :id="item.id" :name="item.id">
-															<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
+													<template v-if="item.action">
+														<div class="standardlist_action" @click="onclick(item.action, $event)">
+															<i :class="item.action.icon"></i>
 														</div>
-
-														<!-- =========================================================================================================================================== fullwidth element accordion -->		
-														<template v-else-if="item.element=='accordion'">
-															<div class="panel-group" :id="item.id">
-																<div v-for="accordion, index in item.list" v-if="!accessControl(accordion,'ac_remove')" class="panel panel-default">
-																	<a class="panel-title collapsed accordion-title" :data-parent="'#'+item.id" @click="rozaSetAccordion(accordion)">
-																		{{accordion['label'+rozaLanguage]}}
-																	</a>
-																	<div :id="accordion.id" class="panel-collapse collapse">
-																		<div class="panel-body">
-																			<!--<img src="images/loading_eclipse.svg">-->
-																			<template v-if="accordions[accordion.id]">
-																				<template v-for="sub in accordions[accordion.id]" v-if="sub.element!='data' && !(sub.element=='file' && accessControl(sub,'ac_dualmode') && viewMode)">
-
-																					<!-- Title -->
-																					<div v-if="!accessControl(sub,'ac_remove') && sub.element=='title'" class="x_title" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						<h2 :id="sub.id" :name="sub.id">{{sub['label'+rozaLanguage]}}</h2>
-																						<div class="clearfix"></div>
-																					</div>
-																					
-																					<!-- Element -->
-																					<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','radio','checkbox','table','datepicker','timeline'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						
-																						<!-- =========================================================================================================================================== fullwidth element html in accordion -->
-																						<div v-if="sub.element=='html' && sub.style=='fullwidth'" v-html="sub.value"></div>
-																						
-																						<!-- =========================================================================================================================================== fullwidth element groupbutton in accordion -->
-																						<div v-else-if="sub.element=='groupbutton' && sub.style=='fullwidth'" class="form-group" :id="sub.id" :name="sub.id">
-																							<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																						</div>
-																						
-																						<!-- =========================================================================================================================================== fullwidth element table in accordion -->
-																						<template v-else-if="sub.element=='table'">
-																							<!-- https://www.npmjs.com/package/vue-tables-2 -->
-																							<v-client-table :id="sub.id" :name="sub.id" :columns="vueTable[sub.id].column" :data="vueTable[sub.id].list" :options="vueTable[sub.id].option" :class="{smallrecord:sub.smallrecord, nosort:sub.nosort}">
-																								<template slot="CheckAll" scope="props">
-																									<div class="checkbox">
-																										<input type="checkbox" class="flat" :value="props.row.action_check.value">
-																									</div>
-																								</template>
-																								<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																									<a v-if="props.row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(props.row.action_view)"><i class="fa fa-eye"></i></a>
-																									<a v-if="props.row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_edit,'ac_disable') || (accessControl(props.row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(props.row.action_edit)"><i class="fa fa-pencil"></i></a>
-																									<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																									<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-																								</template>
-																							</v-client-table>
-																						</template>
-																						
-																						<!-- =========================================================================================================================================== fullwidth element timeline in accordion -->
-																						<template v-else-if="sub.element=='timeline'">
-																							<div id="wizard" class="form_wizard wizard_horizontal">
-																								<ul class="wizard_steps">
-																									<li v-for="step, index in sub.list">
-																										<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
-																											<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
-																											<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
-																										</a>
-																									</li>
-																								</ul>
-																							</div>
-																						</template>
-																						<!-- =========================================================================================================================================== fullwidth element timeline in accordion  end -->
+													</template>
+												</li>
+											</ul>
+										</div>
+										
+										<!-- FAB for standardlist -->
+										<div v-if="panel[p].prop[1] && panel[p].prop[1].element=='fab'" class="fab">
+											<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
+											<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(panel[p].prop[1].onsend)"><i class="fa fa-paper-plane"></i></a></div>
+											<div class="padder" v-if="!viewMode && panel[p].prop[1].onsave && !accessControl(panel[p].prop[1].onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(panel[p].prop[1].onsave)"><i class="fa fa-floppy-o"></i></a></div>
+											<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+											<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+											<div class="padder" v-if="!viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+											<div class="padder" v-if="viewMode && panel[p].prop[1].onsend && !accessControl(panel[p].prop[1].onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+											<div class="padder" v-if="panel[p].prop[1].onexport && !accessControl(panel[p].prop[1].onexport,'ac_remove')">
+												<template v-if="panel[p].prop[1].onexport.excel || panel[p].prop[1].onexport.word">
+													<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport':'Export'" @click="exportModal(panel[p].prop[1].onexport)"><i class="fa fa-share"></i></a>
+												</template>
+												<template v-else>
+													<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport PDF':'Export PDF'" @click="onclick(panel[p].prop[1].onexport.pdf)"><i class="fa fa-share"></i></a>
+												</template>
+											</div>
+										</div>
+									</div>
+									<!-- =========================================================================================================================================== panel for ui -->
+									<div class="x_panel" v-else-if="panel[p].type=='ui'">
+										<div data-simplebar class="x_content p-0">
+											<div data-parsley-validate class="form-horizontal form-label-left" style="margin-top:-5px; height:100%;">
+												<template v-for="item,index in panel[p].prop" v-if="item.element!='data' && !(item.element=='file' && accessControl(item,'ac_dualmode') && viewMode)">
+												
+														<!-- Title -->
+														<div v-if="!accessControl(item,'ac_remove') && item.element=='title'" class="x_title" :class="{ac_hide:accessControl(item,'ac_hide')}">
+															<h2 :id="item.id" :name="item.id">{{item['label'+rozaLanguage]}}</h2>
+															<div class="clearfix"></div>
+														</div>
 														
-																						<template v-else>
-																							<label class="control-label col-xs-3">
-																								<template v-if="sub.element!='groupbutton'">
-																									<span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}
-																								</template>
-																							</label>
-																							<div class="col-xs-9">
-																								<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub['placeholder'+rozaLanguage]" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
-																								<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode), searchable:sub.style=='searchable'}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
-																									<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+rozaLanguage]}}</option>
-																								</select>
-																								<div contentEditable v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub['placeholder'+rozaLanguage]" :maxlength="sub.maxlength" rows="4">{{sub.value}}</div>
-																								<div v-if="sub.element=='html'" class="inline-html" v-html="sub.value"></div>
-																								<div v-if="sub.element=='file'" class="dropzone"></div>
-																								<template v-if="sub.element=='checkbox'">
-																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
-																										<div class="checkbox" :class="sub.style">
-																											<label v-for="opt in sub.list"><input type="checkbox" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																										</div>
-																									</template>
-																									<template v-else>
-																										<template v-for="opt in sub.list" v-if="opt.value==sub.value">
-																											<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																										</template>
-																									</template>
-																								</template>
-																								<template v-if="sub.element=='radio'">
-																									<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
-																										<div class="radio" :class="sub.style">
-																											<label v-for="opt in sub.list"><input type="radio" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																										</div>
-																									</template>
-																									<template v-else>
-																										<template v-for="opt in sub.list" v-if="opt.value==sub.value">
-																											<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																										</template>
-																									</template>
-																								</template>
-																								<div v-if="sub.element=='datepicker'" class='input-group date'>
-																									<input type='text' class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" :id="sub.id" :name="sub.id" :data-style="sub.style" :value="sub.value" @change="onchange(sub)">
-																									<span v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
-																								</div>
-																								<div v-if="sub.element=='groupbutton'" class="form-group" :id="sub.id" :name="sub.id">
-																									<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																								</div>
-																							</div>													
-																						</template>
-																						
-																					</div>
-																					
-																					<!-- FAB -->
-																					<div v-else-if="sub.element=='fab'" class="fab">
-																						<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub.onsend)"><i class="fa fa-paper-plane"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(sub.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-																						<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-																						<div class="padder" v-if="viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
-																						<div class="padder" v-if="sub.onprint && !accessControl(sub.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(sub.onprint)"><i class="fa fa-print"></i></a></div>
-																					</div>
-																					
-																					<!-- Not Supported -->
-																					<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
-																						<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}</label>
-																						<div class="col-xs-9">
-																							<input class="form-control not-supported" :value="'Element \''+sub.element+'\' is not supported'" readonly>
+														<!-- Element -->
+														<div v-else-if="!accessControl(item,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','accordion','radio','checkbox','table','datepicker','timeline'].indexOf(item.element)>-1" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
+															
+															<!-- =========================================================================================================================================== fullwidth element html -->
+															<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
+															
+															<!-- =========================================================================================================================================== fullwidth element groupbutton -->
+															<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group groupbutton" :id="item.id" :name="item.id">
+																<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
+															</div>
+
+															<!-- =========================================================================================================================================== fullwidth element accordion -->		
+															<template v-else-if="item.element=='accordion'">
+																<div class="panel-group" :id="item.id">
+																	<div v-for="accordion, index in item.list" v-if="!accessControl(accordion,'ac_remove')" class="panel panel-default">
+																		<a class="panel-title collapsed accordion-title" :data-parent="'#'+item.id" @click="rozaSetAccordion(accordion)">
+																			{{accordion['label'+rozaLanguage]}}
+																		</a>
+																		<div :id="accordion.id" class="panel-collapse collapse">
+																			<div class="panel-body">
+																				<!--<img src="images/loading_eclipse.svg">-->
+																				<template v-if="accordions[accordion.id]">
+																					<template v-for="sub in accordions[accordion.id]" v-if="sub.element!='data' && !(sub.element=='file' && accessControl(sub,'ac_dualmode') && viewMode)">
+
+																						<!-- Title -->
+																						<div v-if="!accessControl(sub,'ac_remove') && sub.element=='title'" class="x_title" :class="{ac_hide:accessControl(sub,'ac_hide')}">
+																							<h2 :id="sub.id" :name="sub.id">{{sub['label'+rozaLanguage]}}</h2>
+																							<div class="clearfix"></div>
 																						</div>
-																					</div>
-																				
+																						
+																						<!-- Element -->
+																						<div v-else-if="!accessControl(sub,'ac_remove') && ['text','password','dropdown','textarea','html','file', 'groupbutton','radio','checkbox','table','datepicker','timeline'].indexOf(sub.element)>-1" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
+																							
+																							<!-- =========================================================================================================================================== fullwidth element html in accordion -->
+																							<div v-if="sub.element=='html' && sub.style=='fullwidth'" v-html="sub.value"></div>
+																							
+																							<!-- =========================================================================================================================================== fullwidth element groupbutton in accordion -->
+																							<div v-else-if="sub.element=='groupbutton' && sub.style=='fullwidth'" class="form-group groupbutton" :id="sub.id" :name="sub.id">
+																								<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
+																							</div>
+																							
+																							<!-- =========================================================================================================================================== fullwidth element table in accordion -->
+																							<div v-else-if="sub.element=='table'" class="dataTables_Container" :class="sub.style">
+																								<button v-if="sub.action_add && !(accessControl(sub.action_add,'ac_dualmode') && viewMode)" type="button" class="btn btn-success dataTables_add" onclick="alert('Your new form')"><i class="fa fa-plus"></i> {{rozaLanguage=='bm'?'Tambah':'Add'}}</button>
+																								<table :id="sub.id" class="table" :class="{'table-striped jambo_table':sub.style.split(' ').indexOf('basic')<0}">
+																									<thead>
+																										<tr v-if="sub.style.split(' ').indexOf('searchcolumn')>-1 && sub.style.split(' ').indexOf('basic')<0" class="filtering">
+																											<th v-show="sub.action_check && !(accessControl(sub.action_check,'ac_dualmode') && viewMode)" width="1"></th>
+																											<th v-for="col in sub.column"><input type="text" class="searchcolumn form-control"></th>
+																											<th v-if="sub.action_view || sub.action_edit || sub.action_delete || sub.action_drag" width="1"></th>
+																										</tr>
+																										<tr class="headings">
+																											<th v-show="sub.action_check && !(accessControl(sub.action_check,'ac_dualmode') && viewMode) && sub.style.split(' ').indexOf('basic')<0" class="checkall_column nosort" width="1">
+																												<input type="checkbox"class="flat checkall">
+																												<span class="dropdown bulk_toggle transparent">
+																													<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+																														{{rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions'}} (<span id="bulkCount"></span> {{rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected'}}) <span class=" fa fa-angle-down"></span>
+																													</a>
+																													<ul class="dropdown-menu">
+																														<li><a onclick="">xxx</a></li>
+																													</ul>
+																												</span>
+																											</th>
+																											<th v-for="col in sub.column" class="bulk_toggle" :class="{nosort:sub.style.split(' ').indexOf('nosort')>-1 || sub.style.split(' ').indexOf('basic')>-1}">{{col}}</th>
+																											<th v-if="sub.style.split(' ').indexOf('basic')<0 && (sub.action_view || sub.action_edit || sub.action_delete || sub.action_drag)" width="1" class="bulk_toggle action_column nosort">{{rozaLanguage=='bm'?'Tindakan':'Action'}}</th>
+																										</tr>
+																									</thead>
+																									<tbody>
+																										<tr v-for="row in sub.list">
+																											<td v-show="sub.action_check && !(accessControl(sub.action_check,'ac_dualmode') && viewMode) && sub.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																											<td v-for="col in sub.column">{{row[col]}}</td>
+																											<td v-if="sub.style.split(' ').indexOf('basic')<0 && (sub.action_view || sub.action_edit || sub.action_delete || sub.action_drag)" class="action_column">
+																												<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
+																												<a v-if="row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_edit,'ac_disable') || (accessControl(row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(row.action_edit)"><i class="fa fa-pencil"></i></a>
+																												<a v-if="row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_delete,'ac_disable') || (accessControl(row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(row.action_delete)"><i class="fa fa-trash"></i></a>
+																												<a v-if="row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_drag,'ac_disable') || (accessControl(row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																											</td>
+																										</tr>
+																									</tbody>
+																								</table>
+																							</div>
+																							
+																							<!-- =========================================================================================================================================== fullwidth element timeline in accordion -->
+																							<template v-else-if="sub.element=='timeline'">
+																								<div id="wizard" class="form_wizard wizard_horizontal">
+																									<ul class="wizard_steps">
+																										<li v-for="step, index in sub.list">
+																											<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
+																												<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
+																												<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
+																											</a>
+																										</li>
+																									</ul>
+																								</div>
+																							</template>
+																							<!-- =========================================================================================================================================== fullwidth element timeline in accordion  end -->
+															
+																							<template v-else>
+																								<label class="control-label col-xs-3">
+																									<template v-if="sub.element!='groupbutton'">
+																										<span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}
+																									</template>
+																								</label>
+																								<div class="col-xs-9">
+																									<input v-if="['text','password'].indexOf(sub.element)>-1" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :type="sub.element" :id="sub.id" :name="sub.id" :required="sub.required" :placeholder="sub['placeholder'+rozaLanguage]" :value="sub.value" :data-default="sub.value" :maxlength="sub.maxlength">
+																									<select v-if="sub.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode), searchable:sub.style=='searchable'}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :data-default="sub.value" :required="sub.required">
+																										<option v-for="opt in sub.list" :value="opt.value" :selected="opt.value==sub.value">{{opt['label'+rozaLanguage]}}</option>
+																									</select>
+																									<div contentEditable v-if="sub.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" @click="onclick(sub)" @change="onchange(sub)" :id="sub.id" :name="sub.id" :required="sub.required" :data-default="sub.value" :placeholder="sub['placeholder'+rozaLanguage]" :maxlength="sub.maxlength" @input="maxlength(sub)">{{sub.value}}</div>
+																									<div v-if="sub.element=='html'" class="inline-html" v-html="sub.value"></div>
+																									<div v-if="sub.element=='file'" class="dropzone"></div>
+																									<template v-if="sub.element=='checkbox'">
+																										<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
+																											<div class="checkbox" :class="sub.style">
+																												<label v-for="opt in sub.list"><input type="checkbox" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
+																											</div>
+																										</template>
+																										<template v-else>
+																											<template v-for="opt in sub.list" v-if="opt.value==sub.value">
+																												<div class="inline">{{opt['label'+rozaLanguage]}}</div>
+																											</template>
+																										</template>
+																									</template>
+																									<template v-if="sub.element=='radio'">
+																										<template v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)">
+																											<div class="radio" :class="sub.style">
+																												<label v-for="opt in sub.list"><input type="radio" @click="onclick(sub)" :id="sub.id" :name="sub.id" class="flat" :checked="opt.value==sub.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
+																											</div>
+																										</template>
+																										<template v-else>
+																											<template v-for="opt in sub.list" v-if="opt.value==sub.value">
+																												<div class="inline">{{opt['label'+rozaLanguage]}}</div>
+																											</template>
+																										</template>
+																									</template>
+																									<div v-if="sub.element=='datepicker'" class='input-group date'>
+																										<input type='text' class="form-control" :class="{ac_disable:accessControl(sub,'ac_disable') || (accessControl(sub,'ac_dualmode') && viewMode)}" :id="sub.id" :name="sub.id" :data-style="sub.style" :value="sub.value" @change="onchange(sub)">
+																										<span v-if="!accessControl(sub,'ac_disable') && !(accessControl(sub,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
+																									</div>
+																									<div v-if="sub.element=='groupbutton'" class="form-group groupbutton" :id="sub.id" :name="sub.id">
+																										<button v-for="btn in sub.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
+																									</div>
+																								</div>													
+																							</template>
+																							
+																						</div>
+																						
+																						<!-- FAB -->
+																						<div v-else-if="sub.element=='fab'" class="fab">
+																							<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
+																							<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(sub.onsend)"><i class="fa fa-paper-plane"></i></a></div>
+																							<div class="padder" v-if="!viewMode && sub.onsave && !accessControl(sub.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(sub.onsave)"><i class="fa fa-floppy-o"></i></a></div>
+																							<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+																							<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+																							<div class="padder" v-if="!viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+																							<div class="padder" v-if="viewMode && sub.onsend && !accessControl(sub.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+																							<div class="padder" v-if="sub.onexport && !accessControl(sub.onexport,'ac_remove')">
+																								<template v-if="sub.onexport.excel || sub.onexport.word">
+																									<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport':'Export'" @click="exportModal(sub.onexport)"><i class="fa fa-share"></i></a>
+																								</template>
+																								<template v-else>
+																									<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport PDF':'Export PDF'" @click="onclick(sub.onexport.pdf)"><i class="fa fa-share"></i></a>
+																								</template>
+																							</div>
+																						</div>
+																						
+																						<!-- Not Supported -->
+																						<div v-else-if="!accessControl(sub,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(sub,'ac_hide')}">
+																							<label class="control-label col-xs-3"><span class="required" v-if="sub.required">* </span>{{sub['label'+rozaLanguage]}}</label>
+																							<div class="col-xs-9">
+																								<input class="form-control not-supported" :value="'Element \''+sub.element+'\' is not supported'" readonly>
+																							</div>
+																						</div>
+																					
+																					</template>
 																				</template>
-																			</template>
+																			</div>
 																		</div>
 																	</div>
 																</div>
+															</template>
+															<!-- =========================================================================================================================================== fullwidth element accordion end -->
+															
+															<!-- =========================================================================================================================================== fullwidth element datatables -->
+															<div v-else-if="item.element=='table'" class="dataTables_Container" :class="item.style">
+																<button v-if="item.action_add && !(accessControl(item.action_add,'ac_dualmode') && viewMode)" type="button" class="btn btn-success dataTables_add" onclick="alert('Your new form')"><i class="fa fa-plus"></i> {{rozaLanguage=='bm'?'Tambah':'Add'}}</button>
+																<table :id="item.id" class="table" :class="{'table-striped jambo_table':item.style.split(' ').indexOf('basic')<0}">
+																	<thead>
+																		<tr v-if="item.style.split(' ').indexOf('searchcolumn')>-1 && item.style.split(' ').indexOf('basic')<0" class="filtering">
+																			<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" width="1"></th>
+																			<th v-for="col in item.column"><input type="text" class="searchcolumn form-control"></th>
+																			<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1"></th>
+																		</tr>
+																		<tr class="headings">
+																			<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="checkall_column nosort" width="1">
+																				<input type="checkbox"class="flat checkall">
+																				<span class="dropdown bulk_toggle transparent">
+																					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+																						{{rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions'}} (<span id="bulkCount"></span> {{rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected'}}) <span class=" fa fa-angle-down"></span>
+																					</a>
+																					<ul class="dropdown-menu">
+																						<li><a onclick="">xxx</a></li>
+																					</ul>
+																				</span>
+																			</th>
+																			<th v-for="col in item.column" class="bulk_toggle" :class="{nosort:item.style.split(' ').indexOf('nosort')>-1 || item.style.split(' ').indexOf('basic')>-1}">{{col}}</th>
+																			<th v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" width="1" class="bulk_toggle action_column nosort">{{rozaLanguage=='bm'?'Tindakan':'Action'}}</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr v-for="row in item.list">
+																			<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																			<td v-for="col in item.column">{{row[col]}}</td>
+																			<td v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" class="action_column">
+																				<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
+																				<a v-if="row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_edit,'ac_disable') || (accessControl(row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(row.action_edit)"><i class="fa fa-pencil"></i></a>
+																				<a v-if="row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_delete,'ac_disable') || (accessControl(row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(row.action_delete)"><i class="fa fa-trash"></i></a>
+																				<a v-if="row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_drag,'ac_disable') || (accessControl(row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
 															</div>
-														</template>
-														<!-- =========================================================================================================================================== fullwidth element accordion end -->
-														
-														<!-- =========================================================================================================================================== fullwidth element datatables -->
-														<div v-else-if="item.element=='table'" class="dataTables_Container" :class="item.style">
-															<button v-if="item.action_add && !(accessControl(item.action_add,'ac_dualmode') && viewMode)" type="button" class="btn btn-success dataTables_add" onclick="alert('Your new form')"><i class="fa fa-plus"></i> {{rozaLanguage=='bm'?'Tambah':'Add'}}</button>
-															<table :id="item.id" class="table table-striped jambo_table">
-																<thead>
-																	<tr v-if="item.style.split(' ').indexOf('searchcolumn')>-1" class="filtering">
-																		<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" width="1"></th>
-																		<th v-for="col in item.column"><input type="text" class="searchcolumn form-control"></th>
-																		<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1"></th>
-																	</tr>
-																	<tr class="headings">
-																		<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" class="checkall_column nosort" width="1">
-																			<input type="checkbox"class="flat checkall">
-																			<span class="dropdown bulk_toggle transparent">
-																				<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-																					{{rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions'}} (<span id="bulkCount"></span> {{rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected'}}) <span class=" fa fa-angle-down"></span>
-																				</a>
-																				<ul class="dropdown-menu">
-																					<li><a onclick="">xxx</a></li>
-																				</ul>
-																			</span>
-																		</th>
-																		<th v-for="col in item.column" class="bulk_toggle">{{col}}</th>
-																		<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1" class="bulk_toggle action_column nosort">{{rozaLanguage=='bm'?'Tindakan':'Action'}}</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<tr v-for="row in item.list">
-																		<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
-																		<td v-for="col in item.column">{{row[col]}}</td>
-																		<td v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" class="action_column">
-																			<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
-																			<a v-if="row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_edit,'ac_disable') || (accessControl(row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(row.action_edit)"><i class="fa fa-pencil"></i></a>
-																			<a v-if="row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_delete,'ac_disable') || (accessControl(row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(row.action_delete)"><i class="fa fa-trash"></i></a>
-																			<a v-if="row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_drag,'ac_disable') || (accessControl(row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
+															<!-- =========================================================================================================================================== fullwidth element datatables end -->
+															
+															<!-- =========================================================================================================================================== fullwidth element timeline -->
+															<template v-else-if="item.element=='timeline'">
+																<div id="wizard" class="form_wizard wizard_horizontal">
+																	<ul class="wizard_steps">
+																		<li v-for="step, index in item.list">
+																			<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
+																				<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
+																				<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
+																			</a>
+																		</li>
+																	</ul>
+																</div>
+															</template>
+															<!-- =========================================================================================================================================== fullwidth element timeline end -->
+															
+															<!-- =========================================================================================================================================== non fullwidth elements -->
+															<template v-else>
+																<label class="control-label col-xs-3">
+																	<template v-if="item.element!='groupbutton'">
+																		<span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}
+																	</template>
+																</label>					
+																<div class="col-xs-9">
+																	<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item['placeholder'+rozaLanguage]" :value="item.value" :data-default="item.value" :maxlength="item.maxlength">
+																	<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode), searchable:item.style=='searchable'}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
+																		<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+rozaLanguage]}}</option>
+																	</select>
+																	<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength"  @input="maxlength(item)" rows="4">{{item.value}}</div>
+																	<div v-if="item.element=='html'" class="inline-html" v-html="item.value"></div>
+																	<div v-if="item.element=='file'" class="dropzone"></div>
+																	<template v-if="item.element=='checkbox'">
+																		<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
+																			<div class="checkbox" :class="item.style">
+																				<label v-for="opt in item.list"><input type="checkbox" @click="onclick(item)" :id="item.id" :name="item.id" class="flat" :checked="opt.value==item.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
+																			</div>
+																		</template>
+																		<template v-else>
+																			<template v-for="opt in item.list" v-if="opt.value==item.value">
+																				<div class="inline">{{opt['label'+rozaLanguage]}}</div>
+																			</template>
+																		</template>
+																	</template>
+																	<template v-if="item.element=='radio'">
+																		<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
+																			<div class="radio" :class="item.style">
+																				<label v-for="opt in item.list"><input type="radio" @click="onclick(item)" :id="item.id" :name="item.id" class="flat" :checked="opt.value==item.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
+																			</div>
+																		</template>
+																		<template v-else>
+																			<template v-for="opt in item.list" v-if="opt.value==item.value">
+																				<div class="inline">{{opt['label'+rozaLanguage]}}</div>
+																			</template>
+																		</template>
+																	</template>
+																	<div v-if="item.element=='datepicker'" class='input-group date'>
+																		<input type='text' class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" :id="item.id" :name="item.id" :data-style="item.style" :value="item.value" @change="onchange(item)">
+																		<span v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
+																	</div>
+																	<div v-if="item.element=='groupbutton'" class="form-group groupbutton" :id="item.id" :name="item.id">
+																		<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
+																	</div>
+																</div>													
+															</template>
+															<!-- =========================================================================================================================================== non fullwidth elements end -->
+															
 														</div>
-														<!-- =========================================================================================================================================== fullwidth element datatables end -->
 														
-														<!-- =========================================================================================================================================== fullwidth element timeline -->
-														<template v-else-if="item.element=='timeline'">
-															<div id="wizard" class="form_wizard wizard_horizontal">
-																<ul class="wizard_steps">
-																	<li v-for="step, index in item.list">
-																		<a :class="{selected:step.ROZA_TIME, disabled:!step.ROZA_TIME}">
-																			<span class="step_no" @click="timelineDetail(step)">{{index+1}}</span>
-																			<span class="step_descr">{{step.ROZA_TITLE}}<br> <small>{{step.ROZA_TIME}}</small></span>
-																		</a>
-																	</li>
-																</ul>
-															</div>
-														</template>
-														<!-- =========================================================================================================================================== fullwidth element timeline end -->
-														
-														<!-- =========================================================================================================================================== non fullwidth elements -->
-														<template v-else>
-															<label class="control-label col-xs-3">
-																<template v-if="item.element!='groupbutton'">
-																	<span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}
+														<!-- =========================================================================================================================================== FAB -->
+														<div v-else-if="item.element=='fab'" class="fab">
+															<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
+															<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(item.onsend)"><i class="fa fa-paper-plane"></i></a></div>
+															<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(item.onsave)"><i class="fa fa-floppy-o"></i></a></div>
+															<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
+															<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
+															<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
+															<div class="padder" v-if="viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
+															<div class="padder" v-if="item.onexport && !accessControl(item.onexport,'ac_remove')">
+																<template v-if="item.onexport.excel || item.onexport.word">
+																	<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport':'Export'" @click="exportModal(item.onexport)"><i class="fa fa-share"></i></a>
 																</template>
-															</label>					
+																<template v-else>
+																	<a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Eksport PDF':'Export PDF'" @click="onclick(item.onexport.pdf)"><i class="fa fa-share"></i></a>
+																</template>
+															</div>
+														</div>
+
+														<!-- =========================================================================================================================================== not supported -->
+														<div v-else-if="!accessControl(item,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
+															<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}</label>
 															<div class="col-xs-9">
-																<input v-if="['text','password'].indexOf(item.element)>-1" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :type="item.element" :id="item.id" :name="item.id" :required="item.required" :placeholder="item['placeholder'+rozaLanguage]" :value="item.value" :data-default="item.value" :maxlength="item.maxlength">
-																<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode), searchable:item.style=='searchable'}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
-																	<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+rozaLanguage]}}</option>
-																</select>
-																<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength" rows="4">{{item.value}}</div>
-																<div v-if="item.element=='html'" class="inline-html" v-html="item.value"></div>
-																<div v-if="item.element=='file'" class="dropzone"></div>
-																<template v-if="item.element=='checkbox'">
-																	<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
-																		<div class="checkbox" :class="item.style">
-																			<label v-for="opt in item.list"><input type="checkbox" @click="onclick(item)" :id="item.id" :name="item.id" class="flat" :checked="opt.value==item.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																		</div>
-																	</template>
-																	<template v-else>
-																		<template v-for="opt in item.list" v-if="opt.value==item.value">
-																			<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																		</template>
-																	</template>
-																</template>
-																<template v-if="item.element=='radio'">
-																	<template v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)">
-																		<div class="radio" :class="item.style">
-																			<label v-for="opt in item.list"><input type="radio" @click="onclick(item)" :id="item.id" :name="item.id" class="flat" :checked="opt.value==item.value" :value="opt.value"> {{opt['label'+rozaLanguage]}}</label>
-																		</div>
-																	</template>
-																	<template v-else>
-																		<template v-for="opt in item.list" v-if="opt.value==item.value">
-																			<div class="inline">{{opt['label'+rozaLanguage]}}</div>
-																		</template>
-																	</template>
-																</template>
-																<div v-if="item.element=='datepicker'" class='input-group date'>
-																	<input type='text' class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" :id="item.id" :name="item.id" :data-style="item.style" :value="item.value" @change="onchange(item)">
-																	<span v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
-																</div>
-																<div v-if="item.element=='groupbutton'" class="form-group" :id="item.id" :name="item.id">
-																	<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
-																</div>
-															</div>													
-														</template>
-														<!-- =========================================================================================================================================== non fullwidth elements end -->
-														
-													</div>
+																<input class="form-control not-supported" :value="'Element \''+item.element+'\' is not supported'" readonly>
+															</div>
+														</div>
 													
-													<!-- =========================================================================================================================================== FAB -->
-													<div v-else-if="item.element=='fab'" class="fab">
-														<div class="padder"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Tindakan':'Action'"><i class="fa fa-th-large"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Hantar':'Send'" @click="onclick(item.onsend)"><i class="fa fa-paper-plane"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsave && !accessControl(item.onsave,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Simpan':'Save'" @click="onclick(item.onsave)"><i class="fa fa-floppy-o"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Nilai Asal':'Default'" @click="rozaResetData()"><i class="fa fa-repeat"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Kosongkan':'Clear'" @click="rozaClearData()"><i class="fa fa-ban"></i></a></div>
-														<div class="padder" v-if="!viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mod Papar':'View Mode'" @click="viewMode=true"><i class="fa fa-eye"></i></a></div>
-														<div class="padder" v-if="viewMode && item.onsend && !accessControl(item.onsend,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Mode Kemaskini':'Edit Mode'" @click="viewMode=false"><i class="fa fa-pencil"></i></a></div>
-														<div class="padder" v-if="item.onprint && !accessControl(item.onprint,'ac_remove')"><a class="roza-tooltip-left" :data-title="rozaLanguage=='bm'?'Cetak':'Print'" @click="onclick(item.onprint)"><i class="fa fa-print"></i></a></div>
+												</template>
+											</div>
+										</div>
+									</div>
+									<!-- =========================================================================================================================================== custompage searchresult -->
+									<div class="x_panel" v-else-if="panel[p].type=='custompage_searchresult'">
+										<div class="x_content p-0">
+											<div class="" role="tabpanel" data-example-id="togglable-tabs">
+												<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+													<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab">All</a></li>
+													<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab">Module</a></li>
+													<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab">Document</a></li>
+													<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab">Images</a></li>
+													<li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab">Video</a></li>
+												</ul>
+												<div id="myTabContent" class="tab-content">
+													<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+														<ul class="list-group">
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
+																		Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
+																		Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
+																		Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-play"></i>
+																	</div>
+																	<div class="left searchresult_thumbnail">
+																		<img src='data:image/jpg;base64,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'/>
+																	</div>
+																	<div class="right">
+																		<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
+																		Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-file"></i>
+																	</div>
+																	<div class="right">
+																		<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
+																		Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																	</div>
+																</div>
+															</li>
+														</ul>
 													</div>
-
-													<!-- =========================================================================================================================================== not supported -->
-													<div v-else-if="!accessControl(item,'ac_remove')" class="form-group" :class="{ac_hide:accessControl(item,'ac_hide')}">
-														<label class="control-label col-xs-3"><span class="required" v-if="item.required">* </span>{{item['label'+rozaLanguage]}}</label>
-														<div class="col-xs-9">
-															<input class="form-control not-supported" :value="'Element \''+item.element+'\' is not supported'" readonly>
+													<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+														<ul class="list-group">
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
+																		Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
+																		Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
+																	</div>
+																</div>
+															</li>
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-microchip"></i>
+																	</div>
+																	<div class="right">
+																		<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
+																		Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</div>
+													<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+														<ul class="list-group">
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-file"></i>
+																	</div>
+																	<div class="right">
+																		<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
+																		Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</div>
+													<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+														<p>No result</p>
+													</div>
+													<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+														<ul class="list-group">
+															<li class="list-group-item">
+																<div class="mail_list">
+																	<div class="left">
+																		<i class="fa fa-play"></i>
+																	</div>
+																	<div class="left searchresult_thumbnail">
+																		<img src='data:image/jpg;base64,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'/>
+																	</div>
+																	<div class="right">
+																		<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
+																		Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="btn-toolbar" style="margin-left: 5px;">
+													<div class="btn-group">
+														<button class="btn btn-success" type="button">Prev</button>
+													</div>
+													<div class="btn-group">
+														<button class="btn btn-default" type="button">1</button>
+														<button class="btn btn-default active" type="button">2</button>
+														<button class="btn btn-default" type="button">3</button>
+														<button class="btn btn-default" type="button">4</button>
+													</div>
+													<div class="btn-group">
+														<button class="btn btn-success" type="button">Next</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- =========================================================================================================================================== panel for search result end -->
+									
+									<!-- =========================================================================================================================================== Modal Filter for each panel -->
+									<div v-if="panel[p].type=='standardlist'" id="modalFilter" class="modal fade" tabindex="-1" role="dialog">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="x_panel">
+														<div class="x_title">
+															<h2>{{rozaLanguage=='bm'?'Tapisan Am':'General Filter'}}</h2>
+															<div class="clearfix"></div>
+														</div>
+														<div class="x_content p-0 noscroll">
+															<input type="text" class="form-control" v-model="panel[p].filterString" :placeholder="rozaLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'">
 														</div>
 													</div>
-												
-											</template>
-										</div>
-									</div>
-								</div>
-								<!-- =========================================================================================================================================== custompage searchresult -->
-								<div class="x_panel" v-else-if="panel[p].type=='custompage_searchresult'">
-									<div class="x_content p-0">
-										<div class="" role="tabpanel" data-example-id="togglable-tabs">
-											<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-												<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab">All</a></li>
-												<li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab">Module</a></li>
-												<li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab">Document</a></li>
-												<li role="presentation" class=""><a href="#tab_content4" role="tab" id="profile-tab2" data-toggle="tab">Images</a></li>
-												<li role="presentation" class=""><a href="#tab_content5" role="tab" id="profile-tab2" data-toggle="tab">Video</a></li>
-											</ul>
-											<div id="myTabContent" class="tab-content">
-												<div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-													<ul class="list-group">
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
-																	Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
-																	Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
-																	Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-play"></i>
-																</div>
-																<div class="left searchresult_thumbnail">
-																	<img src='data:image/jpg;base64,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'/>
-																</div>
-																<div class="right">
-																	<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
-																	Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-file"></i>
-																</div>
-																<div class="right">
-																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
-																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-													<ul class="list-group">
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>A-PEL - Jabatan Peguam Negara <small>23/10/17 02:51AM</small></h3>
-																	Maklumat kandungan meliputi topik undang-undang dan bukan ... Kaedah pembelajaran secara maya ini disarankan untuk Penjawat Awam dan diambil kira
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>About AGC - Jabatan Peguam Negara<small>23/10/17 02:51AM</small></h3>
-																	Dasar privasi ini menerangkan penggunaan dan perlindungan maklumat yang dikemukakan oleh pengunjung melalui web portal dan blog Jabatan Peguam
-																</div>
-															</div>
-														</li>
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-microchip"></i>
-																</div>
-																<div class="right">
-																	<h3>Attorney General Chambers (Jabatan Peguam Negara), Putrajaya<small>23/10/17 02:51AM</small></h3>
-																	Jabatan Peguam Negara. Attorney General Chambers. Attorney General Chambers is located at:- Aras 1-8, Blok C3 & Aras 2, Blok C7, Pusat Pentadbiran
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-													<ul class="list-group">
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-file"></i>
-																</div>
-																<div class="right">
-																	<h3>RANG UNDANG-UNDANG.docx<small>23/10/17 02:51AM</small></h3>
-																	Dewan Negara. rang undang-undang akan dibaca dan dibahas secara lebih terperinci. ... Draf Rang Undang-undang disediakan oleh Jabatan Peguam Negara
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-												<div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
-													<p>No result</p>
-												</div>
-												<div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
-													<ul class="list-group">
-														<li class="list-group-item">
-															<div class="mail_list">
-																<div class="left">
-																	<i class="fa fa-play"></i>
-																</div>
-																<div class="left searchresult_thumbnail">
-																	<img src='data:image/jpg;base64,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'/>
-																</div>
-																<div class="right">
-																	<h3>KES KEVIN MORAIS – JABATAN PEGUAM NEGARA GESA POLIS<small>23/10/17 02:51AM</small></h3>
-																	Susulan pembunuhan kejam Timbalan Ketua Bahagian Bicara dan Rayuan, Jabatan Peguam Negara
-																</div>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="btn-toolbar" style="margin-left: 5px;">
-												<div class="btn-group">
-													<button class="btn btn-success" type="button">Prev</button>
-												</div>
-												<div class="btn-group">
-													<button class="btn btn-default" type="button">1</button>
-													<button class="btn btn-default active" type="button">2</button>
-													<button class="btn btn-default" type="button">3</button>
-													<button class="btn btn-default" type="button">4</button>
-												</div>
-												<div class="btn-group">
-													<button class="btn btn-success" type="button">Next</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- =========================================================================================================================================== panel for search result end -->
-								
-								<!-- =========================================================================================================================================== Modal Filter for each panel -->
-								<div v-if="panel[p].type=='standardlist'" id="modalFilter" class="modal fade" tabindex="-1" role="dialog">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-body">
-												<div class="x_panel">
-													<div class="x_title">
-														<h2>{{rozaLanguage=='bm'?'Tapisan Am':'General Filter'}}</h2>
-														<div class="clearfix"></div>
-													</div>
-													<div class="x_content p-0 noscroll">
-														<input type="text" class="form-control" v-model="panel[p].filterString" :placeholder="rozaLanguage=='bm'?'Masukkan terma tapisan':'Enter filter term'">
-													</div>
-												</div>
-												<div class="x_panel">
-													<div class="x_title">
-														<h2>{{rozaLanguage=='bm'?'Tapisan Lanjut':'Advance Filter'}}</h2>
-														<div class="clearfix"></div>
-													</div>
-													<div class="x_content p-0 noscroll" :id="p+'QueryBuilder'">
-														
-														<div class="filterRow">
-															<select class="form-control adv1" onchange="advanceIsDatepicker(this)" name="parameter">
-																<option value=""></option>
-																<option v-for="opt in panel[p].prop[0]['filter']" :value="opt.parameter" :element="opt.element">{{opt['label'+rozaLanguage]}}</option>
-															</select>
-															<select class="form-control adv2" name="operator">
-																<option value=""></option>
-																<option value="contains">{{rozaLanguage=='bm'?'mengandungi':'contains'}}</option>
-																<option value="not_contains">{{rozaLanguage=='bm'?'tidak mengandungi':'not contains'}}</option>
-																<option value="equal">{{rozaLanguage=='bm'?'sama':'equal'}}</option>
-																<option value="not_equal">{{rozaLanguage=='bm'?'tidak sama':'not equal'}}</option>
-																<option value="begins_with">{{rozaLanguage=='bm'?'bermula':'begin'}}</option>
-																<option value="ends_with">{{rozaLanguage=='bm'?'berakhir':'end'}}</option>
-															</select>
-															<input type='text' class="form-control adv3" name="value">
-															<template v-if="p=='leftPanel'">
-																<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('leftPanel')"><i class="fa fa-plus"></i></button>
-																<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('leftPanel',this)"><i class="fa fa-minus"></i></button>
-															</template>
-															<template v-if="p=='rightPanel'">
-																<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('rightPanel')"><i class="fa fa-plus"></i></button>
-																<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('rightPanel',this)"><i class="fa fa-minus"></i></button>
-															</template>
-															<template v-if="p=='fullPanel'">
-																<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('fullPanel')"><i class="fa fa-plus"></i></button>
-																<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('fullPanel',this)"><i class="fa fa-minus"></i></button>
-															</template>
+													<div class="x_panel">
+														<div class="x_title">
+															<h2>{{rozaLanguage=='bm'?'Tapisan Lanjut':'Advance Filter'}}</h2>
+															<div class="clearfix"></div>
 														</div>
-														
+														<div class="x_content p-0 noscroll" :id="p+'QueryBuilder'">
+															
+															<div class="filterRow">
+																<select class="form-control adv1" onchange="advanceIsDatepicker(this)" name="parameter">
+																	<option value=""></option>
+																	<option v-for="opt in panel[p].prop[0]['filter']" :value="opt.parameter" :element="opt.element">{{opt['label'+rozaLanguage]}}</option>
+																</select>
+																<select class="form-control adv2" name="operator">
+																	<option value=""></option>
+																	<option value="contains">{{rozaLanguage=='bm'?'mengandungi':'contains'}}</option>
+																	<option value="not_contains">{{rozaLanguage=='bm'?'tidak mengandungi':'not contains'}}</option>
+																	<option value="equal">{{rozaLanguage=='bm'?'sama':'equal'}}</option>
+																	<option value="not_equal">{{rozaLanguage=='bm'?'tidak sama':'not equal'}}</option>
+																	<option value="begins_with">{{rozaLanguage=='bm'?'bermula':'begin'}}</option>
+																	<option value="ends_with">{{rozaLanguage=='bm'?'berakhir':'end'}}</option>
+																</select>
+																<input type='text' class="form-control adv3" name="value">
+																<template v-if="p=='leftPanel'">
+																	<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('leftPanel')"><i class="fa fa-plus"></i></button>
+																	<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('leftPanel',this)"><i class="fa fa-minus"></i></button>
+																</template>
+																<template v-if="p=='rightPanel'">
+																	<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('rightPanel')"><i class="fa fa-plus"></i></button>
+																	<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('rightPanel',this)"><i class="fa fa-minus"></i></button>
+																</template>
+																<template v-if="p=='fullPanel'">
+																	<button type="button" class="btn btn-success adv4" onclick="roza.addFilterRow('fullPanel')"><i class="fa fa-plus"></i></button>
+																	<button type="button" class="btn btn-danger adv5" onclick="roza.addFilterRow('fullPanel',this)"><i class="fa fa-minus"></i></button>
+																</template>
+															</div>
+															
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="modal-footer">
-												<!--
-												<button type="button" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
-												<button type="button" class="btn btn-primary" @click="resetQueryBuilder(p)">{{rozaLanguage=='bm'?'Nilai Asal':'Default'}}</button>
-												<button type="button" class="btn btn-success" data-dismiss="modal" @click="submitQueryBuilder(p)">Ok</button>
-												-->
-												<button type="button" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
-												<button type="button" class="btn btn-primary" @click="clearFilterRow(p)">{{rozaLanguage=='bm'?'Kosongkan':'Clear'}}</button>
-												<button type="button" class="btn btn-success" @click="submitFilterRow(p)">Ok</button>
+												<div class="modal-footer">
+													<!--
+													<button type="button" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
+													<button type="button" class="btn btn-primary" @click="resetQueryBuilder(p)">{{rozaLanguage=='bm'?'Nilai Asal':'Default'}}</button>
+													<button type="button" class="btn btn-success" data-dismiss="modal" @click="submitQueryBuilder(p)">Ok</button>
+													-->
+													<button type="button" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
+													<button type="button" class="btn btn-primary" @click="clearFilterRow(p)">{{rozaLanguage=='bm'?'Kosongkan':'Clear'}}</button>
+													<button type="button" class="btn btn-success" @click="submitFilterRow(p)">Ok</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- =========================================================================================================================================== Modal Filter for each panel end -->
+									<!-- =========================================================================================================================================== Modal Filter for each panel end -->
 
+								</div>
 							</div>
-						</div>
+						</template>
+						
 					</div>
 				</div>
 				<!-- /page content -->
@@ -876,6 +988,23 @@
 				</div>
 			</div>
 			
+			<!-- =========================================================================================================================================== Modal Export -->
+			<div id="modalGeneral" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"></h4>
+						</div>
+						<div class="modal-body"></div>
+						<div class="modal-footer">
+							<button type="button" id="btnCancel" class="btn btn-primary" data-dismiss="modal">{{rozaLanguage=='bm'?'Batal':'Close'}}</button>
+							<button type="button" id="btnOk" class="btn btn-success">Ok</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<!-- =========================================================================================================================================== Modal UI -->
 			<div id="modalProp" class="modal fade" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
@@ -901,24 +1030,49 @@
 													
 													<div v-if="item.element=='html' && item.style=='fullwidth'" v-html="item.value"></div>
 													
-													<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group" :id="item.id" :name="item.id">
+													<div v-else-if="item.element=='groupbutton' && item.style=='fullwidth'" class="form-group groupbutton" :id="item.id" :name="item.id">
 														<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 													</div>
 
-													<template v-else-if="item.element=='table'">
-														<!-- https://www.npmjs.com/package/vue-tables-2 -->
-														<v-client-table :id="item.id" :name="item.id" :columns="vueTable[item.id].column" :data="vueTable[item.id].list" :options="vueTable[item.id].option" :class="{smallrecord:item.smallrecord, nosort:item.nosort}">
-															<template slot="CheckAll" scope="props">
-																<div class="checkbox">
-																	<input type="checkbox" class="flat" :value="props.row.action_check.value">
-																</div>
-															</template>
-															<template :slot="rozaLanguage=='bm'?'Tindakan':'Action'" scope="props">
-																<a v-if="props.row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_delete,'ac_disable') || (accessControl(props.row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(props.row.action_delete)"><i class="fa fa-trash"></i></a>
-																<a v-if="props.row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(props.row.action_drag,'ac_disable') || (accessControl(props.row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
-															</template>
-														</v-client-table>
-													</template>
+													<div v-else-if="item.element=='table'" class="dataTables_Container" :class="item.style">
+														<button v-if="item.action_add && !(accessControl(item.action_add,'ac_dualmode') && viewMode)" type="button" class="btn btn-success dataTables_add" onclick="alert('Your new form')"><i class="fa fa-plus"></i> {{rozaLanguage=='bm'?'Tambah':'Add'}}</button>
+														<table :id="item.id" class="table" :class="{'table-striped jambo_table':item.style.split(' ').indexOf('basic')<0}">
+															<thead>
+																<tr v-if="item.style.split(' ').indexOf('searchcolumn')>-1 && item.style.split(' ').indexOf('basic')<0" class="filtering">
+																	<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode)" width="1"></th>
+																	<th v-for="col in item.column"><input type="text" class="searchcolumn form-control"></th>
+																	<th v-if="item.action_view || item.action_edit || item.action_delete || item.action_drag" width="1"></th>
+																</tr>
+																<tr class="headings">
+																	<th v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="checkall_column nosort" width="1">
+																		<input type="checkbox"class="flat checkall">
+																		<span class="dropdown bulk_toggle transparent">
+																			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+																				{{rozaLanguage=='bm'?'Tindakan Pukal':'Bulk Actions'}} (<span id="bulkCount"></span> {{rozaLanguage=='bm'?'Rekod Dipilih':'Records Selected'}}) <span class=" fa fa-angle-down"></span>
+																			</a>
+																			<ul class="dropdown-menu">
+																				<li><a onclick="">xxx</a></li>
+																			</ul>
+																		</span>
+																	</th>
+																	<th v-for="col in item.column" class="bulk_toggle" :class="{nosort:item.style.split(' ').indexOf('nosort')>-1 || item.style.split(' ').indexOf('basic')>-1}">{{col}}</th>
+																	<th v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" width="1" class="bulk_toggle action_column nosort">{{rozaLanguage=='bm'?'Tindakan':'Action'}}</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr v-for="row in item.list">
+																	<td v-show="item.action_check && !(accessControl(item.action_check,'ac_dualmode') && viewMode) && item.style.split(' ').indexOf('basic')<0" class="FFF"><input type="checkbox" class="flat" :value="row.action_check.value"></td>
+																	<td v-for="col in item.column">{{row[col]}}</td>
+																	<td v-if="item.style.split(' ').indexOf('basic')<0 && (item.action_view || item.action_edit || item.action_delete || item.action_drag)" class="action_column">
+																		<a v-if="row.action_view" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_view,'ac_disable')}" :data-title="rozaLanguage=='bm'?'Lihat':'View'" @click="onclick(row.action_view)"><i class="fa fa-eye"></i></a>
+																		<a v-if="row.action_edit" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_edit,'ac_disable') || (accessControl(row.action_edit,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Kemaskini':'Edit'" @click="onclick(row.action_edit)"><i class="fa fa-pencil"></i></a>
+																		<a v-if="row.action_delete" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_delete,'ac_disable') || (accessControl(row.action_delete,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Hapus':'Delete'" @click="onclick(row.action_delete)"><i class="fa fa-trash"></i></a>
+																		<a v-if="row.action_drag" class="roza-tooltip-bottom action_icon" :class="{ac_disable:accessControl(row.action_drag,'ac_disable') || (accessControl(row.action_drag,'ac_dualmode') && viewMode)}" :data-title="rozaLanguage=='bm'?'Alih':'Drag'"><i class="fa fa-arrows-v"></i></a>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
 													
 													<template v-else>
 														<label class="control-label col-xs-3">
@@ -931,7 +1085,7 @@
 															<select v-if="item.element=='dropdown'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode), searchable:item.style=='searchable'}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :data-default="item.value" :required="item.required">
 																<option v-for="opt in item.list" :value="opt.value" :selected="opt.value==item.value">{{opt['label'+rozaLanguage]}}</option>
 															</select>
-															<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength" rows="4">{{item.value}}</div>
+															<div contentEditable v-if="item.element=='textarea'" class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" @click="onclick(item)" @change="onchange(item)" :id="item.id" :name="item.id" :required="item.required" :data-default="item.value" :placeholder="item['placeholder'+rozaLanguage]" :maxlength="item.maxlength" @input="maxlength(item)" rows="4">{{item.value}}</div>
 															<div v-if="item.element=='html'" class="inline-html" v-html="item.value"></div>
 															<div v-if="item.element=='file'" class="dropzone"></div>
 															<template v-if="item.element=='checkbox'">
@@ -962,7 +1116,7 @@
 																<input type='text' class="form-control" :class="{ac_disable:accessControl(item,'ac_disable') || (accessControl(item,'ac_dualmode') && viewMode)}" :id="item.id" :name="item.id" :data-style="item.style" :value="item.value" @change="onchange(item)">
 																<span v-if="!accessControl(item,'ac_disable') && !(accessControl(item,'ac_dualmode') && viewMode)" class="input-group-addon"><span class="fa fa-calendar"></span></span>
 															</div>
-															<div v-if="item.element=='groupbutton'" class="form-group" :id="item.id" :name="item.id">
+															<div v-if="item.element=='groupbutton'" class="form-group groupbutton" :id="item.id" :name="item.id">
 																<button v-for="btn in item.list" v-if="!accessControl(btn,'ac_remove') && !(accessControl(btn,'ac_dualmode') && viewMode)" class="btn btn-success" type="button" @click="onclick(btn)">{{btn['label'+rozaLanguage]}}</button>
 															</div>
 														</div>													
@@ -1014,8 +1168,10 @@
 		<script src="lib/simplebar/simplebar.js"></script>
 		<script src="lib/sortable.js"></script>
 		<script src="lib/datatables-1.10.16/datatables.min.js"></script>
+		<script src="lib/morrisjs/raphael.min.js"></script>
+		<script src="lib/morrisjs/morris.min.js"></script>
 		
-		<script src="roza/ROZA_Vue.js?v180206"></script>
+		<script src="roza/ROZA_Vue.js?v180219"></script>
 		<!--
 		<script src="lib/jquery.debounce-1.0.5.js"></script>
 		<script src="lib/querybuilder/js/query-builder.standalone.min.js"></script>

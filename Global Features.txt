@@ -11,5 +11,3 @@ Recent Documents:
 		Jawapan: Ada table recent_documents. Column:
 							- alfresco url
 							- is editable <-- nie masa sesuatu proses submit, kena update column nie
-
-	

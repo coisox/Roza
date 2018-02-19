@@ -6,6 +6,15 @@ html, body {
 body {
 	overflow: hidden;
 }
+#menu_toggle i {
+    font-size: 26px;
+    float: left;
+    margin: 3px 0 0 -15px;
+}
+.navbar-nav .open .dropdown-menu.dropdown-menu-left {
+	right: auto;
+    left: 0;
+}
 .metro-menu {
     position: fixed;
     top: 0;
@@ -145,6 +154,10 @@ textarea {
 [contenteditable].form-control {
 	height: initial;
 }
+[contenteditable]:empty:before {
+	content: attr(placeholder);
+	display: block; /* For Firefox */
+}
 .form-control:focus, .single-line:focus {
 	border-color: #1ABB9C;
 }
@@ -278,10 +291,6 @@ tab {
 }
 .p-0 {
 	padding: 0 !important;
-}
-.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
-	background-color: #337AB7;
-    border-color: #337AB7;
 }
 [type=checkbox] {
 	position: absolute;
@@ -449,6 +458,9 @@ iframe {
 .form-group {
 	position: relative;
 }
+.form-group:not(.groupbutton) {
+	padding: 0 10px;
+}
 .form-group .btn {
     margin-bottom: initial;
 }
@@ -574,21 +586,72 @@ select.form-control.ac_disable {
 [class^=col-]:last-child {
 	padding-right: 0;
 }
+.x_panel {
+	padding: 10px 0;
+	border: 0;
+	box-shadow: inset 0px 0px 0px 1px #E6E9ED;
+}
 .x_content.p-0 {
 	height: calc(100vh - 176px);
 	overflow-x: hidden;
 }
 .x_title {
+	position: relative;
 	font-weight: bold;
+	padding: 1px 10px 8px;
+	border-bottom: 0;
+}
+.x_title:before {
+	content: '';
+    position: absolute;
+    width: calc(100% - 20px);
+    height: 2px;
+    bottom: 0;
+    background: #E6E9ED;
 }
 .x_title:not(:first-child) {
-	margin-top: 50px;
+	margin-top: 31px;
+	position: relative;
 }
-
+.x_title:not(:first-child):after {
+	content: '';
+    position: absolute;
+    top: -31px;
+    left: 0px;
+    width: 100%;
+    height: 22px;
+    background: #f7f7f7;
+    border-top: 1px solid #E6E9ED;
+    border-bottom: 1px solid #E6E9ED;
+}
+.x_title h2 {
+	font-weight: bold;
+}
+.export-container,
+.export-box
+{
+	text-align: center;
+}
+.export-box {
+	display: inline-block;
+	margin: 0 20px;
+}
+.export-circle {
+	width: 60px;
+    height: 60px;
+    background: red;
+    font-size: 30px;
+    padding-top: 10px;
+    border-radius: 50%;
+    color: white;
+    margin-bottom: 10px;
+	cursor: pointer;
+}
 /*====================================================================standardlist start */
 .x_content.p-0.standardlist {
 	height: calc(100vh - 220px);
-	margin-top: 0;
+    width: calc(100% - 20px);
+    margin: 0 10px;
 }
 .standardlist li {
 	display: flex;
@@ -619,6 +682,31 @@ select.form-control.ac_disable {
 }
 .panel_toolbox>li>a.standardlist_hasFilter {
 	color: #E74C3C;
+}
+.standardlist-status {
+	width: 10px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -1px;
+}
+.standardlist li:first-child .standardlist-status {
+	border-top-left-radius: 4px;
+}
+.standardlist li:last-child .standardlist-status {
+	border-bottom-left-radius: 4px;
+}
+.standardlist-status.pass {
+	background: #F44236;
+}
+.standardlist-status.current {
+	background: #FFE93B;
+}
+.standardlist-status.future {
+	background: #8BC24A;
+}
+.extrapad {
+	padding-left: 20px;
 }
 /*====================================================================standardlist end */
 .simplebar-track.horizontal {
@@ -676,28 +764,23 @@ th .icheckbox_flat-green, th .iradio_flat-green {
 }
 
 /* ================================================================================== Datatables */
-.dataTables_add,
+.dataTables_add.btn,
 .dataTables_filter,
 .dataTables_length
 {
 	margin-bottom: 5px;
 }
-.dataTables_add {
+.dataTables_Container:not(.basic) .dataTables_add {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 1;
 }
 .dataTable {
 	width: 100% !important;
-	position: relative;
+	zzzposition: relative;
 }
 .dataTable thead tr th {
 	border-bottom: 0;
-}
-.dataTable tr.filtering {
-	border: 1px solid #E0E0E0 !important;
-    background: #E0E0E0 !important;
 }
 .dataTable tr.filtering input {
 	font-weight: normal;
@@ -706,8 +789,19 @@ th .icheckbox_flat-green, th .iradio_flat-green {
 .dataTable > thead > tr.filtering > th {
     padding: 4px 4px 4px 10px;
 }
-.dataTables_Container.searchcolumn .dataTables_filter {
+.dataTables_Container {
+	position: relative;
+}
+.dataTables_Container.searchcolumn .dataTables_filter,
+.dataTables_Container.basic .dataTables_length,
+.dataTables_Container.basic .dataTables_filter,
+.dataTables_Container.basic .dataTables_info,
+.dataTables_Container.basic .dataTables_paginate
+{
 	display: none;
+}
+.dataTables_Container.basic thead tr {
+	border-bottom: 2px solid #ddd;
 }
 .dataTables_length {
     width: initial;
@@ -723,6 +817,10 @@ th .icheckbox_flat-green, th .iradio_flat-green {
 .dataTables_filter input {
 	border: 1px solid #ccc !important;
     padding: 6px;
+	border-radius: 4px;
+}
+.dataTables_paginate {
+	margin-bottom: 17px;
 }
 .dataTables_paginate .paginate_button {
     padding: 8px 10px !important;
@@ -867,6 +965,12 @@ th .icheckbox_flat-green, th .iradio_flat-green {
 	-ms-transform: translateY(-266px) scale(1);
 	transform: translateY(-266px) scale(1);
 }
+.fab:hover .padder:nth-child(7) {
+	opacity: 1;
+	-webkit-transform: translateY(-316px) scale(1);
+	-ms-transform: translateY(-316px) scale(1);
+	transform: translateY(-316px) scale(1);
+}
 /* ================================================================================== FAB END */
 
 /* ================================================================================== ACCORDION START */
@@ -881,6 +985,9 @@ a.panel-title, a.panel-title:focus { /*active*/
 a.panel-title.collapsed, a.panel-title.collapsed:focus { /*not active*/
     background: #F7F7F7;
 	color: #337AB7;
+}
+.panel-group {
+	margin-bottom: 10px;
 }
 .panel-group .panel {
     overflow: hidden;
@@ -902,3 +1009,21 @@ a.panel-title.collapsed, a.panel-title.collapsed:focus { /*not active*/
 	cursor: pointer;
 }
 /* ================================================================================== TIMELINE END */
+
+/* ================================================================================== dashboard start */
+.dashboard {
+	height: calc(100vh - 124px);
+}
+.dashboard h2 {
+	font-weight: bold;
+}
+.dashboard h5 {
+	chartjs_padding-left: 5px;
+	text-align: center;
+	margin: 0;
+}
+.doughnut_container {
+	float: left;
+	width: 33.3333%;
+}
+/* ================================================================================== dashboard end */

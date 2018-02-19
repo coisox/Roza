@@ -1,0 +1,30 @@
+<div id="vue">
+	This is parent - <input v-model="parentmsg"><br>
+	This is child - <child :childmsg3="parentmsg"></child>
+</div>
+
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>
+<script src='../lib/vue.js'></script>
+
+<script>
+
+var data = {
+	childmsg1: 'Child Msg 1',
+	childmsg2: 'Child Msg 2'
+}
+
+Vue.component('child', {
+	template: '<span>{{childmsg1}}, <span v-if="childmsg3==\'abc\'">Match!</span><span v-if="childmsg3!=\'abc\'">{{childmsg3}}</span></span>',
+	props: ['childmsg3'],
+	data: function() {
+		return data;
+	}
+})
+
+var vue = new Vue({
+    el: "#vue",
+    data: {
+		parentmsg: 'Parent Msg'
+	}
+});
+</script>

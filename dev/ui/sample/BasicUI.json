@@ -12,7 +12,7 @@
 	{
 		"element": "table",
 		"id": "table",
-		"style": "searchglobal", /*searchcolumn, searchglobal, simple, nosort*/
+		"style": "searchglobal", /*searchcolumn, searchglobal, nosort, basic*/
 		"source": "sample/Table.sql",
 		"parameterize": ["{{staff_id}}"],
 		"column": [
@@ -31,7 +31,7 @@
 		],
 		"action_check":
 		{
-			"value": "[[data1]]",
+			"value": "data1 [[data1]], staff_id {{staff_id}}",
 			"bulk": [
 				{
 					"labelbi": "Delete",
@@ -121,7 +121,7 @@
 		"labelbm": "Element 'textarea'",
 		"placeholderbi": "insert comment",
 		"placeholderbm": "insert comment",
-		"maxlength": 255,
+		"maxlength": 10,
 		"required": true,
 		"ac_dualmode": true
 	},
@@ -232,8 +232,8 @@
 	},
 	{
 		"element": "title",
-		"labelbi": "To put 'groupbutton' below tabs or table, set style:fullwidth",
-		"labelbm": "To put 'groupbutton' below tabs or table, set style:fullwidth"
+		"labelbi": "To put 'groupbutton' below accordion or table, set style:fullwidth",
+		"labelbm": "To put 'groupbutton' below accordion or table, set style:fullwidth"
 	},
 	{
 		"element": "groupbutton",
@@ -271,36 +271,6 @@
 		"id": "html",
 		"style": "fullwidth",
 		"value": "<iframe src='dev/html/sample/AverageTemperature.html?{{rozaTimestamp}}' height='416'></iframe>"
-	},
-	{
-		"element": "title",
-		"labelbi": "Element 'tabs' and second level 'tabs'",
-		"labelbm": "Element 'tabs' and second level 'tabs'"
-	},
-	{
-		"element": "tabs",
-		"id": "tabs",
-		"list": [
-			{
-				"labelbi": "Tab 1",
-				"labelbm": "Tab 1",
-				"id": "tab1",
-				"ui": "sample/Tab_1_Content.json",
-				"ac_default": true
-			},
-			{
-				"labelbi": "Tab 2",
-				"labelbm": "Tab 2",
-				"id": "tab2",
-				"ui": "sample/Accordion_2_Content.json"
-			},
-			{
-				"labelbi": "Tab 3",
-				"labelbm": "Tab 3",
-				"id": "tab3",
-				"ui": "sample/Accordion_3_Content.json"
-			}
-		]
 	},
 	{
 		"element": "title",
@@ -360,9 +330,11 @@
 	},
 	{
 		"element": "fab",
-		"onprint":
+		"onexport":
 		{
-			"onclick": "alert('print')"
+			"pdf": "alert('open PDF in new tab')",
+			"excel": "alert('open EXCEL in new tab')",
+			"word": "alert('open WORD in new tab')"
 		},
 		"onsave":
 		{
