@@ -1,0 +1,30 @@
+[
+	{
+		"element": "standardlist",
+		"labelbi": "List of Task",
+		"labelbm": "Senarai Tugasan",
+		"onclick": "rozaCallLandingFile('dashboard/LoadTask.js')",
+		"source": "dashboard/Standardlist_Task.sql",
+		"filter": [
+			{
+				"element": "text",
+				"labelbi": "Position",
+				"labelbm": "Jawatan",
+				"parameter": "position"
+			},
+			{
+				"element": "dropdown",
+				"source": "sample/LOV_State.sql",
+				"labelbi": "State",
+				"labelbm": "Negeri",
+				"parameter": "state"
+			},
+			{
+				"element": "datepicker",
+				"labelbi": "Date Appoint",
+				"labelbm": "Tarikh Lantikan",
+				"parameter": "dateappoint"
+			}
+		]
+	}
+]

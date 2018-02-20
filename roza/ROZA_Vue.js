@@ -95,6 +95,24 @@ function initDashboard_ChartJS() {
 }
 
 function initVue() {
+	Vue.component('com-standardlist-tools', {
+		template:
+			'<ul class="nav navbar-right panel_toolbox">'+
+				'<li class="dropdown">'+
+					'<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sort-amount-desc"></i></a>'+
+					'<ul class="dropdown-menu" role="menu">'+
+						'<li v-if="standardlistv2[listid].list.length>0 && standardlistv2[listid].list[0].ROZA_TIME"><label @click="sortListV2(listid, \'ROZA_EPOCH\')">{{language==\'bm\'?\'Masa\':\'Time\'}} &nbsp; <i class="fa" :class="{\'fa-sort-amount-asc\':standardlistv2[listid].sortBy==\'ROZA_EPOCH_DESC\', \'fa-sort-amount-desc\':standardlistv2[listid].sortBy==\'ROZA_EPOCH_ASC\'}"></i></label></li>'+
+						'<li v-if="standardlistv2[listid].list.length>0 && standardlistv2[listid].list[0].ROZA_STATUS"><label @click="sortListV2(listid, \'ROZA_STATUS\')">Status &nbsp; <i class="fa" :class="{\'fa-sort-amount-asc\':standardlistv2[listid].sortBy==\'ROZA_STATUS_DESC\', \'fa-sort-amount-desc\':standardlistv2[listid].sortBy==\'ROZA_STATUS_ASC\'}"></i></label></li>'+
+						'<li><label @click="sortListV2(listid, \'ROZA_TITLE\')">{{language==\'bm\'?\'Tajuk\':\'Title\'}} &nbsp; <i class="fa" :class="{\'fa-sort-amount-asc\':standardlistv2[listid].sortBy==\'ROZA_TITLE_DESC\', \'fa-sort-amount-desc\':standardlistv2[listid].sortBy==\'ROZA_TITLE_ASC\'}"></i></label></li>'+
+					'</ul>'+
+				'</li>'+
+				'<li class="dropdown">'+
+					'<a class="dropdown-toggle" :class="{standardlist_hasFilter:standardlistv2[listid].filterString!=\'\'}" data-toggle="modal" data-target="#modalFilter"><i class="fa fa-filter"></i></a>'+
+				'</li>'+
+			'</ul>',
+		props: ['listid', 'standardlistv2', 'language']
+	});
+
 	roza = new Vue({
 		el: '#roza',
 		data: {
@@ -118,6 +136,14 @@ function initVue() {
 			standardlist: {
 				activeItem: '',
 				sortBy: ''
+			},
+			standardlistv2: {
+				listTask: {
+					activeItem: '',
+					sortBy: '',
+					filterString: '',
+					list: []
+				}
 			},
 			taskbar: {},
 			accordions: {},
@@ -145,6 +171,12 @@ function initVue() {
 					prop: [],
 					show: false
 				},
+				dashboardTask: {
+					filterString: '',
+					type: '',
+					prop: [],
+					show: false
+				}
 			},
 			modalProp: [],
 			dropzoneAction: 'main.html',
@@ -822,9 +854,21 @@ function initVue() {
 			},
 			showDashboard: function() {
 				this.page = 'dashboard';
-				setTimeout(function(){
-					initMorris();
-				}, 50);
+				setTimeout(function(){ initMorris(); }, 50);
+				
+				//reload standardlist task
+				//===========================================================================================================
+				$.getJSON('roza/ROZA_GetUi.php?ROZA_UI=dashboard/Standardlist_Task.json', function(data){
+					if(data.status=='ok') {
+						roza.viewMode = true;
+						
+						roza.panel.dashboardTask.prop = data.prop;
+
+					}
+					else roza.toast(data.status);
+				});
+				//===========================================================================================================
+				
 			}
 		},
 		created: function() {

@@ -225,13 +225,30 @@
 									<div class="x_panel">
 										<div class="x_title">
 											<h2>{{rozaLanguage=='bm'?'Tugasan':'Task'}}</h2>
-											<!--
-											<comStandardlistTools :list="dashboard.listTask"></comStandardlistTools>
-											-->
+											<com-standardlist-tools :language="rozaLanguage" :listid="'listTask'" :standardlistv2="standardlistv2"></com-standardlist-tools>
 											<div class="clearfix"></div>
 										</div>
-										<div class="x_content">
-											
+										<div data-simplebar class="x_content p-0 standardlist" style="height:500px">
+											<ul class="list-group">
+												<li v-for="item in standardlistv2.listTask.list" :class="{unread:item.ROZA_UNREAD==1, active:standardlistv2.listTask.activeItem==item.ROZA_ID, extrapad:item.ROZA_STATUS}" @click="standardlistv2.listTask.activeItem=item.ROZA_ID; onclick(item)" class="list-group-item">
+													<div :class="'standardlist-status '+item.ROZA_STATUS"></div>
+													<div class="standardlist_image" v-if="item.ROZA_IMAGE">
+														<img :src="item.ROZA_IMAGE">
+													</div>
+													<div class="standardlist_text">
+														<div class="pull-left"><b>{{item.ROZA_TITLE}}</b></div>
+														<div class="pull-right">{{item.ROZA_TIME}}</div>
+														<div class="clearfix"></div>
+														<div class="pull-left">{{item.ROZA_DESC}}</div>
+														<div class="clearfix"></div>
+													</div>
+													<template v-if="item.action">
+														<div class="standardlist_action" @click="onclick(item.action, $event)">
+															<i :class="item.action.icon"></i>
+														</div>
+													</template>
+												</li>
+											</ul>
 										</div>
 									</div>
 								</div>
