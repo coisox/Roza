@@ -1,0 +1,9 @@
+[
+ 	{
+		"element": "datepicker",
+		"id": "datepicker",
+		"labelbi": "Element 'datepicker' single",
+		"labelbm": "Elemen 'datepicker' single",
+		"style": "single"
+	}
+]

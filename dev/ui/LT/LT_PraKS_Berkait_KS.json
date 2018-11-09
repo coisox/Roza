@@ -1,0 +1,52 @@
+[
+  {
+    "element": "title",
+    "labelbi": "List of Related PraKS",
+    "labelbm": "Senarai PraKS Berkait"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_PraKS_Berkait_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Report No",
+				"labelbm": "No Laporan",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Offence",
+				"labelbm": "Kesalahan",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Date Commited",
+				"labelbm": "Tarikh Kejadian",
+				"value": "[[data4]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	}
+]

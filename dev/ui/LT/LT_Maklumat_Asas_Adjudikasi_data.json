@@ -1,0 +1,68 @@
+[
+  {
+    "element": "title",
+    "labelbi": "IP infomation",
+    "labelbm": "Maklumat Kertas Siasatan"
+  },
+  {
+    "id": "noFail01",
+    "value": "{{ref_no}}",
+    "element": "text",
+	"required": true,
+    "labelbi": "No Fail",
+    "labelbm": "No Fail"
+  },
+  {
+    "id": "tarikh01",
+    "value": "12/4/2017",
+    "element": "text",
+	"required": true,
+    "labelbi": "File Open Date",
+    "labelbm": "Tarikh Fail Dibuka"
+  },
+  {
+    "id": "tarikh02",
+    "value": "12/4/2017",
+    "element": "text",
+	"required": true,
+    "labelbi": "First Document Received Date",
+    "labelbm": "Tarikh Dokumen Pertama Diterima"
+  },
+  {
+    "id": "tarikh02",
+    "value": "12/4/2017",
+    "element": "text",
+	"required": true,
+    "labelbi": "First Document Reference No",
+    "labelbm": "No Rujukan Dokumen Pertama"
+  },
+  {
+    "id": "agensi01",
+    "value": "Jabatan Alam Sekitar",
+    "element": "text",
+	"required": true,
+    "labelbi": "Agency",
+    "labelbm": "Agensi"
+  },  
+  {
+		"element": "dropdown",
+		"id": "unit",
+		"source": "LOV_unit_pendakwaan.sql",
+		"labelbi": "Submit To",
+		"labelbm": "Serahan Kepada"
+	} ,
+  
+  {
+    "id": "catatan01",
+    "value": "ABC/123",
+    "element": "textarea",
+    "labelbi": "Description",
+    "labelbm": "Keterangan Ringkas"
+  },
+	{
+		"element" : "file",
+		"id" : "imgUpload",
+		"labelbi" : "Attachment",
+		"labelbm" : "Lampiran"
+	}
+]

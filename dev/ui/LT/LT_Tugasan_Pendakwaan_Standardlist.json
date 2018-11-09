@@ -1,0 +1,9 @@
+[
+	{
+		"source": "LT/LT_Tugasan_Pendakwaan_Standardlist.sql",
+		"element": "standardlist",
+		"labelbi": "List of Presecution Task",
+		"labelbm": "Senarai Tugasan Pendakwaan",
+		"onclick": "rozaCallLandingFile('LT/LT_PendakwaanTabForm.js?staff_id=[[ROZA_ID]]&module_id=[[MODULE_ID]]&process_id=[[PROCESS_ID]]&ref_no=[[ROZA_TITLE]]')"
+	}
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "element": "title",
+    "labelbi": "List of Defendent",
+    "labelbm": "Senarai Defendan"
+  },
+ 	{
+		"element": "table",
+		"id": "Defendan_Adjudikasi_list",
+		"source": "LT/LT_Defendan_Adjudikasi_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Name",
+				"labelbm": "Nama",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "ID No",
+				"labelbm": "No Pengenalan",
+				"value": "[[data3]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	}
+]

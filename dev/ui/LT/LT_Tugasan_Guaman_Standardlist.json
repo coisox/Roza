@@ -1,0 +1,9 @@
+[
+	{
+		"source": "LT/LT_Tugasan_Guaman_Standardlist.sql",
+		"element": "standardlist",
+		"labelbi": "List of Civil Task",
+		"labelbm": "Senarai Tugasan Guaman",
+		"onclick": "rozaCallLandingFile('LT/LT_GuamanTabForm.js?staff_id=[[ROZA_ID]]&module_id=[[MODULE_ID]]&process_id=[[PROCESS_ID]]&ref_no=[[ROZA_TITLE]]')"
+	}
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "icon": "fa fa-plus",
+    "list": [
+      {
+        "labelbi": "Adjudication",
+        "labelbm": "Adjudikasi",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
+      },
+      {
+        "labelbi": "Arbitrary",
+        "labelbm": "Timbangtara",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Amanah Khairat Awam",
+        "labelbm": "Amanah Khairat Awam",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Saman Penghutang Penghakiman",
+        "labelbm": "Saman Penghutang Penghakiman",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Bankruptcy",
+        "labelbm": "Kebankrapan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Windingup",
+        "labelbm": "Pengulunggan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Bill Cost",
+        "labelbm": "Bil Kos",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Garnishment",
+        "labelbm": "Garnismen",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Judicial Review",
+        "labelbm": "Semakan Kehakiman",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },{
+        "labelbi": "Election Petition",
+        "labelbm": "Petisyen Pilihanraya",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      }
+    ],
+    "element": "taskbar",
+    "labelbi": "New Registration",
+    "labelbm": "Daftar Baharu"
+  },
+  {
+    "icon": "fa fa-list",
+    "list": [
+      {
+        "labelbi": "Adjudication",
+        "labelbm": "Adjudikasi",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
+      },
+      {
+        "labelbi": "Arbitrary",
+        "labelbm": "Timbangtara",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Amanah Khairat Awam",
+        "labelbm": "Amanah Khairat Awam",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Saman Penghutang Penghakiman",
+        "labelbm": "Saman Penghutang Penghakiman",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Bankruptcy",
+        "labelbm": "Kebankrapan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Windingup",
+        "labelbm": "Pengulunggan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Bill Cost",
+        "labelbm": "Bil Kos",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Garnishment",
+        "labelbm": "Garnismen",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },
+      {
+        "labelbi": "Judicial Review",
+        "labelbm": "Semakan Kehakiman",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      },{
+        "labelbi": "Election Petition",
+        "labelbm": "Petisyen Pilihanraya",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      }
+    ],
+    "element": "taskbar",
+    "labelbi": "List",
+    "labelbm": "Senarai"
+  }
+]

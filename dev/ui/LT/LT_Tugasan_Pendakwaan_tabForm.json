@@ -1,0 +1,105 @@
+[
+  {
+    "element": "title",
+    "labelbi": "{{ref_no}}",
+    "labelbm": "{{ref_no}}"
+  },
+  {
+  	"element": "accordion",
+	"id": "accordion01",
+    "list": [
+      {
+        "ui": "LT/LT_Maklumat_Asas_Pendakwaan_Data.json",
+		"xui": "LT/LT_Maklumat_Asas_Pendakwaan_subTab.json",
+        "labelbi": "Basic Info",
+        "labelbm": "Maklumat Asas",
+		"id": "acc_BasicInfo",
+        "ac_remove": "!rozaHasRole(['admin'])",
+		"ac_default": false
+      },    {
+				"labelbi": "OKT & Complainer",
+				"labelbm": "Orang Kena Tuduh (OKT) & Pengadu",
+				"id": "xx4",
+				"ui": "LT/LT_OKT_Pengadu_KS_list.json"
+			},
+			{
+				"labelbi": "Related Pra-KS",
+				"labelbm": "Pra-KS Berkait",
+				"id": "xx6",
+				"ui": "LT/LT_PraKS_Berkait_KS.json"
+			},	{
+				"labelbi": "Charge",
+				"labelbm": "Pertuduhan",
+				"id": "xx3",
+				"ui": "LT/LT_Pertuduhan_KS.json"
+			},
+      {
+        "ui": "LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Letter",
+        "labelbm": "Surat",
+		"id": "acc_Surat",
+        "ac_remove": " !rozaHasRole(['admin']) || '{{module_id}}' != 'B' "
+      },
+      {
+		"ui": "LT/LT_Agihan_Pendakwaan_data.json",
+        "labelbi": "Distribution",
+        "labelbm": "Pengagihan",
+		"id": "acc_Distribution",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_Penerimaan_Pendakwaan_form.json",
+        "labelbi": "Acceptance",
+        "labelbm": "Penerimaan",
+		"id": "acc_Acceptance",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      }, {
+        "ui": "LT/LT_saksi_KS_listing.json",
+        "labelbi": "Witnes",
+        "labelbm": "Saksi",
+		"id": "acc_Witness",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_dokumen_list.json",
+        "labelbi": "Document",
+        "labelbm": "Dokumen",
+		"id": "acc_Document",
+        "ac_remove": "!rozaHasRole(['admin']) || '{{process_id}}' == 'KS-JT' "
+      }, 
+	  {
+        "ui": "LT/LT_Pendakwaan_TaklimatTindakan_tabForm.json",
+        "labelbi": "Briefing/Action",
+        "labelbm": "Taklimat/Tindakan",
+		"id": "acc_BriefingAction",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },{
+        "ui": "LT/LT_KS_Berkait_KS_list.json",
+        "labelbi": "Related KS",
+        "labelbm": "KS Berkait",
+		"id": "acc_RelatedKS",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },{
+        "ui": "LT/LT_minit_KS_list.json",
+        "labelbi": "Minute",
+        "labelbm": "Minit",
+		"id": "acc_Minute",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_TutupFail_Pendakwaan_tabForm.json",
+        "labelbi": "Close File",
+        "labelbm": "Tutup Fail",
+		"id": "acc_ClosedFile",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui":"LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Tab 2",
+        "labelbm": "Tab 2",
+		"id": "acc_Tab2",
+        "ac_remove": "1==1"
+      }
+    ]
+  }
+]

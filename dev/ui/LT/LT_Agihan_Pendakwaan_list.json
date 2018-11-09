@@ -1,0 +1,75 @@
+[
+  {
+    "element": "title",
+    "labelbi": "{{ref_no}}",
+    "labelbm": "{{ref_no}}"
+  },
+  {
+    "list": [
+      {
+        "ui": "LT/LT_Maklumat_Asas_Pendakwaan_subTab.json",
+        "labelbi": "Basic Info",
+        "labelbm": "Maklumat Asas",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Letter",
+        "labelbm": "Surat",
+        "ac_remove": " !rozaHasRole(['admin']) || '{{module_id}}' != 'B' "
+      },
+      {
+		"ui": "LT/LT_Agihan_Pendakwaan_data.json",
+        "labelbi": "Distribution",
+        "labelbm": "Pengagihan",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_Pendakwaan_penerimaan_form.json",
+        "labelbi": "Acceptance",
+        "labelbm": "Penerimaan",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      }, {
+        "ui": "LT/LT_saksi_KS_listing.json",
+        "labelbi": "Witnes",
+        "labelbm": "Saksi",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_dokumen_list.json",
+        "labelbi": "Document",
+        "labelbm": "Dokumen",
+        "ac_remove": "!rozaHasRole(['admin']) || '{{process_id}}' == 'KS-JT' "
+      }, 
+	  {
+        "ui": "LT/LT_Pendakwaan_TaklimatTindakan_tabForm.json",
+        "labelbi": "Briefing/Action",
+        "labelbm": "Taklimat/Tindakan",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },{
+        "ui": "LT/LT_KS_Berkait_KS_list.json",
+        "labelbi": "Related KS",
+        "labelbm": "KS Berkait",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },{
+        "ui": "LT/LT_minit_KS_list.json",
+        "labelbi": "Minute",
+        "labelbm": "Minit",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/ui_LT_Pendakwaan_tutupFail_tabForm.json",
+        "labelbi": "Close File",
+        "labelbm": "Tutup Fail",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui":"LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Tab 2",
+        "labelbm": "Tab 2",
+        "ac_remove": "1==1"
+      }
+    ],
+    "element": "tabs"
+  }
+]

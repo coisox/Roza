@@ -1,0 +1,32 @@
+[
+	{
+		"element": "tabs",
+		"list": [
+			{
+				"labelbi": "IP Info",
+				"labelbm": "Maklumat KS",
+				"ui": "LT/LT_Maklumat_Asas_Adjudikasi_data.json",
+				"ac_default": true
+			},{
+				"labelbi": "Adjudicationer",
+				"labelbm": "Pengadil",
+				"ui": "LT/LT_Pengadil_Adjudikasi_data.json"
+			},
+			{
+				"labelbi": "Plentif/Applicant",
+				"labelbm": "Plentif/Pemohon",
+				"ui": "LT/LT_Plentif_Adjudikasi_list.json"
+			},
+			{
+				"labelbi": "Defendent/Respondent",
+				"labelbm": "Defendan/Respondan",
+				"ui": "LT/LT_Defendan_Adjudikasi_list.json"
+			},
+			{
+				"labelbi": "Third Party",
+				"labelbm": "Pihak Ketiga",
+				"ui": "LT/LT_Pihak_Ketiga_Adjudikasi_list.json"
+			}
+		]
+	}
+]

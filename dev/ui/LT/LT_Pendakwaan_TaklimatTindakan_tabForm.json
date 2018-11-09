@@ -1,0 +1,20 @@
+[
+	{
+		"element": "tabs",
+		"list": [
+			{
+				"labelbi": "Briefing",
+				"labelbm": "Taklimat",
+				"id":"xyz",
+				"ui": "LT/LT_Taklimat_KS_list.json",
+				"ac_default": true
+			},
+			{
+				"labelbi": "Action",
+				"labelbm": "Tindakan",
+				"id":"xyz01",
+				"ui": "LT/LT_Tindakan_KS_list.json"
+			}
+		]
+	}
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Clasiffication of Case",
+    "labelbm": "Klasifikasi Kes"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_Pertuduhan_Klasifikasi_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Act",
+				"labelbm": "Akta",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Section",
+				"labelbm": "Seksyen",
+				"value": "[[data3]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		}
+	},
+  {
+    "element": "title",
+    "labelbi": "Case With Charge",
+    "labelbm": "Kes Dengan Pertuduhan"
+  },
+ 	{
+		"element": "table",
+		"id": "table2",
+		"source": "LT/LT_Pertuduhan_KesPertuduhan_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Case No",
+				"labelbm": "No Kes",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Court",
+				"labelbm": "Mahkamah",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "State",
+				"labelbm": "Negeri",
+				"value": "[[data4]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		}
+	}	
+]

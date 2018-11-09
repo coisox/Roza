@@ -1,0 +1,38 @@
+[
+  {
+    "icon": "fa fa-plus",
+    "list": [
+      {
+        "labelbi": "Pra-Investigation Paper",
+        "labelbm": "Pra-Kertas Siasatan",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffInfo.js')"
+      },
+      {
+        "labelbi": "Investigation Paper",
+        "labelbm": "Kertas Siasatan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorInfo.js')"
+      }
+    ],
+    "element": "taskbar",
+    "labelbi": "New Registration",
+    "labelbm": "Daftar Baharu"
+  },
+  {
+    "icon": "fa fa-list",
+    "list": [
+      {
+        "labelbi": "Pra-Investigation Paper",
+        "labelbm": "Pra-Kertas Siasatan",
+        "onclick": "rozaCallLandingFile('UI_SampleStaffList.js')"
+      },
+      {
+        "labelbi": "Investigation Paper",
+        "labelbm": "Kertas Siasatan",
+        "onclick": "rozaCallLandingFile('UI_SampleVendorList.js')"
+      }
+    ],
+    "element": "taskbar",
+    "labelbi": "List",
+    "labelbm": "Senarai"
+  }
+]

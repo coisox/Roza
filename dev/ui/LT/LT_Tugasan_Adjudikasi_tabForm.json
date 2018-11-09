@@ -1,0 +1,86 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Adjudication - {{ref_no}}",
+    "labelbm": "Adjudikasi - {{ref_no}}"
+  },
+  { 
+    "element": "accordion",
+	"id": "accordion06",
+    "list": [
+      {
+        "ui": "LT/LT_Maklumat_Asas_Adjudikasi_subTab.json",
+        "labelbi": "Basic Info",
+        "labelbm": "Maklumat Asas",
+		"id": "acc06_BasicInfo",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Letter",
+        "labelbm": "Surat",
+		"id": "acc06_Letter",
+        "ac_remove": " !rozaHasRole(['admin']) || '{{module_id}}' != 'B' "
+      },
+      {
+		"ui": "LT/LT_Agihan_Adjudikasi_list.json",
+        "labelbi": "File Distribution",
+        "labelbm": "Pengagihan Fail",
+		"id": "acc06_Distribution",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_Penerimaan_Adjudikasi_form.json",
+        "labelbi": "Task Acceptance",
+        "labelbm": "Penerimaan Tugasan",
+		"id": "acc06_Acceptance",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      }, {
+        "ui": "LT/LT_Maklumat_Perincian_Adjudikasi_form.json",
+        "labelbi": "Details Claim",
+        "labelbm": "Maklumat Tuntutan",
+		"id": "acc06_DetailsClaim",
+        "ac_remove": "!rozaHasRole(['admin']) || '{{process_id}}' == 'KS-JT' "
+      },
+      {
+        "ui": "LT/LT_dokumen_list.json",
+        "labelbi": "Upload Document",
+        "labelbm": "Muat Naik Dokumen",
+		"id": "acc06_Document",
+        "ac_remove": "!rozaHasRole(['admin']) || '{{process_id}}' == 'KS-JT' "
+      }, {
+        "ui": "LT/LT_Maklumat_Adjudikasi_list.json",
+        "labelbi": "Adjudication Meeting Info",
+        "labelbm": "Maklumat Mesyuarat Adjudikasi",
+		"id": "acc06_Adjudikasi",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+	  {
+        "ui": "LT/LT_Keputusan_Adjudikasi_form.json",
+        "labelbi": "Adjudication Result",
+        "labelbm": "Keputusan Adjudikasi",
+		"id": "acc06_AdjudicationResult",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },{
+        "ui": "LT/LT_Maklumat_Bayaran_Adjudikasi_tabForm.json",
+        "labelbi": "Payment Info",
+        "labelbm": "Maklumat Bayaran",
+		"id": "acc06_PaymentInfo",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui": "LT/LT_TutupFail_Adjudikasi_tabForm.json",
+        "labelbi": "Close File",
+        "labelbm": "Tutup Fail",
+		"id": "acc06_CloseFile",
+        "ac_remove": "!rozaHasRole(['admin'])"
+      },
+      {
+        "ui":"LT/ui_LT_Pendakwaan_surat_tabForm.json",
+        "labelbi": "Tab 2",
+        "labelbm": "Tab 2",
+        "ac_remove": "1==1"
+      }
+    ]
+  }
+]

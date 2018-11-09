@@ -1,0 +1,21 @@
+[{
+    "element": "title",
+    "labelbi": "File Acceptance",
+    "labelbm": "Penerimaan Fail"
+  },
+ 	{
+		"element": "datepicker",
+		"id": "datepicker01",
+		"labelbi": "Send Date",
+		"labelbm": "Tarikh Hantar",
+		"ac_disable": true,
+		"style": "single"
+	},
+ 	{
+		"element": "datepicker",
+		"id": "datepicker02",
+		"labelbi": "Acceptance Date",
+		"labelbm": "Tarikh Terima",
+		"style": "single"
+	}
+]

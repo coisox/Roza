@@ -1,0 +1,52 @@
+[
+  {
+    "element": "title",
+    "labelbi": "List of Briefing",
+    "labelbm": "Senarai Taklimat"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_taklimat_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "To",
+				"labelbm": "Kepada",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Order          ",
+				"labelbm": "Arahan          ",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Note",
+				"labelbm": "Catatan",
+				"value": "[[data4]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	}
+]

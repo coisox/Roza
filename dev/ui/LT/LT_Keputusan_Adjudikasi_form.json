@@ -1,0 +1,42 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Adjudication Result",
+    "labelbm": "Keputusan Adjudikasi"
+  },{
+		"element": "text",
+		"labelbi": "File Ref No",
+		"labelbm": "No Rujukan Fail",
+		"value": "{{ref_no}}",
+		"ac_disable": true,
+		"style": "single"
+	},
+ 	{
+		"element": "text",
+		"labelbi": "Date File Open",
+		"labelbm": "Tarikh Fail Dibuka",
+		"value": "04/12/2017",
+		"ac_disable": true,
+		"style": "single"
+	}, 	{
+		"element": "text",
+		"labelbi": "Agency",
+		"labelbm": "Agensi",
+		"value": "JKR",
+		"ac_disable": true,
+		"style": "single"
+	},	{
+		"element": "dropdown",
+		"id":"xx",
+		"source": "LOV_KeputusanPerbicaraan.sql",
+		"labelbi": "Result",
+		"labelbm": "Keputusan",
+		"style": "single"
+	},{
+		"element": "textarea",
+		"id": "tx12",
+		"labelbi": "Notes",
+		"labelbm": "Catatan Keputusan",
+		"style": "single"
+	}
+]

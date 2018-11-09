@@ -1,0 +1,89 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Close File",
+    "labelbm": "Maklumat Tutup Fail"
+  },{
+		"element": "text",
+		"labelbi": "File Ref No",
+		"labelbm": "No Rujukan Fail",
+		"value": "{{ref_no}}",
+		"ac_disable": true,
+		"style": "single"
+	},
+ 	{
+		"element": "text",
+		"labelbi": "Date File Open",
+		"labelbm": "Tarikh Fail Dibuka",
+		"value": "04/12/2017",
+		"ac_disable": true,
+		"style": "single"
+	}, 	{
+		"element": "text",
+		"labelbi": "Agency",
+		"labelbm": "Agensi",
+		"value": "JKR",
+		"ac_disable": true,
+		"style": "single"
+	},	{
+		"element": "text",
+		"labelbi": "Total Amount",
+		"labelbm": "Jumlah Perlu Dibayar (RM)",
+		"value": "2000.00",
+		"style": "single"
+	},{
+		"element": "textarea",
+		"id": "tx12",
+		"labelbi": "Notes",
+		"labelbm": "Catatan (Sila nyatakan perincian bayaran)",
+		"style": "single"
+	},{
+	"element": "radio",
+	"id":"10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "Close File?",
+	"labelbm": "Tutup Fail?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	},{
+    "element": "title",
+    "labelbi": "Close File Confirmation",
+    "labelbm": "Pengesahan Tutup Fail"
+   },{
+	"element": "radio",
+	"id":"P10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "I agree on the closure of the file?",
+	"labelbm": "Saya bersetuju untuk fail ini ditutup?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	},{
+    "element": "title",
+	"xac_hide": true,
+    "labelbi": "File closed",
+    "labelbm": "Penutupan Fail oleh PT"
+   },{
+	"element": "radio",
+	"id":"P10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "File has been closed?",
+	"labelbm": "Fail telah ditutup?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	}
+]

@@ -1,0 +1,45 @@
+[
+	{
+		"element": "tabs",
+		"id": "xx",
+		"list": [
+			{
+				"labelbi": "IP Info",
+				"labelbm": "Maklumat KS",
+				"id": "xx1",
+				"ui": "LT/LT_Maklumat_Asas_Pendakwaan_Data.json",
+				"ac_default": true
+			},
+			{
+				"labelbi": "Investigation Officer",
+				"labelbm": "Pegawai Penyiasat",
+				"id": "xx2",
+				"ui": "LT/LT_Pegawai_Penyiasat_KS_list.json"
+			},
+			{
+				"labelbi": "Charge",
+				"labelbm": "Pertuduhan",
+				"id": "xx3",
+				"ui": "LT/LT_Pertuduhan_KS.json"
+			},
+			{
+				"labelbi": "OKT",
+				"labelbm": "Orang Kena Tuduh (OKT)",
+				"id": "xx4",
+				"ui": "LT/LT_OKT_KS_list.json"
+			},
+			{
+				"labelbi": "Complainer",
+				"labelbm": "Pengadu",
+				"id": "xx5",
+				"ui": "LT/LT_Pengadu_KS.json"
+			},
+			{
+				"labelbi": "Related Pra-KS",
+				"labelbm": "Pra-KS Berkait",
+				"id": "xx6",
+				"ui": "LT/LT_PraKS_Berkait_KS.json"
+			}
+		]
+	}
+]

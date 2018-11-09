@@ -142,6 +142,7 @@ function initVue() {
 					activeItem: '',
 					sortBy: '',
 					filterString: '',
+					filterString: '',
 					list: []
 				}
 			},

@@ -1,0 +1,67 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Adjudikasi meeting info",
+    "labelbm": "Maklumat Mesyuarat Adjudikasi"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_Maklumat_Adjudikasi_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Meeting",
+				"labelbm": "Mesyuarat",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Date From",
+				"labelbm": "Tarikh Dari",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Date To",
+				"labelbm": "Tarikh Hingga",
+				"value": "[[data4]]"
+			},
+			{
+				"labelbi": "Place",
+				"labelbm": "Tempat",
+				"value": "[[data5]]"
+			},
+			{
+				"labelbi": "New Date",
+				"labelbm": "Tarikh Baru",
+				"value": "[[data6]]"
+			},
+			{
+				"labelbi": "Notes",
+				"labelbm": "Catatan",
+				"value": "[[data7]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	}
+]

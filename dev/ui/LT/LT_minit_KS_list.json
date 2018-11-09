@@ -1,0 +1,57 @@
+[
+  {
+    "element": "title",
+    "labelbi": "List of Minute",
+    "labelbm": "Senarai Minit"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_Minit_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Minute No",
+				"labelbm": "No Minit",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Date",
+				"labelbm": "Tarikh",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Prepared By",
+				"labelbm": "Disediakan Oleh",
+				"value": "[[data4]]"
+			},
+			{
+				"labelbi": "Delivered To",
+				"labelbm": "Diserahkan Kepada",
+				"value": "[[data5]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	}
+]

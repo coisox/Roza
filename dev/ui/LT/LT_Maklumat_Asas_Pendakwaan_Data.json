@@ -1,0 +1,167 @@
+[
+  {
+    "element": "title",
+    "labelbi": "IP infomation",
+    "labelbm": "Maklumat Kertas Siasatan"
+  },
+  {
+    "id": "noFail01",
+    "value": "{{ref_no}}",
+    "element": "text",
+    "labelbi": "No Fail",
+    "labelbm": "No Fail", "ac_disable": "'{{mode}}'!='edit'"
+  }, {
+    "id": "tarikh01",
+    "value": "12/4/2017",
+    "element": "text",
+    "labelbi": "File Open Date",
+    "labelbm": "Tarikh Fail Dibuka"
+  },
+  {
+    "id": "tarikh01",
+    "value": "12/4/2017",
+    "element": "text",
+    "labelbi": "Report Received Date",
+    "labelbm": "Tarikh Laporan DiTerima"
+  },
+  {
+    "id": "agensi01",
+    "value": "PDRM",
+    "element": "text",
+    "labelbi": "Agency",
+    "labelbm": "Agensi"
+  },  {
+    "id": "noLaporanAgensi01",
+    "value": "abc123",
+    "element": "text",
+    "labelbi": "Agency Report No",
+    "labelbm": "No Laporan Agensi"
+  }, {
+    "id": "negeri01",
+    "value": "Selangor",
+    "element": "text",
+    "labelbi": "State",
+    "labelbm": "Negeri"
+  },{
+    "id": "daerah01",
+    "value": "Kajang",
+    "element": "text",
+    "labelbi": "Area",
+    "labelbm": "Daerah"
+  },{
+    "id": "tarikhKejadian01",
+    "value": "03/12/2017",
+    "element": "text",
+    "labelbi": "Date of occurance",
+    "labelbm": "Tarikh Kejadian"
+  },{
+    "id": "masaKejadian01",
+    "value": "09.30 AM",
+    "element": "text",
+    "labelbi": "Time of Occurance",
+    "labelbm": "Masa Kejadian"
+  },
+  {
+    "id": "catatan01",
+    "value": "ABC/123",
+    "element": "textarea",
+    "labelbi": "Description",
+    "labelbm": "Keterangan Ringkas"
+  },
+	{
+		"element" : "file",
+		"id" : "imgUpload",
+		"labelbi" : "Attachment of KS",
+		"labelbm" : "Lampiran KS"
+	},{
+	"element": "radio",
+	"id": "ka01",
+	"source": "LOV_YaTidak.sql",
+	"labelbi": "Public Interest?",
+	"labelbm": "Kepentingan Awam?",
+	"style": "horizontal"
+	},{
+	"element": "radio",
+	"id": "IPwn",
+	"source": "LOV_YaTidak.sql",
+	"labelbi": "IP Walk-in",
+	"labelbm": "IP Walkin",
+	"style": "horizontal"
+	},{
+	"element": "dropdown",
+	"id": "state",
+	"source": "LOV_SampleState.sql",
+	"labelbi": "distribution to TPR",
+	"labelbm": "Agihan Kepada TPR"
+	},
+  {
+    "element": "title",
+    "labelbi": "IP Officer",
+    "labelbm": "Pegawai Penyiasat"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/TPR_Staff_Table.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Name",
+				"labelbm": "Nama",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "Status",
+				"labelbm": "Status",
+				"value": "[[data3]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		},
+		"onadd":
+		{
+			"onclick": "alert('Your new form')"
+		}
+	},
+
+	{
+		"element": "fab",
+		"onprint": {
+			"onclick": "alert('print')"
+		},
+		"onedit": {
+			"onclick": "rozaCallLandingFile('LT/LT_GuamanTabForm.js?staff_id={{ref_no}}&mode=edit')",			
+			"ac_remove": "'{{mode}}'=='edit'"
+		},
+		"onview": {
+			"onclick": "rozaCallLandingFile('xSampleStaff_Form.js?staff_id={{staff_id}}&mode=view')",
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"onclear": {
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"ondefault": {
+			"ac_remove": "'{{mode}}'!='edit'"
+		},
+		"onsave": {
+			"onclick": "alert('save')",
+			"ac_remove": "'{{mode}}'!='edit'"
+		}
+	}
+]

@@ -1,0 +1,54 @@
+[{
+    "element": "title",
+    "labelbi": "Adjudication Details Info",
+    "labelbm": "Maklumat Perincian Adjudikasi"
+  },{
+		"element": "text",
+		"labelbi": "File Ref No",
+		"labelbm": "No Rujukan Fail",
+		"value": "{{ref_no}}",
+		"ac_disable": true,
+		"style": "single"
+	},{
+		"element": "text",
+		"labelbi": "1st File Ref No",
+		"labelbm": "No Rujukan Dokumen Pertama",
+		"value": "{{ref_no}}",
+		"ac_disable": true,
+		"style": "single"
+	},
+ 	{
+		"element": "datepicker",
+		"id": "datepicker01",
+		"labelbi": "1st Document Received Date",
+		"labelbm": "Tarikh Penerimaan Dokumen Pertama",
+		"ac_disable": true,
+		"style": "single"
+	},{
+	"element": "radio",
+	"id":"P10",
+	"source": "LOV_AdjSubject.sql",
+	"required":true,
+	"labelbi": "Subject",
+	"labelbm": "Subjek",
+	"style": "horizontal"
+	},
+ 	{
+		"element": "textarea",
+		"labelbi": "Notes",
+		"labelbm": "Catatan",
+		"style": "single"
+	},
+ 	{
+		"element": "textarea",
+		"labelbi": "Claim",
+		"labelbm": "Tuntutan",
+		"style": "single"
+	},
+ 	{
+		"element": "text",
+		"labelbi": "Claim Amount (RM)",
+		"labelbm": "Jumlah Tuntutan (RM)",
+		"style": "single"
+	}
+]

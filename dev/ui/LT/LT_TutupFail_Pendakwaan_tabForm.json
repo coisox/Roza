@@ -1,0 +1,116 @@
+[
+  {
+    "element": "title",
+    "labelbi": "Close File",
+    "labelbm": "Maklumat Tutup Fail"
+  },{
+		"element": "text",
+		"labelbi": "File Ref No",
+		"labelbm": "No Rujukan Fail",
+		"value": "{{ref_no}}",
+		"ac_disable": true,
+		"style": "single"
+	},
+ 	{
+		"element": "text",
+		"labelbi": "Agency",
+		"labelbm": "Agensi",
+		"value": "PDRM",
+		"ac_disable": true,
+		"style": "single"
+	}, 	{
+		"element": "text",
+		"labelbi": "State",
+		"labelbm": "Negeri",
+		"value": "Selangor",
+		"ac_disable": true,
+		"style": "single"
+	},	{
+		"element": "text",
+		"labelbi": "State",
+		"labelbm": "Daerah",
+		"value": "Kajang",
+		"ac_disable": true,
+		"style": "single"
+	},{
+		"element": "datepicker",
+		"labelbi": "Acceptance Date",
+		"labelbm": "Tarikh Terima",
+		"ac_disable": true,
+		"style": "single"
+	} ,	{
+		"element": "datepicker",
+		"labelbi": "Issue Date",
+		"labelbm": "Tarikh Dikeluarkan",
+		"required":true,
+		"style": "single"
+	},{
+		"element": "text",
+		"labelbi": "Receiver",
+		"labelbm": "Penerima",
+		"required":true,
+		"style": "single"
+	},{
+		"element": "text",
+		"labelbi": "Receiver NoKP",
+		"labelbm": "No Pengenalan diri Penerima",
+		"required":true,
+		"style": "single"
+	},{
+	"element": "radio",
+	"id":"12",
+	"source": "LOV_KaedahPenerimaan.sql",
+	"labelbi": "Acceptance Method",
+	"labelbm": "Kaedah Penerimaan",
+	"required":true,
+	"style": "horizontal"
+	},{
+	"element": "radio",
+	"id":"10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "Close File?",
+	"labelbm": "Tutup Fail?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	},{
+    "element": "title",
+    "labelbi": "Close File Confirmation",
+    "labelbm": "Pengesahan Tutup Fail"
+   },{
+	"element": "radio",
+	"id":"P10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "I agree on the closure of the file?",
+	"labelbm": "Saya bersetuju untuk fail ini ditutup?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	},{
+    "element": "title",
+	"xac_hide": true,
+    "labelbi": "File closed",
+    "labelbm": "Penutupan Fail oleh PT"
+   },{
+	"element": "radio",
+	"id":"P10",
+	"source": "LOV_YaTidak.sql",
+	"required":true,
+	"labelbi": "File has been closed?",
+	"labelbm": "Fail telah ditutup?",
+	"style": "horizontal"
+	},{
+		"element": "textarea",
+		"labelbi": "Catatan",
+		"labelbm": "Catatan",
+		"style": "single"
+	}
+]

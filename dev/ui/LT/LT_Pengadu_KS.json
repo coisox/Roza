@@ -1,0 +1,48 @@
+[
+  {
+    "element": "title",
+    "labelbi": "List of Complainer",
+    "labelbm": "Senarai Pengadu"
+  },
+ 	{
+		"element": "table",
+		"id": "table",
+		"source": "LT/LT_Pengadu_KS_list.sql",
+		"tool": true,
+		"column": [
+			{
+				"labelbi": "ID",
+				"labelbm": "ID",
+				"value": "[[data1]]",
+				"ac_remove": true
+			},
+			{
+				"labelbi": "Name",
+				"labelbm": "Nama",
+				"value": "[[data2]]"
+			},
+			{
+				"labelbi": "ID No",
+				"labelbm": "No Kad Pengenalan/Pasport",
+				"value": "[[data3]]"
+			},
+			{
+				"labelbi": "Nationality",
+				"labelbm": "Warganegara",
+				"value": "[[data4]]"
+			}
+		],
+		"onview":
+		{
+			"onclick": "alert('View for [[data3]]')"
+		},
+		"onedit":
+		{
+			"onclick": "alert('Edit for [[data3]]')"
+		},
+		"ondelete":
+		{
+			"ac_disable": true
+		}
+	}
+]
